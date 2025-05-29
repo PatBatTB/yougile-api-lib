@@ -31,8 +31,8 @@ public class UserBody extends RequestBody {
             super(body);
         }
 
-        public Builder setIsAdmin(boolean isAdmin) {
-            body.isAdmin = isAdmin;
+        public Builder isAdmin(boolean value) {
+            body.isAdmin = value;
             return this;
         }
     }

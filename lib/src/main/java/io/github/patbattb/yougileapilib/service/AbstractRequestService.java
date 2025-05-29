@@ -5,6 +5,7 @@ import io.github.patbattb.yougileapilib.domain.AuthKey;
 import io.github.patbattb.yougileapilib.domain.QueryParams;
 import io.github.patbattb.yougileapilib.domain.body.RequestBody;
 import lombok.Setter;
+import org.apache.http.HttpHeaders;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.fluent.Request;
 import org.apache.http.client.fluent.Response;
@@ -20,7 +21,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-public abstract class AbstractRequestService {
+abstract class AbstractRequestService {
 
     private final String scheme = "https";
     private final String host = "ru.yougile.com";
@@ -29,10 +30,17 @@ public abstract class AbstractRequestService {
     @Setter
     private int timeout = 10000;
 
+    protected final AuthKey authKey;
+
     protected final String noAuthKeyMessage = "\"Service doesn't have AuthKey. You need Service instance with AuthKey\"";
 
     protected AbstractRequestService(String endpoint) {
+        this(endpoint, null);
+    }
+
+    protected AbstractRequestService(String endpoint, AuthKey authKey) {
         this.endpoint = endpoint;
+        this.authKey = authKey;
     }
 
     protected URIBuilder configureURI() {
@@ -84,18 +92,32 @@ public abstract class AbstractRequestService {
         return  request.execute();
     }
 
+    protected Response sendPutRequest(URI uri, RequestBody body, AuthKey authKey) throws IOException {
+        String bodyString = new JsonMapper().writeValueAsString(body);
+        Request request = generateBaseRequest(Request.Put(uri))
+                .bodyString(bodyString, ContentType.APPLICATION_JSON)
+                .addHeader(getAuthHeader(authKey));
+        return request.execute();
+    }
+
     protected Response sendDeleteRequest(URI uri) throws IOException {
         Request request = generateBaseRequest(Request.Delete(uri));
+        return request.execute();
+    }
+
+    protected Response sendDeleteRequest(URI uri, AuthKey authKey) throws IOException {
+        Request request = generateBaseRequest(Request.Delete(uri))
+                .addHeader(getAuthHeader(authKey));
         return request.execute();
     }
 
     private Request generateBaseRequest(Request request) {
         return request.connectTimeout(timeout)
                 .socketTimeout(timeout)
-                .addHeader(new BasicHeader("Content-Type", "application/json"));
+                .addHeader(new BasicHeader(HttpHeaders.CONTENT_TYPE, "application/json"));
     }
 
     private BasicHeader getAuthHeader(AuthKey authKey) {
-        return new BasicHeader("Authorization", "Bearer " + authKey.key());
+        return new BasicHeader(HttpHeaders.AUTHORIZATION, "Bearer " + authKey.key());
     }
 }

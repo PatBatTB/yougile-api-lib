@@ -1,31 +1,24 @@
 package io.github.patbattb.yougileapilib.service;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.json.JsonMapper;
-import com.fasterxml.jackson.databind.node.ArrayNode;
 import io.github.patbattb.yougileapilib.domain.AuthKey;
 import io.github.patbattb.yougileapilib.domain.Id;
 import io.github.patbattb.yougileapilib.domain.QueryParams;
 import io.github.patbattb.yougileapilib.domain.User;
+import io.github.patbattb.yougileapilib.domain.body.EditUserBody;
 import io.github.patbattb.yougileapilib.domain.body.UserBody;
-import io.github.patbattb.yougileapilib.http.YouGileResponseHandler;
+import io.github.patbattb.yougileapilib.http.ResponseHandlerProvider;
 import lombok.NonNull;
 import org.apache.http.client.fluent.Content;
 import org.apache.http.client.fluent.Response;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
-import java.util.ArrayList;
 import java.util.List;
 
 public class UserService extends AbstractRequestService {
 
-    private final AuthKey authKey;
-
     public UserService(AuthKey authKey) {
-        super("users");
-        this.authKey = authKey;
+        super("users", authKey);
     }
 
     public UserService() {
@@ -49,8 +42,8 @@ public class UserService extends AbstractRequestService {
      */
     public List<User> getUserList(@NonNull QueryParams params, @NonNull AuthKey authKey) throws URISyntaxException, IOException {
         Response response = sendGetRequest(configureURI(params).build(), authKey);
-        Content content = response.handleResponse(YouGileResponseHandler::getJsonOKHandler);
-        return handleUserListContent(content);
+        Content content = response.handleResponse(ResponseHandlerProvider::OKJsonHandler);
+        return ContentHandler.handleUserList(content);
     }
 
     /**
@@ -73,33 +66,55 @@ public class UserService extends AbstractRequestService {
         return getUserList(params, this.authKey);
     }
 
-    public Id inviteToCompany(UserBody body, AuthKey authKey) throws URISyntaxException, IOException {
+    public Id inviteToCompany(@NonNull UserBody body, @NonNull AuthKey authKey) throws URISyntaxException, IOException {
         Response response = sendPostRequest(configureURI().build(), body, authKey);
-        Content content = response.handleResponse(YouGileResponseHandler::getJsonCreatedHandler);
-        return handleIdContent(content);
+        Content content = response.handleResponse(ResponseHandlerProvider::CreatedJsonHandler);
+        return ContentHandler.handleId(content);
     }
 
-    public Id inviteToCompany(UserBody body) throws URISyntaxException, IOException {
+    public Id inviteToCompany(@NonNull UserBody body) throws URISyntaxException, IOException {
         if (this.authKey == null) {
             throw new NullPointerException(noAuthKeyMessage);
         }
         return inviteToCompany(body, authKey);
     }
 
-    private List<User> handleUserListContent(Content content) throws JsonProcessingException {
-        JsonMapper mapper = new JsonMapper();
-        List<User> userList = new ArrayList<>();
-        JsonNode rootNode = mapper.readTree(content.asString());
-        ArrayNode arrayNode = (ArrayNode) rootNode.get("content");
-        for (JsonNode node: arrayNode) {
-            userList.add(mapper.readValue(node.toString(), User.class));
-        }
-        return userList;
+    public User getUserById(@NonNull String userId, @NonNull AuthKey authKey) throws URISyntaxException, IOException {
+        Response response = sendGetRequest(configureURI(userId).build(), authKey);
+        Content content = response.handleResponse(ResponseHandlerProvider::OKJsonHandler);
+        return ContentHandler.handleUser(content);
     }
 
-    private Id handleIdContent(Content content) throws JsonProcessingException {
-        JsonMapper mapper = new JsonMapper();
-        JsonNode node = mapper.readTree(content.asString());
-        return mapper.readValue(node.toString(), Id.class);
+    public User getUserById(@NonNull String userId) throws URISyntaxException, IOException {
+        if (this.authKey == null) {
+            throw new NullPointerException(noAuthKeyMessage);
+        }
+        return getUserById(userId, authKey);
+    }
+
+    public Id editUserById(@NonNull String userId, @NonNull EditUserBody body, @NonNull  AuthKey authKey) throws URISyntaxException, IOException {
+        Response response = sendPutRequest(configureURI(userId).build(), body, authKey);
+        Content content = response.handleResponse(ResponseHandlerProvider::OKJsonHandler);
+        return ContentHandler.handleId(content);
+    }
+
+    public Id editUserById(@NonNull String userId, @NonNull EditUserBody body) throws URISyntaxException, IOException {
+        if (this.authKey == null) {
+            throw new NullPointerException(noAuthKeyMessage);
+        }
+        return editUserById(userId, body, authKey);
+    }
+
+    public Id deleteFromCompany(@NonNull String userId, @NonNull AuthKey authKey) throws URISyntaxException, IOException {
+        Response response = sendDeleteRequest(configureURI(userId).build(), authKey);
+        Content content = response.handleResponse(ResponseHandlerProvider::OKJsonHandler);
+        return ContentHandler.handleId(content);
+    }
+
+    public Id deleteFromCompany(@NonNull String userId) throws URISyntaxException, IOException {
+        if (this.authKey == null) {
+            throw new NullPointerException(noAuthKeyMessage);
+        }
+        return deleteFromCompany(userId, authKey);
     }
 }

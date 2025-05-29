@@ -26,8 +26,8 @@ public class AuthCompanyBody extends RequestBody{
             super(body);
         }
 
-        public Builder setName(String name) {
-            body.name = name;
+        public Builder name(String value) {
+            body.name = value;
             return this;
         }
     }

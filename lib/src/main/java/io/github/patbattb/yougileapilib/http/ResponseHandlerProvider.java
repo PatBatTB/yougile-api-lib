@@ -15,9 +15,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 @UtilityClass
-public class YouGileResponseHandler {
+public class ResponseHandlerProvider {
 
-    public Content getJsonOKHandler(HttpResponse response) throws IOException {
+    public Content OKJsonHandler(HttpResponse response) throws IOException {
         ContentType contentType = ContentType.APPLICATION_JSON;
         checkContainedEntity(response);
         checkContentType(response, contentType);
@@ -25,7 +25,7 @@ public class YouGileResponseHandler {
         return new Content(response.getEntity().getContent().readAllBytes(), contentType);
     }
 
-    public Content getJsonCreatedHandler(HttpResponse response) throws IOException {
+    public Content CreatedJsonHandler(HttpResponse response) throws IOException {
         ContentType contentType = ContentType.APPLICATION_JSON;
         checkContainedEntity(response);
         checkContentType(response, contentType);

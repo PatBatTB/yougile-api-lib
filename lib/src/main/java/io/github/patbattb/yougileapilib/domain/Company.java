@@ -1,5 +1,7 @@
 package io.github.patbattb.yougileapilib.domain;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import io.github.patbattb.yougileapilib.http.deserialize.CompanyDeserializer;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
@@ -8,6 +10,7 @@ import lombok.experimental.FieldDefaults;
 @AllArgsConstructor
 @EqualsAndHashCode
 @ToString
+@JsonDeserialize(using = CompanyDeserializer.class)
 public class Company {
     @Setter
     boolean deleted;
