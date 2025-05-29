@@ -2,10 +2,13 @@ package io.github.patbattb.yougileapilib.service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.json.JsonMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import io.github.patbattb.yougileapilib.domain.AuthCompany;
+import io.github.patbattb.yougileapilib.domain.QueryParams;
+import io.github.patbattb.yougileapilib.domain.body.AuthCompanyBody;
 import io.github.patbattb.yougileapilib.http.YouGileResponseHandler;
+import lombok.NonNull;
 import org.apache.http.client.fluent.Content;
 import org.apache.http.client.fluent.Response;
 
@@ -13,7 +16,6 @@ import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 
 public class AuthCompanyService extends AbstractRequestService{
@@ -22,43 +24,35 @@ public class AuthCompanyService extends AbstractRequestService{
         super("auth/companies");
     }
 
-    //default number = 50
-    public List<AuthCompany> getAuthCompanyList(String login, String password) throws URISyntaxException, IOException {
-        Map<String, Object> bodyMap = Map.of(
-                "login", login,
-                "password", password
-        );
-        Response response = sendPostRequest(bodyMap, configureURI().build());
+    /**
+     * @param body {@link AuthCompanyBody} Request body.
+     * @param params {@link QueryParams} Request parameters<p>
+     *                                   Available parameter names:<ul>
+     *                                   <li>{@code limit} - number
+     *                                   <li>{@code offset} - number</ul>
+     *
+     * @return {@link List} of {@link AuthCompany}
+     * @throws URISyntaxException
+     * @throws IOException
+     */
+    public List<AuthCompany> getAuthCompanyList(@NonNull QueryParams params, @NonNull AuthCompanyBody body) throws URISyntaxException, IOException {
+        Response response = sendPostRequest(configureURI(params).build(), body);
         Content content = response.handleResponse(YouGileResponseHandler::getJsonOKHandler);
         return handleContent(content);
     }
 
-    public List<AuthCompany> getAuthCompanyList(String login, String password, int limit) throws URISyntaxException, IOException {
-        Map<String, Object> bodyMap = Map.of(
-                "login", login,
-                "password", password
-        );
-        Response response = sendPostRequest(
-                bodyMap,
-                configureURI().addParameter("limit", String.valueOf(limit)).build());
-        Content content = response.handleResponse(YouGileResponseHandler::getJsonOKHandler);
-        return handleContent(content);
+    /**
+     * @param body {@link AuthCompanyBody} Request body.
+     * @return {@link List} of {@link AuthCompany}
+     * @throws URISyntaxException
+     * @throws IOException
+     */
+    public List<AuthCompany> getAuthCompanyList(@NonNull AuthCompanyBody body) throws URISyntaxException, IOException {
+        return getAuthCompanyList(QueryParams.empty(), body);
     }
 
-    public AuthCompany getCompanyInfo(String login, String password, String companyName) throws URISyntaxException, IOException {
-        Map<String, Object> bodyMap = Map.of(
-                "login", login,
-                "password", password,
-                "name", companyName
-        );
-        Response response = sendPostRequest(bodyMap, configureURI().build());
-        Content content = response.handleResponse(YouGileResponseHandler::getJsonOKHandler);
-        return handleContent(content).getFirst();
-    }
-
-    private List<AuthCompany> handleContent(Content content) {
-        try {
-            ObjectMapper mapper = new ObjectMapper();
+    private List<AuthCompany> handleContent(Content content) throws JsonProcessingException {
+            JsonMapper mapper = new JsonMapper();
             List<AuthCompany> authCompanyList = new ArrayList<>();
             JsonNode rootNode = mapper.readTree(content.asString());
             ArrayNode contentArrayNode = (ArrayNode) rootNode.get("content");
@@ -66,8 +60,5 @@ public class AuthCompanyService extends AbstractRequestService{
                 authCompanyList.add(mapper.readValue(contentNode.toString(), AuthCompany.class));
             }
             return authCompanyList;
-        } catch (JsonProcessingException e) {
-            throw new RuntimeException(e);
-        }
     }
 }

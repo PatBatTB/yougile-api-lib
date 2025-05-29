@@ -1,17 +1,17 @@
 package io.github.patbattb.yougileapilib.service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.json.JsonMapper;
 import io.github.patbattb.yougileapilib.domain.AuthKey;
+import io.github.patbattb.yougileapilib.domain.body.AuthKeyBody;
 import io.github.patbattb.yougileapilib.http.YouGileResponseHandler;
-import org.apache.http.HttpStatus;
+import lombok.NonNull;
 import org.apache.http.client.fluent.Content;
 import org.apache.http.client.fluent.Response;
 
 import java.io.IOException;
-import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.Map;
 
 public class AuthKeyService extends AbstractRequestService {
 
@@ -19,28 +19,28 @@ public class AuthKeyService extends AbstractRequestService {
         super("auth/keys");
     }
 
-    public AuthKey createAuthKey(String login, String password, String companyId) throws URISyntaxException, IOException {
-        Map<String, Object> bodyMap = Map.of(
-                "login", login,
-                "password", password,
-                "companyId", companyId
-        );
-        Response response = sendPostRequest(bodyMap, configureURI().build());
+    public AuthKey createAuthKey(@NonNull AuthKeyBody body) throws URISyntaxException, IOException {
+        Response response = sendPostRequest(configureURI().build(), body);
         Content content = response.handleResponse(YouGileResponseHandler::getJsonCreatedHandler);
         return handleContent(content);
 
     }
 
-    public boolean deleteAuthKey(AuthKey authKey) throws URISyntaxException, IOException {
-        String basePath = configureURI().getPath();
-        URI uri = configureURI().setPath(String.join("/", basePath, authKey.key())).build();
-        Response response = sendDeleteRequest(uri);
+    public boolean deleteAuthKey(@NonNull AuthKey authKey) throws URISyntaxException, IOException {
+        Response response = sendDeleteRequest(configureURI(authKey.key()).build());
         Content content = response.handleResponse(YouGileResponseHandler::getJsonOKHandler);
-        return response.returnResponse().getStatusLine().getStatusCode() == HttpStatus.SC_OK;
+        return handleDeleteContent(content);
     }
 
     private AuthKey handleContent(Content content) throws JsonProcessingException {
-        return new ObjectMapper().readValue(content.toString(), AuthKey.class);
+        return new JsonMapper().readValue(content.toString(), AuthKey.class);
+    }
+
+    private boolean handleDeleteContent(Content content) throws JsonProcessingException {
+        String validString = "ok";
+        JsonMapper mapper = new JsonMapper();
+        JsonNode node = mapper.readTree(content.toString());
+        return node.get("result").asText().equals(validString);
     }
 
 }

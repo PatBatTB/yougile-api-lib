@@ -1,5 +1,8 @@
 package io.github.patbattb.yougileapilib.http;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.json.JsonMapper;
+import com.fasterxml.jackson.databind.node.ArrayNode;
 import lombok.experimental.UtilityClass;
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
@@ -8,31 +11,34 @@ import org.apache.http.client.fluent.Content;
 import org.apache.http.entity.ContentType;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 @UtilityClass
 public class YouGileResponseHandler {
 
     public Content getJsonOKHandler(HttpResponse response) throws IOException {
         ContentType contentType = ContentType.APPLICATION_JSON;
-        checkStatusCode(response, HttpStatus.SC_OK);
         checkContainedEntity(response);
         checkContentType(response, contentType);
+        checkStatusCode(response, HttpStatus.SC_OK);
         return new Content(response.getEntity().getContent().readAllBytes(), contentType);
     }
 
     public Content getJsonCreatedHandler(HttpResponse response) throws IOException {
         ContentType contentType = ContentType.APPLICATION_JSON;
-        checkStatusCode(response, HttpStatus.SC_CREATED);
         checkContainedEntity(response);
         checkContentType(response, contentType);
+        checkStatusCode(response, HttpStatus.SC_CREATED);
         return  new Content(response.getEntity().getContent().readAllBytes(), contentType);
     }
 
-    private void checkStatusCode(HttpResponse response, int status) throws ClientProtocolException {
+    private void checkStatusCode(HttpResponse response, int status) throws IOException {
         int responseStatusCode = response.getStatusLine().getStatusCode();
         if (responseStatusCode != status) {
             String phrase = response.getStatusLine().getReasonPhrase();
-            throw new ClientProtocolException(String.format("Error %d %s", responseStatusCode, phrase));
+            String messageString = getMessage(response);
+            throw new ClientProtocolException(String.format("Error %d %s: %s", responseStatusCode, phrase, messageString));
         }
     }
     private void checkContainedEntity(HttpResponse response) throws IOException {
@@ -45,5 +51,24 @@ public class YouGileResponseHandler {
         if (!(ContentType.get(response.getEntity()).getMimeType().equals(contentType.getMimeType()))) {
             throw new ClientProtocolException("Response content type is not equals \"application/json\"");
         }
+    }
+
+    private String getMessage(HttpResponse response) throws IOException {
+        Content content = new Content(response.getEntity().getContent().readAllBytes(), ContentType.APPLICATION_JSON);
+        JsonMapper mapper = new JsonMapper();
+        JsonNode rootNode = mapper.readTree(content.asString());
+        System.out.println(rootNode);
+        String messageString;
+        JsonNode messageNode = rootNode.get("message");
+        if (messageNode instanceof ArrayNode) {
+            List<String> messagesList = new ArrayList<>();
+            for (JsonNode node: messageNode) {
+                messagesList.add(node.asText());
+            }
+            messageString = String.join(", ", messagesList);
+        } else {
+            messageString = messageNode.asText();
+        }
+        return messageString;
     }
 }

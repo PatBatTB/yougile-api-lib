@@ -1,0 +1,40 @@
+package io.github.patbattb.yougileapilib.domain.body;
+
+import com.fasterxml.jackson.annotation.JsonGetter;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import lombok.Getter;
+
+
+@JsonInclude(JsonInclude.Include.NON_NULL)
+public class UserBody extends RequestBody {
+
+    @Getter
+    private final String email;
+    private Boolean isAdmin;
+
+    private UserBody(String email) {
+        this.email = email;
+    }
+
+    public static UserBody.Builder builder(String email) {
+        return new Builder(new UserBody(email));
+    }
+
+    @JsonGetter("isAdmin")
+    public Boolean isAdmin() {
+        return isAdmin;
+    }
+
+    public static class Builder extends BodyBuilder<UserBody> {
+
+        public Builder(UserBody body) {
+            super(body);
+        }
+
+        public Builder setIsAdmin(boolean isAdmin) {
+            body.isAdmin = isAdmin;
+            return this;
+        }
+    }
+}
+
