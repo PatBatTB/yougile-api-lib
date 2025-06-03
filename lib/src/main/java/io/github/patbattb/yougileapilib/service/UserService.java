@@ -1,9 +1,6 @@
 package io.github.patbattb.yougileapilib.service;
 
-import io.github.patbattb.yougileapilib.domain.AuthKey;
-import io.github.patbattb.yougileapilib.domain.Id;
-import io.github.patbattb.yougileapilib.domain.QueryParams;
-import io.github.patbattb.yougileapilib.domain.User;
+import io.github.patbattb.yougileapilib.domain.*;
 import io.github.patbattb.yougileapilib.domain.body.UserBody;
 import io.github.patbattb.yougileapilib.domain.body.UserEditBody;
 import io.github.patbattb.yougileapilib.http.ResponseHandlerProvider;
@@ -13,7 +10,6 @@ import org.apache.http.client.fluent.Response;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
-import java.util.List;
 
 public class UserService extends AbstractRequestService {
 
@@ -40,7 +36,7 @@ public class UserService extends AbstractRequestService {
      * @throws URISyntaxException
      * @throws IOException
      */
-    public List<User> getUserList(@NonNull QueryParams params, @NonNull AuthKey authKey) throws URISyntaxException, IOException {
+    public PagingContainer<User> getUserList(@NonNull QueryParams params, @NonNull AuthKey authKey) throws URISyntaxException, IOException {
         Response response = sendGetRequest(configureURI(params).build(), authKey);
         Content content = response.handleResponse(ResponseHandlerProvider::OKJsonHandler);
         return ContentHandler.handleUserList(content);
@@ -59,7 +55,7 @@ public class UserService extends AbstractRequestService {
      * @throws URISyntaxException
      * @throws IOException
      */
-    public List<User> getUserList(@NonNull QueryParams params) throws URISyntaxException, IOException {
+    public PagingContainer<User> getUserList(@NonNull QueryParams params) throws URISyntaxException, IOException {
         if (this.authKey == null) {
             throw new NullPointerException(noAuthKeyMessage);
         }

@@ -10,7 +10,6 @@ import org.apache.http.client.fluent.Response;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
-import java.util.List;
 
 public class ProjectService extends AbstractRequestService {
 
@@ -36,7 +35,7 @@ public class ProjectService extends AbstractRequestService {
      * @throws URISyntaxException
      * @throws IOException
      */
-    public List<Project> getProjectList(@NonNull QueryParams params, @NonNull AuthKey authKey) throws URISyntaxException, IOException {
+    public PagingContainer<Project> getProjectList(@NonNull QueryParams params, @NonNull AuthKey authKey) throws URISyntaxException, IOException {
         Response response = sendGetRequest(configureURI(params).build(), authKey);
         Content content = response.handleResponse(ResponseHandlerProvider::OKJsonHandler);
         return ContentHandler.handleProjectList(content);
@@ -55,7 +54,7 @@ public class ProjectService extends AbstractRequestService {
      * @throws URISyntaxException
      * @throws IOException
      */
-    public List<Project> getProjectList(@NonNull QueryParams params) throws URISyntaxException, IOException {
+    public PagingContainer<Project> getProjectList(@NonNull QueryParams params) throws URISyntaxException, IOException {
         if (authKey == null) {
             throw new NullPointerException(noAuthKeyMessage);
         }

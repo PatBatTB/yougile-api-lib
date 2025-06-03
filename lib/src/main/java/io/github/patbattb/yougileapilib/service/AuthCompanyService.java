@@ -1,6 +1,7 @@
 package io.github.patbattb.yougileapilib.service;
 
 import io.github.patbattb.yougileapilib.domain.AuthCompany;
+import io.github.patbattb.yougileapilib.domain.PagingContainer;
 import io.github.patbattb.yougileapilib.domain.QueryParams;
 import io.github.patbattb.yougileapilib.domain.body.AuthCompanyBody;
 import io.github.patbattb.yougileapilib.http.ResponseHandlerProvider;
@@ -30,7 +31,7 @@ public class AuthCompanyService extends AbstractRequestService{
      * @throws URISyntaxException
      * @throws IOException
      */
-    public List<AuthCompany> getAuthCompanyList(@NonNull QueryParams params, @NonNull AuthCompanyBody body) throws URISyntaxException, IOException {
+    public PagingContainer<AuthCompany> getAuthCompanyList(@NonNull QueryParams params, @NonNull AuthCompanyBody body) throws URISyntaxException, IOException {
         Response response = sendPostRequest(configureURI(params).build(), body);
         Content content = response.handleResponse(ResponseHandlerProvider::OKJsonHandler);
         return ContentHandler.handleAuthCompanyList(content);
@@ -42,7 +43,7 @@ public class AuthCompanyService extends AbstractRequestService{
      * @throws URISyntaxException
      * @throws IOException
      */
-    public List<AuthCompany> getAuthCompanyList(@NonNull AuthCompanyBody body) throws URISyntaxException, IOException {
+    public PagingContainer<AuthCompany> getAuthCompanyList(@NonNull AuthCompanyBody body) throws URISyntaxException, IOException {
         return getAuthCompanyList(QueryParams.empty(), body);
     }
 }
