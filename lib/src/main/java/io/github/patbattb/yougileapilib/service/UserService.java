@@ -4,8 +4,8 @@ import io.github.patbattb.yougileapilib.domain.AuthKey;
 import io.github.patbattb.yougileapilib.domain.Id;
 import io.github.patbattb.yougileapilib.domain.QueryParams;
 import io.github.patbattb.yougileapilib.domain.User;
-import io.github.patbattb.yougileapilib.domain.body.EditUserBody;
 import io.github.patbattb.yougileapilib.domain.body.UserBody;
+import io.github.patbattb.yougileapilib.domain.body.UserEditBody;
 import io.github.patbattb.yougileapilib.http.ResponseHandlerProvider;
 import lombok.NonNull;
 import org.apache.http.client.fluent.Content;
@@ -92,13 +92,13 @@ public class UserService extends AbstractRequestService {
         return getUserById(userId, authKey);
     }
 
-    public Id editUserById(@NonNull String userId, @NonNull EditUserBody body, @NonNull  AuthKey authKey) throws URISyntaxException, IOException {
+    public Id editUserById(@NonNull String userId, @NonNull UserEditBody body, @NonNull  AuthKey authKey) throws URISyntaxException, IOException {
         Response response = sendPutRequest(configureURI(userId).build(), body, authKey);
         Content content = response.handleResponse(ResponseHandlerProvider::OKJsonHandler);
         return ContentHandler.handleId(content);
     }
 
-    public Id editUserById(@NonNull String userId, @NonNull EditUserBody body) throws URISyntaxException, IOException {
+    public Id editUserById(@NonNull String userId, @NonNull UserEditBody body) throws URISyntaxException, IOException {
         if (this.authKey == null) {
             throw new NullPointerException(noAuthKeyMessage);
         }

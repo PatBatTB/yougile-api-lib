@@ -4,11 +4,11 @@ import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonInclude;
 
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
-public class EditUserBody extends RequestBody {
+public class UserEditBody extends RequestBody {
 
     private final boolean isAdmin;
 
-    private EditUserBody(boolean isAdmin) {
+    private UserEditBody(boolean isAdmin) {
         this.isAdmin = isAdmin;
     }
 
@@ -19,13 +19,13 @@ public class EditUserBody extends RequestBody {
 
 
 
-    public static EditUserBody.Builder builder(boolean isAdmin) {
-        return new Builder(new EditUserBody(isAdmin));
+    public static UserEditBody.Builder builder(boolean isAdmin) {
+        return new Builder(new UserEditBody(isAdmin));
     }
 
-    public static class Builder extends  BodyBuilder<EditUserBody> {
+    public static class Builder extends  BodyBuilder<UserEditBody> {
 
-        public Builder(EditUserBody body) {
+        public Builder(UserEditBody body) {
             super(body);
         }
     }

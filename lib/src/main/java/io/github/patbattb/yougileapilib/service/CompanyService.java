@@ -3,7 +3,7 @@ package io.github.patbattb.yougileapilib.service;
 import io.github.patbattb.yougileapilib.domain.AuthKey;
 import io.github.patbattb.yougileapilib.domain.Company;
 import io.github.patbattb.yougileapilib.domain.Id;
-import io.github.patbattb.yougileapilib.domain.body.EditCompanyBody;
+import io.github.patbattb.yougileapilib.domain.body.CompanyEditBody;
 import io.github.patbattb.yougileapilib.http.ResponseHandlerProvider;
 import lombok.NonNull;
 import org.apache.http.client.fluent.Content;
@@ -54,13 +54,13 @@ public class CompanyService extends AbstractRequestService {
         return getCompany(authKey);
     }
 
-    public Id editCompany(@NonNull EditCompanyBody body, AuthKey authKey) throws URISyntaxException, IOException {
+    public Id editCompany(@NonNull CompanyEditBody body, AuthKey authKey) throws URISyntaxException, IOException {
         Response response = sendPutRequest(configureURI().build(), body, authKey);
         Content content = response.handleResponse(ResponseHandlerProvider::OKJsonHandler);
         return ContentHandler.handleId(content);
     }
 
-    public Id editCompany(@NonNull EditCompanyBody body) throws URISyntaxException, IOException {
+    public Id editCompany(@NonNull CompanyEditBody body) throws URISyntaxException, IOException {
         if (authKey == null) {
             throw new NullPointerException(noAuthKeyMessage);
         }

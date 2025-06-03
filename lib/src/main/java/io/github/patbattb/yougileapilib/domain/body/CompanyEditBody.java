@@ -3,21 +3,21 @@ package io.github.patbattb.yougileapilib.domain.body;
 import lombok.Getter;
 
 @Getter
-public class EditCompanyBody extends RequestBody {
+public class CompanyEditBody extends RequestBody {
 
     private boolean deleted;
     private String title;
 
-    private EditCompanyBody() {
+    private CompanyEditBody() {
     }
 
     public static Builder builder() {
-        return new Builder(new EditCompanyBody());
+        return new Builder(new CompanyEditBody());
     }
 
-    public static class Builder extends BodyBuilder<EditCompanyBody> {
+    public static class Builder extends BodyBuilder<CompanyEditBody> {
 
-        public Builder(EditCompanyBody body) {
+        public Builder(CompanyEditBody body) {
             super(body);
         }
 

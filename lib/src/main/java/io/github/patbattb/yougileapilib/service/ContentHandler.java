@@ -69,4 +69,19 @@ class ContentHandler {
         }
         return authCompanyList;
     }
+
+    public static List<Project> handleProjectList(Content content) throws JsonProcessingException {
+        JsonMapper mapper = new JsonMapper();
+        List<Project> projectList = new ArrayList<>();
+        JsonNode rooteNode = mapper.readTree(content.asString());
+        ArrayNode contentArrayNode = (ArrayNode) rooteNode.get("content");
+        for (JsonNode contentNode: contentArrayNode) {
+            projectList.add(mapper.readValue(contentNode.toString(), Project.class));
+        }
+        return projectList;
+    }
+
+    public static Project handleProject(Content content) throws JsonProcessingException {
+        return new JsonMapper().readValue(content.toString(), Project.class);
+    }
 }

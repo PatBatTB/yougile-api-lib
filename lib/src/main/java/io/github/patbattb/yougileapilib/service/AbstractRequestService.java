@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.json.JsonMapper;
 import io.github.patbattb.yougileapilib.domain.AuthKey;
 import io.github.patbattb.yougileapilib.domain.QueryParams;
 import io.github.patbattb.yougileapilib.domain.body.RequestBody;
+import lombok.NonNull;
 import lombok.Setter;
 import org.apache.http.HttpHeaders;
 import org.apache.http.NameValuePair;
@@ -52,12 +53,12 @@ abstract class AbstractRequestService {
                     .setCharset(StandardCharsets.UTF_8);
     }
 
-    protected URIBuilder configureURI(String pathParam) {
+    protected URIBuilder configureURI(@NonNull String pathParam) {
         String path = configureURI().getPath();
         return configureURI().setPath(String.join("/", path, pathParam));
     }
 
-    protected URIBuilder configureURI(QueryParams params) {
+    protected URIBuilder configureURI(@NonNull  QueryParams params) {
         List<NameValuePair> parameters = new ArrayList<>();
         for (Map.Entry<String, Object> entry: params.getParams().entrySet()) {
             parameters.add(new BasicNameValuePair(entry.getKey(), entry.getValue().toString()));
@@ -65,18 +66,18 @@ abstract class AbstractRequestService {
         return configureURI().addParameters(parameters);
     }
 
-    protected Response sendGetRequest(URI uri) throws IOException {
+    protected Response sendGetRequest(@NonNull URI uri) throws IOException {
         Request request = generateBaseRequest(
                 Request.Get(uri));
         return request.execute();
     }
-    protected Response sendGetRequest(URI uri, AuthKey authKey) throws IOException {
+    protected Response sendGetRequest(@NonNull URI uri, @NonNull AuthKey authKey) throws IOException {
         Request request = Request.Get(uri)
                 .addHeader(getAuthHeader(authKey));
         return request.execute();
     }
 
-    protected Response sendPostRequest(URI uri, RequestBody body) throws IOException {
+    protected Response sendPostRequest(@NonNull URI uri, @NonNull RequestBody body) throws IOException {
         //TODO возникают варнинги json-annotation. Что бы не было - нужно подключить в app проект jenkins-annotations
         String bodyString = new JsonMapper().writeValueAsString(body);
         Request request = generateBaseRequest(Request.Post(uri))
@@ -84,7 +85,7 @@ abstract class AbstractRequestService {
         return request.execute();
     }
 
-    protected Response sendPostRequest(URI uri, RequestBody body, AuthKey authKey) throws IOException {
+    protected Response sendPostRequest(@NonNull URI uri, @NonNull RequestBody body, @NonNull AuthKey authKey) throws IOException {
         String bodyString = new JsonMapper().writeValueAsString(body);
         Request request = generateBaseRequest(Request.Post(uri))
                 .bodyString(bodyString, ContentType.APPLICATION_JSON)
@@ -92,7 +93,7 @@ abstract class AbstractRequestService {
         return  request.execute();
     }
 
-    protected Response sendPutRequest(URI uri, RequestBody body, AuthKey authKey) throws IOException {
+    protected Response sendPutRequest(@NonNull URI uri, @NonNull RequestBody body, @NonNull AuthKey authKey) throws IOException {
         String bodyString = new JsonMapper().writeValueAsString(body);
         Request request = generateBaseRequest(Request.Put(uri))
                 .bodyString(bodyString, ContentType.APPLICATION_JSON)
@@ -100,24 +101,24 @@ abstract class AbstractRequestService {
         return request.execute();
     }
 
-    protected Response sendDeleteRequest(URI uri) throws IOException {
+    protected Response sendDeleteRequest(@NonNull URI uri) throws IOException {
         Request request = generateBaseRequest(Request.Delete(uri));
         return request.execute();
     }
 
-    protected Response sendDeleteRequest(URI uri, AuthKey authKey) throws IOException {
+    protected Response sendDeleteRequest(@NonNull URI uri, @NonNull AuthKey authKey) throws IOException {
         Request request = generateBaseRequest(Request.Delete(uri))
                 .addHeader(getAuthHeader(authKey));
         return request.execute();
     }
 
-    private Request generateBaseRequest(Request request) {
+    private Request generateBaseRequest(@NonNull Request request) {
         return request.connectTimeout(timeout)
                 .socketTimeout(timeout)
                 .addHeader(new BasicHeader(HttpHeaders.CONTENT_TYPE, "application/json"));
     }
 
-    private BasicHeader getAuthHeader(AuthKey authKey) {
+    private BasicHeader getAuthHeader(@NonNull AuthKey authKey) {
         return new BasicHeader(HttpHeaders.AUTHORIZATION, "Bearer " + authKey.key());
     }
 }
