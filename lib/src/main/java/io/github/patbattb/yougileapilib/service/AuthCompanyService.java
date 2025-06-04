@@ -33,7 +33,7 @@ public class AuthCompanyService extends AbstractRequestService{
      */
     public PagingContainer<AuthCompany> getAuthCompanyList(@NonNull QueryParams params, @NonNull AuthCompanyBody body) throws URISyntaxException, IOException {
         Response response = sendPostRequest(configureURI(params).build(), body);
-        Content content = response.handleResponse(ResponseHandlerProvider::OKJsonHandler);
+        Content content = response.handleResponse(ResponseHandlerProvider::okJsonHandler);
         return ContentHandler.handleAuthCompanyList(content);
     }
 

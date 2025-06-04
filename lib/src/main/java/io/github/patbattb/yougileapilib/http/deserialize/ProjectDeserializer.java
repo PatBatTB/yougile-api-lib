@@ -7,7 +7,7 @@ import com.fasterxml.jackson.databind.JsonDeserializer;
 import com.fasterxml.jackson.databind.JsonNode;
 import io.github.patbattb.yougileapilib.domain.Project;
 import io.github.patbattb.yougileapilib.domain.ProjectUser;
-import io.github.patbattb.yougileapilib.domain.SystemProjectRole;
+import io.github.patbattb.yougileapilib.domain.SystemRole;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -16,6 +16,7 @@ import java.util.Map;
 
 public class ProjectDeserializer extends JsonDeserializer<Project> {
     @Override
+    //TODO need to check out
     public Project deserialize(JsonParser p, DeserializationContext ctxt) throws IOException {
         JsonNode rootNode = p.readValueAsTree();
         String title = rootNode.get("title").asText();
@@ -24,8 +25,7 @@ public class ProjectDeserializer extends JsonDeserializer<Project> {
         JsonNode usersNode = rootNode.get("users");
         if (usersNode != null) {
             for (Map.Entry<String, JsonNode> prop : usersNode.properties()) {
-                SystemProjectRole role = getRole(prop.getValue().asText());
-                users.add(new ProjectUser(prop.getKey(), role));
+                users.add(new ProjectUser(prop.getKey(), prop.getValue().asText()));
             }
         }
         String id = rootNode.get("id").asText();
@@ -37,9 +37,9 @@ public class ProjectDeserializer extends JsonDeserializer<Project> {
         return new Project(deleted, id, title, created, users);
     }
 
-    private SystemProjectRole getRole(String value) throws JsonParseException {
-        for (SystemProjectRole role: SystemProjectRole.values()) {
-            if (role.getValue().equals(value)) {
+    private SystemRole getRole(String value) throws JsonParseException {
+        for (SystemRole role: SystemRole.values()) {
+            if (role.getId().equals(value)) {
                 return role;
             }
         }

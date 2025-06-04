@@ -19,7 +19,7 @@ public class AuthKeyDetailsService extends AbstractRequestService {
 
     public List<AuthKeyDetails> getAuthKeyList(@NonNull AuthKeyBody body) throws URISyntaxException, IOException {
         Response response = sendPostRequest(configureURI().build(), body);
-        Content content = response.handleResponse(ResponseHandlerProvider::OKJsonHandler);
+        Content content = response.handleResponse(ResponseHandlerProvider::okJsonHandler);
         return ContentHandler.handleAuthKeyList(content);
     }
 

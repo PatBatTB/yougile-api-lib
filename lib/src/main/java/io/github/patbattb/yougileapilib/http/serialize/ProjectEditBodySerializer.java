@@ -10,6 +10,7 @@ import java.io.IOException;
 
 public class ProjectEditBodySerializer extends JsonSerializer<ProjectEditBody> {
     @Override
+    //TODO need to check out
     public void serialize(ProjectEditBody value, JsonGenerator gen, SerializerProvider serializers) throws IOException {
         gen.writeStartObject();
         gen.writeBooleanField("deleted", value.isDeleted());
@@ -17,7 +18,7 @@ public class ProjectEditBodySerializer extends JsonSerializer<ProjectEditBody> {
         gen.writeFieldName("users");
         gen.writeStartObject();
         for (ProjectUser user: value.getUsers()) {
-            gen.writeStringField(user.getId(), user.getRole().getValue());
+            gen.writeStringField(user.getId(), user.getRoleId());
         }
         gen.writeEndObject();
         gen.writeEndObject();

@@ -18,13 +18,13 @@ public class AuthKeyService extends AbstractRequestService {
 
     public AuthKey createAuthKey(@NonNull AuthKeyBody body) throws URISyntaxException, IOException {
         Response response = sendPostRequest(configureURI().build(), body);
-        Content content = response.handleResponse(ResponseHandlerProvider::CreatedJsonHandler);
+        Content content = response.handleResponse(ResponseHandlerProvider::createdJsonHandler);
         return ContentHandler.handleAuthKey(content);
     }
 
     public boolean deleteAuthKey(@NonNull AuthKey authKey) throws URISyntaxException, IOException {
         Response response = sendDeleteRequest(configureURI(authKey.key()).build());
-        Content content = response.handleResponse(ResponseHandlerProvider::OKJsonHandler);
+        Content content = response.handleResponse(ResponseHandlerProvider::okJsonHandler);
         return ContentHandler.handleResult(content);
     }
 }

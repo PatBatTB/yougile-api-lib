@@ -99,4 +99,24 @@ class ContentHandler {
     public static Project handleProject(Content content) throws JsonProcessingException {
         return new JsonMapper().readValue(content.toString(), Project.class);
     }
+
+    public static PagingContainer<ProjectRole> handleProjectRoleList(Content content) throws JsonProcessingException {
+        JsonMapper mapper = new JsonMapper();
+        JsonNode rootNode = mapper.readTree(content.toString());
+        JsonNode pagingNode = rootNode.get("paging");
+        int count = pagingNode.get("count").asInt();
+        int limit = pagingNode.get("limit").asInt();
+        int offset = pagingNode.get("offset").asInt();
+        boolean next = pagingNode.get("next").asBoolean();
+        List<ProjectRole> roleList = new ArrayList<>();
+        ArrayNode contentArrayNode = (ArrayNode) rootNode.get("content");
+        for (JsonNode contentNode: contentArrayNode) {
+            roleList.add(mapper.readValue(contentNode.toString(), ProjectRole.class));
+        }
+        return new PagingContainer<>(count, limit, offset, next, roleList);
+    }
+
+    public static ProjectRole handleProjectRole(Content content) throws JsonProcessingException {
+        return new JsonMapper().readValue(content.toString(), ProjectRole.class);
+    }
 }

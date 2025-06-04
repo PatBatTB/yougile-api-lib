@@ -37,7 +37,7 @@ public class ProjectService extends AbstractRequestService {
      */
     public PagingContainer<Project> getProjectList(@NonNull QueryParams params, @NonNull AuthKey authKey) throws URISyntaxException, IOException {
         Response response = sendGetRequest(configureURI(params).build(), authKey);
-        Content content = response.handleResponse(ResponseHandlerProvider::OKJsonHandler);
+        Content content = response.handleResponse(ResponseHandlerProvider::okJsonHandler);
         return ContentHandler.handleProjectList(content);
     }
 
@@ -63,7 +63,7 @@ public class ProjectService extends AbstractRequestService {
 
     public Id createProject(@NonNull ProjectCreateBody body, @NonNull AuthKey authKey) throws URISyntaxException, IOException {
         Response response = sendPostRequest(configureURI().build(), body, authKey);
-        Content content = response.handleResponse(ResponseHandlerProvider::CreatedJsonHandler);
+        Content content = response.handleResponse(ResponseHandlerProvider::createdJsonHandler);
         return ContentHandler.handleId(content);
     }
 
@@ -76,7 +76,7 @@ public class ProjectService extends AbstractRequestService {
 
     public Project getProjectById(@NonNull String projectId, @NonNull AuthKey authKey) throws URISyntaxException, IOException {
         Response response = sendGetRequest(configureURI(projectId).build(), authKey);
-        Content content = response.handleResponse(ResponseHandlerProvider::OKJsonHandler);
+        Content content = response.handleResponse(ResponseHandlerProvider::okJsonHandler);
         return ContentHandler.handleProject(content);
     }
 
@@ -89,7 +89,7 @@ public class ProjectService extends AbstractRequestService {
 
     public Id editProject(@NonNull String projectId, @NonNull ProjectEditBody body, @NonNull AuthKey authKey) throws URISyntaxException, IOException {
         Response response = sendPutRequest(configureURI(projectId).build(), body, authKey);
-        Content content = response.handleResponse(ResponseHandlerProvider::OKJsonHandler);
+        Content content = response.handleResponse(ResponseHandlerProvider::okJsonHandler);
         return ContentHandler.handleId(content);
     }
 

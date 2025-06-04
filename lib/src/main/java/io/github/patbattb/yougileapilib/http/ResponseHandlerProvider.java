@@ -17,7 +17,7 @@ import java.util.List;
 @UtilityClass
 public class ResponseHandlerProvider {
 
-    public Content OKJsonHandler(HttpResponse response) throws IOException {
+    public Content okJsonHandler(HttpResponse response) throws IOException {
         ContentType contentType = ContentType.APPLICATION_JSON;
         checkContainedEntity(response);
         checkContentType(response, contentType);
@@ -25,7 +25,7 @@ public class ResponseHandlerProvider {
         return new Content(response.getEntity().getContent().readAllBytes(), contentType);
     }
 
-    public Content CreatedJsonHandler(HttpResponse response) throws IOException {
+    public Content createdJsonHandler(HttpResponse response) throws IOException {
         ContentType contentType = ContentType.APPLICATION_JSON;
         checkContainedEntity(response);
         checkContentType(response, contentType);

@@ -11,5 +11,5 @@ import lombok.experimental.FieldDefaults;
 public class ProjectUser {
     private String id;
     @Setter
-    private SystemProjectRole role;
+    private String roleId;
 }

@@ -38,7 +38,7 @@ public class UserService extends AbstractRequestService {
      */
     public PagingContainer<User> getUserList(@NonNull QueryParams params, @NonNull AuthKey authKey) throws URISyntaxException, IOException {
         Response response = sendGetRequest(configureURI(params).build(), authKey);
-        Content content = response.handleResponse(ResponseHandlerProvider::OKJsonHandler);
+        Content content = response.handleResponse(ResponseHandlerProvider::okJsonHandler);
         return ContentHandler.handleUserList(content);
     }
 
@@ -64,7 +64,7 @@ public class UserService extends AbstractRequestService {
 
     public Id inviteToCompany(@NonNull UserBody body, @NonNull AuthKey authKey) throws URISyntaxException, IOException {
         Response response = sendPostRequest(configureURI().build(), body, authKey);
-        Content content = response.handleResponse(ResponseHandlerProvider::CreatedJsonHandler);
+        Content content = response.handleResponse(ResponseHandlerProvider::createdJsonHandler);
         return ContentHandler.handleId(content);
     }
 
@@ -77,7 +77,7 @@ public class UserService extends AbstractRequestService {
 
     public User getUserById(@NonNull String userId, @NonNull AuthKey authKey) throws URISyntaxException, IOException {
         Response response = sendGetRequest(configureURI(userId).build(), authKey);
-        Content content = response.handleResponse(ResponseHandlerProvider::OKJsonHandler);
+        Content content = response.handleResponse(ResponseHandlerProvider::okJsonHandler);
         return ContentHandler.handleUser(content);
     }
 
@@ -90,7 +90,7 @@ public class UserService extends AbstractRequestService {
 
     public Id editUserById(@NonNull String userId, @NonNull UserEditBody body, @NonNull  AuthKey authKey) throws URISyntaxException, IOException {
         Response response = sendPutRequest(configureURI(userId).build(), body, authKey);
-        Content content = response.handleResponse(ResponseHandlerProvider::OKJsonHandler);
+        Content content = response.handleResponse(ResponseHandlerProvider::okJsonHandler);
         return ContentHandler.handleId(content);
     }
 
@@ -103,7 +103,7 @@ public class UserService extends AbstractRequestService {
 
     public Id deleteFromCompany(@NonNull String userId, @NonNull AuthKey authKey) throws URISyntaxException, IOException {
         Response response = sendDeleteRequest(configureURI(userId).build(), authKey);
-        Content content = response.handleResponse(ResponseHandlerProvider::OKJsonHandler);
+        Content content = response.handleResponse(ResponseHandlerProvider::okJsonHandler);
         return ContentHandler.handleId(content);
     }
 
