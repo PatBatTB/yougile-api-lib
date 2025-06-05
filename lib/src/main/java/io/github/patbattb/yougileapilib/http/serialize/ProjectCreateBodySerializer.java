@@ -10,7 +10,6 @@ import java.io.IOException;
 
 public class ProjectCreateBodySerializer extends JsonSerializer<ProjectCreateBody> {
     @Override
-    //TODO need to check out
     public void serialize(ProjectCreateBody value, JsonGenerator gen, SerializerProvider serializers) throws IOException {
         gen.writeStartObject();
         gen.writeStringField("title", value.getTitle());

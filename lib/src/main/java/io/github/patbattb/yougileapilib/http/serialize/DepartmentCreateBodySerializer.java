@@ -11,7 +11,6 @@ import java.io.IOException;
 
 public class DepartmentCreateBodySerializer extends JsonSerializer<DepartmentCreateBody> {
     @Override
-    //TODO need to check out
     public void serialize(DepartmentCreateBody value, JsonGenerator gen, SerializerProvider serializers) throws IOException {
         gen.writeStartObject();
         gen.writeStringField("title", value.getTitle());

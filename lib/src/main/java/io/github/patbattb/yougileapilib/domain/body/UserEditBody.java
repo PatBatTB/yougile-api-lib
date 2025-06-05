@@ -2,11 +2,14 @@ package io.github.patbattb.yougileapilib.domain.body;
 
 import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import lombok.AccessLevel;
+import lombok.experimental.FieldDefaults;
 
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class UserEditBody extends RequestBody {
 
-    private final boolean isAdmin;
+    final boolean isAdmin;
 
     private UserEditBody(boolean isAdmin) {
         this.isAdmin = isAdmin;

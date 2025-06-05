@@ -3,17 +3,20 @@ package io.github.patbattb.yougileapilib.domain.body;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import io.github.patbattb.yougileapilib.domain.UserRole;
 import io.github.patbattb.yougileapilib.http.serialize.ProjectEditBodySerializer;
+import lombok.AccessLevel;
 import lombok.Getter;
+import lombok.experimental.FieldDefaults;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Getter
+@FieldDefaults(level = AccessLevel.PRIVATE)
 @JsonSerialize(using = ProjectEditBodySerializer.class)
 public class ProjectEditBody extends RequestBody {
-    private boolean deleted;
-    private String title;
-    private List<UserRole> users;
+    boolean deleted;
+    String title;
+    List<UserRole> users;
 
     private ProjectEditBody(List<UserRole> users) {
         this.users = users;

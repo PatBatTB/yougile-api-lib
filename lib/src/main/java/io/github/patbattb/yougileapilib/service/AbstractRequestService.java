@@ -78,7 +78,7 @@ abstract class AbstractRequestService {
     }
 
     protected Response sendPostRequest(@NonNull URI uri, @NonNull RequestBody body) throws IOException {
-        //TODO возникают варнинги json-annotation. Что бы не было - нужно подключить в app проект jenkins-annotations
+        //TODO json-annotation warnings occur. To avoid this, you need to connect the jenkins-annotations dependency to your app
         String bodyString = new JsonMapper().writeValueAsString(body);
         Request request = generateBaseRequest(Request.Post(uri))
                 .bodyString(bodyString, ContentType.APPLICATION_JSON);

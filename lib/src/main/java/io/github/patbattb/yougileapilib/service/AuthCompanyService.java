@@ -36,14 +36,4 @@ public class AuthCompanyService extends AbstractRequestService{
         Content content = response.handleResponse(ResponseHandlerProvider::okJsonHandler);
         return ContentHandler.handleAuthCompanyList(content);
     }
-
-    /**
-     * @param body {@link AuthCompanyBody} Request body.
-     * @return {@link List} of {@link AuthCompany}
-     * @throws URISyntaxException
-     * @throws IOException
-     */
-    public PagingContainer<AuthCompany> getAuthCompanyList(@NonNull AuthCompanyBody body) throws URISyntaxException, IOException {
-        return getAuthCompanyList(QueryParams.empty(), body);
-    }
 }

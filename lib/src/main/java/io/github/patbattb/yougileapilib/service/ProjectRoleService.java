@@ -4,6 +4,7 @@ import io.github.patbattb.yougileapilib.domain.*;
 import io.github.patbattb.yougileapilib.domain.body.ProjectRoleCreateBody;
 import io.github.patbattb.yougileapilib.domain.body.ProjectRoleEditBody;
 import io.github.patbattb.yougileapilib.http.ResponseHandlerProvider;
+import lombok.NonNull;
 import org.apache.http.client.fluent.Content;
 import org.apache.http.client.fluent.Response;
 
@@ -20,65 +21,65 @@ public class ProjectRoleService extends AbstractRequestService {
         super("", authKey);
     }
 
-    public PagingContainer<ProjectRole> getRoleList(String projectId, QueryParams params, AuthKey authKey) throws URISyntaxException, IOException {
+    public PagingContainer<ProjectRole> getRoleList(@NonNull String projectId,@NonNull QueryParams params,@NonNull AuthKey authKey) throws URISyntaxException, IOException {
         Response response = sendGetRequest(configureURI(params).setPath(getEndpoint(projectId)).build(), authKey);
         Content content = response.handleResponse(ResponseHandlerProvider::okJsonHandler);
         return ContentHandler.handleProjectRoleList(content);
     }
 
-    public PagingContainer<ProjectRole> getRoleList(String projectId, QueryParams params) throws URISyntaxException, IOException {
+    public PagingContainer<ProjectRole> getRoleList(@NonNull String projectId,@NonNull QueryParams params) throws URISyntaxException, IOException {
         if (authKey == null) {
             throw new NullPointerException(noAuthKeyMessage);
         }
         return getRoleList(projectId, params, authKey);
     }
 
-    public Id createRole(String projectId, ProjectRoleCreateBody body, AuthKey authKey) throws URISyntaxException, IOException {
+    public Id createRole(@NonNull String projectId,@NonNull ProjectRoleCreateBody body,@NonNull AuthKey authKey) throws URISyntaxException, IOException {
         Response response = sendPostRequest(configureURI().setPath(getEndpoint(projectId)).build(), body, authKey);
         Content content = response.handleResponse(ResponseHandlerProvider::createdJsonHandler);
         return ContentHandler.handleId(content);
     }
 
-    public Id createRole(String projectId, ProjectRoleCreateBody body) throws URISyntaxException, IOException {
+    public Id createRole(@NonNull String projectId,@NonNull ProjectRoleCreateBody body) throws URISyntaxException, IOException {
         if (authKey == null) {
             throw new NullPointerException(noAuthKeyMessage);
         }
         return createRole(projectId, body, authKey);
     }
 
-    public ProjectRole getRoleById(String projectId, String roleId, AuthKey authKey) throws URISyntaxException, IOException {
+    public ProjectRole getRoleById(@NonNull String projectId,@NonNull String roleId,@NonNull AuthKey authKey) throws URISyntaxException, IOException {
         Response response = sendGetRequest(configureURI().setPath(getEndpoint(projectId, roleId)).build(), authKey);
         Content content = response.handleResponse(ResponseHandlerProvider::okJsonHandler);
         return ContentHandler.handleProjectRole(content);
     }
 
-    public ProjectRole getRoleById(String projectId, String roleId) throws URISyntaxException, IOException {
+    public ProjectRole getRoleById(@NonNull String projectId,@NonNull String roleId) throws URISyntaxException, IOException {
         if (authKey == null) {
             throw new IllegalArgumentException(noAuthKeyMessage);
         }
         return getRoleById(projectId, roleId, authKey);
     }
 
-    public Id editRole(String projectId, String roleId, ProjectRoleEditBody body, AuthKey authKey) throws URISyntaxException, IOException {
+    public Id editRole(@NonNull String projectId,@NonNull String roleId,@NonNull ProjectRoleEditBody body,@NonNull AuthKey authKey) throws URISyntaxException, IOException {
         Response response = sendPutRequest(configureURI().setPath(getEndpoint(projectId, roleId)).build(), body, authKey);
         Content content = response.handleResponse(ResponseHandlerProvider::okJsonHandler);
         return ContentHandler.handleId(content);
     }
 
-    public Id editRole(String projectId, String roleId, ProjectRoleEditBody body) throws URISyntaxException, IOException {
+    public Id editRole(@NonNull String projectId,@NonNull String roleId,@NonNull ProjectRoleEditBody body) throws URISyntaxException, IOException {
         if (authKey == null) {
             throw new NullPointerException(noAuthKeyMessage);
         }
         return editRole(projectId, roleId, body, authKey);
     }
 
-    public Id deleteRole(String projectId, String roleId, AuthKey authKey) throws URISyntaxException, IOException {
+    public Id deleteRole(@NonNull String projectId,@NonNull String roleId,@NonNull AuthKey authKey) throws URISyntaxException, IOException {
         Response response = sendDeleteRequest(configureURI().setPath(getEndpoint(projectId, roleId)).build(), authKey);
         Content content = response.handleResponse(ResponseHandlerProvider::okJsonHandler);
         return ContentHandler.handleId(content);
     }
 
-    public Id deleteRole(String projectId, String roleId) throws URISyntaxException, IOException {
+    public Id deleteRole(@NonNull String projectId,@NonNull String roleId) throws URISyntaxException, IOException {
         if (authKey == null) {
             throw new NullPointerException(noAuthKeyMessage);
         }

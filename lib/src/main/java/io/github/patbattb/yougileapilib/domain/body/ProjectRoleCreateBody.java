@@ -1,14 +1,19 @@
 package io.github.patbattb.yougileapilib.domain.body;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import io.github.patbattb.yougileapilib.domain.ProjectPermissions;
+import lombok.AccessLevel;
 import lombok.Getter;
+import lombok.experimental.FieldDefaults;
 
 @Getter
+@FieldDefaults(level = AccessLevel.PRIVATE)
+@JsonInclude(JsonInclude.Include.NON_EMPTY)
 public class ProjectRoleCreateBody extends RequestBody {
 
-    private final String name;
-    private String description;
-    private final ProjectPermissions permissions;
+    final String name;
+    String description;
+    final ProjectPermissions permissions;
 
     private ProjectRoleCreateBody(String name, ProjectPermissions permissions) {
         this.name = name;

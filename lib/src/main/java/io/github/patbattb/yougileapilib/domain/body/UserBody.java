@@ -2,15 +2,18 @@ package io.github.patbattb.yougileapilib.domain.body;
 
 import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import lombok.AccessLevel;
 import lombok.Getter;
+import lombok.experimental.FieldDefaults;
 
 
-@JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class UserBody extends RequestBody {
 
     @Getter
-    private final String email;
-    private Boolean isAdmin;
+    final String email;
+    Boolean isAdmin;
 
     private UserBody(String email) {
         this.email = email;

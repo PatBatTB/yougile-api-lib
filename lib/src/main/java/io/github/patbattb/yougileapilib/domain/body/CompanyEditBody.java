@@ -1,14 +1,17 @@
 package io.github.patbattb.yougileapilib.domain.body;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import lombok.AccessLevel;
 import lombok.Getter;
+import lombok.experimental.FieldDefaults;
 
 @Getter
-@JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class CompanyEditBody extends RequestBody {
 
-    private boolean deleted;
-    private String title;
+    boolean deleted;
+    String title;
 
     private CompanyEditBody() {
     }

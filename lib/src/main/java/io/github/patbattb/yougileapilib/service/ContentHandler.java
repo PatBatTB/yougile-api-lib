@@ -19,24 +19,19 @@ class ContentHandler {
     }
 
     User handleUser(Content content) throws JsonProcessingException {
-        //TODO need to checkout
         return new JsonMapper().readValue(content.toString(), User.class);
     }
 
     PagingContainer<User> handleUserList(Content content) throws JsonProcessingException {
         JsonMapper mapper = new JsonMapper();
         JsonNode rootNode = mapper.readTree(content.asString());
-        JsonNode pagingNode = rootNode.get("paging");
-        int count = pagingNode.get("count").asInt();
-        int limit = pagingNode.get("limit").asInt();
-        int offset = pagingNode.get("offset").asInt();
-        boolean next = pagingNode.get("next").asBoolean();
+        PagingData paging = mapper.readValue(rootNode.get("paging").toString(), PagingData.class);
         List<User> userList = new ArrayList<>();
         ArrayNode arrayNode = (ArrayNode) rootNode.get("content");
         for (JsonNode node: arrayNode) {
             userList.add(mapper.readValue(node.toString(), User.class));
         }
-        return new PagingContainer<>(count, limit, offset, next, userList);
+        return new PagingContainer<>(paging.count(), paging.limit(), paging.offset(), paging.next(), userList);
     }
 
     Company handleCompany(Content content) throws JsonProcessingException {
@@ -68,32 +63,24 @@ class ContentHandler {
         JsonMapper mapper = new JsonMapper();
         List<AuthCompany> authCompanyList = new ArrayList<>();
         JsonNode rootNode = mapper.readTree(content.asString());
-        JsonNode pagingNode = rootNode.get("paging");
-        int count = pagingNode.get("count").asInt();
-        int limit = pagingNode.get("limit").asInt();
-        int offset = pagingNode.get("offset").asInt();
-        boolean next = pagingNode.get("next").asBoolean();
+        PagingData paging = mapper.readValue(rootNode.get("paging").toString(), PagingData.class);
         ArrayNode contentArrayNode = (ArrayNode) rootNode.get("content");
         for (JsonNode contentNode: contentArrayNode) {
             authCompanyList.add(mapper.readValue(contentNode.toString(), AuthCompany.class));
         }
-        return new PagingContainer<>(count, limit, offset, next, authCompanyList);
+        return new PagingContainer<>(paging.count(), paging.limit(), paging.offset(), paging.next(), authCompanyList);
     }
 
     public static PagingContainer<Project> handleProjectList(Content content) throws JsonProcessingException {
         JsonMapper mapper = new JsonMapper();
         JsonNode rootNode = mapper.readTree(content.asString());
-        JsonNode pagingNode = rootNode.get("paging");
-        int count = pagingNode.get("count").asInt();
-        int limit = pagingNode.get("limit").asInt();
-        int offset = pagingNode.get("offset").asInt();
-        boolean next = pagingNode.get("next").asBoolean();
+        PagingData paging = mapper.readValue(rootNode.get("paging").toString(), PagingData.class);
         List<Project> projectList = new ArrayList<>();
         ArrayNode contentArrayNode = (ArrayNode) rootNode.get("content");
         for (JsonNode contentNode: contentArrayNode) {
             projectList.add(mapper.readValue(contentNode.toString(), Project.class));
         }
-        return new PagingContainer<>(count, limit, offset, next, projectList);
+        return new PagingContainer<>(paging.count(), paging.limit(), paging.offset(), paging.next(), projectList);
     }
 
     public static Project handleProject(Content content) throws JsonProcessingException {
@@ -103,17 +90,13 @@ class ContentHandler {
     public static PagingContainer<ProjectRole> handleProjectRoleList(Content content) throws JsonProcessingException {
         JsonMapper mapper = new JsonMapper();
         JsonNode rootNode = mapper.readTree(content.toString());
-        JsonNode pagingNode = rootNode.get("paging");
-        int count = pagingNode.get("count").asInt();
-        int limit = pagingNode.get("limit").asInt();
-        int offset = pagingNode.get("offset").asInt();
-        boolean next = pagingNode.get("next").asBoolean();
+        PagingData paging = mapper.readValue(rootNode.get("paging").toString(), PagingData.class);
         List<ProjectRole> roleList = new ArrayList<>();
         ArrayNode contentArrayNode = (ArrayNode) rootNode.get("content");
         for (JsonNode contentNode: contentArrayNode) {
             roleList.add(mapper.readValue(contentNode.toString(), ProjectRole.class));
         }
-        return new PagingContainer<>(count, limit, offset, next, roleList);
+        return new PagingContainer<>(paging.count(), paging.limit(), paging.offset(), paging.next(), roleList);
     }
 
     public static ProjectRole handleProjectRole(Content content) throws JsonProcessingException {

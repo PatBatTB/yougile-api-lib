@@ -31,8 +31,8 @@ https://ru.yougile.com/api-v2#/operations/CompanyController_get
  */
 public class CompanyService extends AbstractRequestService {
 
-    //TODO временно  добавил /id  к эндпоинту. На самом деле вместо id можно подставить любое значение.
-    // Жду ответа от техподдержки по поводу работы эндпоинта
+    //TODO temporarily added “/id” to the endpoint. You can actually substitute any value instead of id.
+    //I am waiting for a reply from tech support on how this endpoint works
     public CompanyService(AuthKey authKey) {
         super("companies/id", authKey);
     }
@@ -54,7 +54,7 @@ public class CompanyService extends AbstractRequestService {
         return getCompany(authKey);
     }
 
-    public Id editCompany(@NonNull CompanyEditBody body, AuthKey authKey) throws URISyntaxException, IOException {
+    public Id editCompany(@NonNull CompanyEditBody body,@NonNull AuthKey authKey) throws URISyntaxException, IOException {
         Response response = sendPutRequest(configureURI().build(), body, authKey);
         Content content = response.handleResponse(ResponseHandlerProvider::okJsonHandler);
         return ContentHandler.handleId(content);

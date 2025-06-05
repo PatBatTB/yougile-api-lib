@@ -12,10 +12,10 @@ import java.util.List;
 @ToString
 public class PagingContainer<T> {
 
-    private int count;
-    private int limit;
-    private int offset;
-    private boolean next;
+    int count;
+    int limit;
+    int offset;
+    boolean next;
 
-    private List<T> content;
+    List<T> content;
 }

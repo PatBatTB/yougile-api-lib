@@ -5,6 +5,7 @@ import io.github.patbattb.yougileapilib.domain.*;
 import io.github.patbattb.yougileapilib.domain.body.DepartmentCreateBody;
 import io.github.patbattb.yougileapilib.domain.body.DepartmentEditBody;
 import io.github.patbattb.yougileapilib.http.ResponseHandlerProvider;
+import lombok.NonNull;
 import org.apache.http.client.fluent.Content;
 import org.apache.http.client.fluent.Response;
 
@@ -36,7 +37,7 @@ public class DepartmentService extends AbstractRequestService {
      * @throws URISyntaxException
      * @throws IOException
      */
-    public PagingContainer<Department> getDepartmentList(QueryParams params, AuthKey authKey) throws URISyntaxException, IOException {
+    public PagingContainer<Department> getDepartmentList(@NonNull QueryParams params,@NonNull AuthKey authKey) throws URISyntaxException, IOException {
         Response response = sendGetRequest(configureURI(params).build(), authKey);
         Content content = response.handleResponse(ResponseHandlerProvider::okJsonHandler);
         return ContentHandler.handleDepartmentList(content);
@@ -56,46 +57,46 @@ public class DepartmentService extends AbstractRequestService {
      * @throws URISyntaxException
      * @throws IOException
      */
-    public PagingContainer<Department> getDepartmentList(QueryParams params) throws URISyntaxException, IOException {
+    public PagingContainer<Department> getDepartmentList(@NonNull QueryParams params) throws URISyntaxException, IOException {
         if (authKey == null) {
             throw new NullPointerException(noAuthKeyMessage);
         }
         return getDepartmentList(params, authKey);
     }
 
-    public Id createDepartment(DepartmentCreateBody body, AuthKey authKey) throws URISyntaxException, IOException {
+    public Id createDepartment(@NonNull DepartmentCreateBody body,@NonNull AuthKey authKey) throws URISyntaxException, IOException {
         Response response = sendPostRequest(configureURI().build(), body, authKey);
         Content content = response.handleResponse(ResponseHandlerProvider::createdJsonHandler);
         return ContentHandler.handleId(content);
     }
 
-    public Id createDepartment(DepartmentCreateBody body) throws URISyntaxException, IOException {
+    public Id createDepartment(@NonNull DepartmentCreateBody body) throws URISyntaxException, IOException {
         if (authKey == null) {
             throw new NullPointerException(noAuthKeyMessage);
         }
         return createDepartment(body, authKey);
     }
 
-    public Department getDepartmentById(String departmentId, AuthKey authKey) throws URISyntaxException, IOException {
+    public Department getDepartmentById(@NonNull String departmentId,@NonNull AuthKey authKey) throws URISyntaxException, IOException {
         Response response = sendGetRequest(configureURI(departmentId).build(), authKey);
         Content content = response.handleResponse(ResponseHandlerProvider::okJsonHandler);
         return ContentHandler.handleDepartment(content);
     }
 
-    public Department getDepartmentById(String departmentId) throws URISyntaxException, IOException {
+    public Department getDepartmentById(@NonNull String departmentId) throws URISyntaxException, IOException {
         if (authKey == null) {
             throw new NullPointerException(noAuthKeyMessage);
         }
         return getDepartmentById(departmentId, authKey);
     }
 
-    public Id editDepartment(String departmentId, DepartmentEditBody body, AuthKey authKey) throws URISyntaxException, IOException {
+    public Id editDepartment(@NonNull String departmentId,@NonNull DepartmentEditBody body,@NonNull AuthKey authKey) throws URISyntaxException, IOException {
         Response response = sendPutRequest(configureURI(departmentId).build(), body, authKey);
         Content content = response.handleResponse(ResponseHandlerProvider::okJsonHandler);
         return ContentHandler.handleId(content);
     }
 
-    public Id editDepartment(String departmentId, DepartmentEditBody body) throws URISyntaxException, IOException {
+    public Id editDepartment(@NonNull String departmentId,@NonNull DepartmentEditBody body) throws URISyntaxException, IOException {
         if (authKey == null) {
             throw new NullPointerException(noAuthKeyMessage);
         }

@@ -1,15 +1,18 @@
 package io.github.patbattb.yougileapilib.domain.body;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import lombok.AccessLevel;
 import lombok.Getter;
+import lombok.experimental.FieldDefaults;
 
 @Getter
-@JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class AuthKeyBody extends RequestBody {
 
-    private final String login;
-    private final String password;
-    private final String companyId;
+    final String login;
+    final String password;
+    final String companyId;
 
     private AuthKeyBody(String login, String password, String companyId) {
         this.login = login;

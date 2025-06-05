@@ -14,7 +14,6 @@ import java.util.Map;
 
 public class ProjectDeserializer extends JsonDeserializer<Project> {
     @Override
-    //TODO need to check out
     public Project deserialize(JsonParser p, DeserializationContext ctxt) throws IOException {
         JsonNode rootNode = p.readValueAsTree();
         String title = rootNode.get("title").asText();

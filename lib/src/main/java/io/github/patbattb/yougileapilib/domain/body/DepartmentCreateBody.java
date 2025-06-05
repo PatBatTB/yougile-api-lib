@@ -3,18 +3,21 @@ package io.github.patbattb.yougileapilib.domain.body;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import io.github.patbattb.yougileapilib.domain.UserRole;
 import io.github.patbattb.yougileapilib.http.serialize.DepartmentCreateBodySerializer;
+import lombok.AccessLevel;
 import lombok.Getter;
+import lombok.experimental.FieldDefaults;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Getter
 @JsonSerialize(using = DepartmentCreateBodySerializer.class)
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class DepartmentCreateBody extends RequestBody {
 
-    private final String title;
-    private String parentId;
-    private final List<UserRole> users;
+    final String title;
+    String parentId;
+    final List<UserRole> users;
 
     private DepartmentCreateBody(String title, List<UserRole> users) {
         this.title = title;
