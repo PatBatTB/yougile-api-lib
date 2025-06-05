@@ -118,4 +118,16 @@ class ContentHandler {
     public static Department handleDepartment(Content content) throws JsonProcessingException {
         return new JsonMapper().readValue(content.toString(), Department.class);
     }
+
+    public static PagingContainer<Board> handleBoardList(Content content) throws JsonProcessingException {
+        JsonMapper mapper = new JsonMapper();
+        JsonNode rootNode = mapper.readTree(content.toString());
+        PagingData paging = mapper.readValue(rootNode.get("paging").toString(), PagingData.class);
+        List<Board> boardList = new ArrayList<>();
+        ArrayNode contentArrayNode = (ArrayNode) rootNode.get("content");
+        for (JsonNode contentNode: contentArrayNode) {
+            boardList.add(mapper.readValue(contentNode.toString(), Board.class));
+        }
+        return new PagingContainer<>(paging.count(), paging.limit(), paging.offset(), paging.next(), boardList);
+    }
 }

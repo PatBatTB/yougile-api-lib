@@ -1,15 +1,16 @@
 package io.github.patbattb.yougileapilib.domain;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import io.github.patbattb.yougileapilib.http.deserialize.BoardDeserializer;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
-
-import java.util.List;
 
 @Getter
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @AllArgsConstructor
 @EqualsAndHashCode
 @ToString
+@JsonDeserialize(using = BoardDeserializer.class)
 public class Board {
     @Setter
     boolean deleted;
@@ -19,6 +20,6 @@ public class Board {
     @Setter
     String projectId;
     @Setter
-    List<Sticker> stickers;
+    BoardStickerInfo stickers;
 
 }

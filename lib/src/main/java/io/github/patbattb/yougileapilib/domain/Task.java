@@ -39,7 +39,7 @@ public class Task {
     @Setter
     List<ChecklistContainer> checklists;
     @Setter
-    List<Sticker> stickers;
+    List<CustomSticker> stickers;
     @Setter
     TaskColor color;
     @Setter

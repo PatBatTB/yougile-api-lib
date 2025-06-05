@@ -8,12 +8,7 @@ import lombok.experimental.FieldDefaults;
 @AllArgsConstructor
 @EqualsAndHashCode
 @ToString
-public class Sticker {
-    boolean timer;
-    boolean deadline;
-    boolean stopwatch;
-    boolean timeTracking;
-    boolean assignee;
-    boolean repeat;
-    //Object custom;
+public class CustomSticker {
+    String id;
+    boolean status;
 }
