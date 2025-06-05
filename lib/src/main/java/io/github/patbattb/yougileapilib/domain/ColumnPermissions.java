@@ -23,13 +23,17 @@ public class ColumnPermissions {
     @NonNull
     String move;
     boolean addTask;
+
     @NonNull
     @JsonProperty("allTasks")
     TaskPermissions allTasksPermissions;
+
     @JsonProperty("withMeTasks")
     TaskPermissions withMeTasksPermissions; //may be null
+
     @JsonProperty("myTasks")
     TaskPermissions myTasksPermissions; //may be null
+
     @JsonProperty("createdByMeTasks")
     TaskPermissions createdByMeTasksPermissions; //may be null
 
