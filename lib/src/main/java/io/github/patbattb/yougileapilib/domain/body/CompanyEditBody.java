@@ -1,8 +1,10 @@
 package io.github.patbattb.yougileapilib.domain.body;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Getter;
 
 @Getter
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class CompanyEditBody extends RequestBody {
 
     private boolean deleted;

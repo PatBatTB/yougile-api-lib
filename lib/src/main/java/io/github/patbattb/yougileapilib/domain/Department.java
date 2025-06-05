@@ -1,5 +1,7 @@
 package io.github.patbattb.yougileapilib.domain;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import io.github.patbattb.yougileapilib.http.deserialize.DepartmentDeserializer;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
@@ -10,6 +12,7 @@ import java.util.List;
 @AllArgsConstructor
 @EqualsAndHashCode
 @ToString
+@JsonDeserialize(using = DepartmentDeserializer.class)
 public class Department {
     @Setter
     boolean deleted;
@@ -19,5 +22,5 @@ public class Department {
     @Setter
     String parentId;
     @Setter
-    List<User> users;
+    List<UserRole> users;
 }

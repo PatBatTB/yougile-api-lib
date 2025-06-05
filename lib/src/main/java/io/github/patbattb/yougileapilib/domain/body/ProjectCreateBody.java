@@ -1,7 +1,7 @@
 package io.github.patbattb.yougileapilib.domain.body;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import io.github.patbattb.yougileapilib.domain.ProjectUser;
+import io.github.patbattb.yougileapilib.domain.UserRole;
 import io.github.patbattb.yougileapilib.http.serialize.ProjectCreateBodySerializer;
 import lombok.Getter;
 
@@ -12,9 +12,9 @@ import java.util.List;
 @JsonSerialize(using = ProjectCreateBodySerializer.class)
 public class ProjectCreateBody extends RequestBody {
     private final String title;
-    private final List<ProjectUser> users;
+    private final List<UserRole> users;
 
-    private ProjectCreateBody(String title, List<ProjectUser> users) {
+    private ProjectCreateBody(String title, List<UserRole> users) {
         this.title = title;
         this.users = users;
     }
@@ -29,7 +29,18 @@ public class ProjectCreateBody extends RequestBody {
             super(body);
         }
 
-        public Builder users(ProjectUser user) {
+        /**
+         *
+         * @param user {@link UserRole} User ID with system or custom role ID.
+         *              Available system role IDs:
+         *              <ul>
+         *              <li/>{@code admin}
+         *              <li/>{@code worker}
+         *              <li/>{@code observer}
+         *              <li/>{@code -} minus symbol to delete user from project.
+         *              </ul>
+         */
+        public Builder users(UserRole user) {
             body.users.add(user);
             return this;
         }

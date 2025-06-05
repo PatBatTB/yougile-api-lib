@@ -3,6 +3,7 @@ package io.github.patbattb.yougileapilib.domain.body;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Getter;
 
+//TODO need to change field's access modificators to class annotation
 @Getter
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class AuthCompanyBody extends RequestBody{

@@ -20,5 +20,5 @@ public class Project {
     @Setter
     String title;
     long created;
-    List<ProjectUser> users;
+    List<UserRole> users;
 }

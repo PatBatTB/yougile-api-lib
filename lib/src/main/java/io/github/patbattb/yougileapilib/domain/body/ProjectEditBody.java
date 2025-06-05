@@ -1,7 +1,7 @@
 package io.github.patbattb.yougileapilib.domain.body;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import io.github.patbattb.yougileapilib.domain.ProjectUser;
+import io.github.patbattb.yougileapilib.domain.UserRole;
 import io.github.patbattb.yougileapilib.http.serialize.ProjectEditBodySerializer;
 import lombok.Getter;
 
@@ -13,9 +13,9 @@ import java.util.List;
 public class ProjectEditBody extends RequestBody {
     private boolean deleted;
     private String title;
-    private List<ProjectUser> users;
+    private List<UserRole> users;
 
-    private ProjectEditBody(List<ProjectUser> users) {
+    private ProjectEditBody(List<UserRole> users) {
         this.users = users;
     }
 
@@ -39,7 +39,7 @@ public class ProjectEditBody extends RequestBody {
             return this;
         }
 
-        public Builder users(ProjectUser user) {
+        public Builder users(UserRole user) {
             body.users.add(user);
             return this;
         }

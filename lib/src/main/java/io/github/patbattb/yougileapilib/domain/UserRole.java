@@ -8,7 +8,7 @@ import lombok.experimental.FieldDefaults;
 @AllArgsConstructor
 @EqualsAndHashCode
 @ToString
-public class ProjectUser {
+public class UserRole {
     private String id;
     @Setter
     private String roleId;
