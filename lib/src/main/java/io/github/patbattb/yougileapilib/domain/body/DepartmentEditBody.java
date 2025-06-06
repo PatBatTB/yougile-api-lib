@@ -30,7 +30,7 @@ public class DepartmentEditBody extends RequestBody {
 
     public static class Builder extends BodyBuilder<DepartmentEditBody> {
 
-        public Builder(DepartmentEditBody body) {
+        private Builder(DepartmentEditBody body) {
             super(body);
         }
 

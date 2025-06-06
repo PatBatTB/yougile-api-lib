@@ -4,7 +4,7 @@ abstract class BodyBuilder<T extends RequestBody> {
 
     protected final T body;
 
-    public BodyBuilder(T body) {
+    protected BodyBuilder(T body) {
         this.body = body;
     }
 

@@ -26,7 +26,7 @@ public class AuthKeyBody extends RequestBody {
 
     public static class Builder extends BodyBuilder<AuthKeyBody> {
 
-        public Builder(AuthKeyBody body) {
+        private Builder(AuthKeyBody body) {
             super(body);
         }
     }

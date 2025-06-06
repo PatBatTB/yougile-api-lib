@@ -130,4 +130,8 @@ class ContentHandler {
         }
         return new PagingContainer<>(paging.count(), paging.limit(), paging.offset(), paging.next(), boardList);
     }
+
+    public static Board handleBoard(Content content) throws JsonProcessingException {
+        return new JsonMapper().readValue(content.toString(), Board.class);
+    }
 }

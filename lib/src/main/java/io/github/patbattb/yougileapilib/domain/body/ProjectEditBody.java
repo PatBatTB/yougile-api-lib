@@ -28,7 +28,7 @@ public class ProjectEditBody extends RequestBody {
 
     public static class Builder extends BodyBuilder<ProjectEditBody> {
 
-        public Builder(ProjectEditBody body) {
+        private Builder(ProjectEditBody body) {
             super(body);
         }
 

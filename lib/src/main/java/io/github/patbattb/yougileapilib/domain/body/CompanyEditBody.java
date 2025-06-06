@@ -22,7 +22,7 @@ public class CompanyEditBody extends RequestBody {
 
     public static class Builder extends BodyBuilder<CompanyEditBody> {
 
-        public Builder(CompanyEditBody body) {
+        private Builder(CompanyEditBody body) {
             super(body);
         }
 

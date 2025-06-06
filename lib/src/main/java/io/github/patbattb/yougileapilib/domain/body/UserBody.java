@@ -30,7 +30,7 @@ public class UserBody extends RequestBody {
 
     public static class Builder extends BodyBuilder<UserBody> {
 
-        public Builder(UserBody body) {
+        private Builder(UserBody body) {
             super(body);
         }
 

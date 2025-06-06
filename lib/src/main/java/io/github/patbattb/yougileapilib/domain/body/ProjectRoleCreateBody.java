@@ -26,7 +26,7 @@ public class ProjectRoleCreateBody extends RequestBody {
 
     public static class Builder extends BodyBuilder<ProjectRoleCreateBody> {
 
-        public Builder(ProjectRoleCreateBody body) {
+        private Builder(ProjectRoleCreateBody body) {
             super(body);
         }
 
