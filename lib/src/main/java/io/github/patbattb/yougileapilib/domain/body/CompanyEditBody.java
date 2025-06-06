@@ -10,7 +10,7 @@ import lombok.experimental.FieldDefaults;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class CompanyEditBody extends RequestBody {
 
-    boolean deleted;
+    Boolean deleted;
     String title;
 
     private CompanyEditBody() {

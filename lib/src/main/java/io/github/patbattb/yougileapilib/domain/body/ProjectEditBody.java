@@ -14,7 +14,8 @@ import java.util.List;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @JsonSerialize(using = ProjectEditBodySerializer.class)
 public class ProjectEditBody extends RequestBody {
-    boolean deleted;
+
+    Boolean deleted;
     String title;
     List<UserRole> users;
 

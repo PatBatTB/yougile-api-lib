@@ -14,6 +14,7 @@ import java.util.List;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @JsonSerialize(using = ProjectCreateBodySerializer.class)
 public class ProjectCreateBody extends RequestBody {
+
     final String title;
     final List<UserRole> users;
 

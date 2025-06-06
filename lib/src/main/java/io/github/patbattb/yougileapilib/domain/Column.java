@@ -1,5 +1,7 @@
 package io.github.patbattb.yougileapilib.domain;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import io.github.patbattb.yougileapilib.http.deserialize.ColumnDeserializer;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
@@ -8,6 +10,7 @@ import lombok.experimental.FieldDefaults;
 @AllArgsConstructor
 @EqualsAndHashCode
 @ToString
+@JsonDeserialize(using = ColumnDeserializer.class)
 public class Column {
     @Setter
     boolean deleted;
@@ -15,7 +18,7 @@ public class Column {
     @Setter
     String title;
     @Setter
-    int color;
+    Integer color;
     @Setter
     String boardId;
 }

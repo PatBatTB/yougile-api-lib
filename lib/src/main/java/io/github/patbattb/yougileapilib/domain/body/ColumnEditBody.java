@@ -1,7 +1,6 @@
 package io.github.patbattb.yougileapilib.domain.body;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import io.github.patbattb.yougileapilib.domain.BoardStickerInfo;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.experimental.FieldDefaults;
@@ -9,23 +8,23 @@ import lombok.experimental.FieldDefaults;
 @Getter
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
-public class BoardEditBody extends RequestBody {
+public class ColumnEditBody extends RequestBody {
 
     Boolean deleted;
     String title;
-    String projectId;
-    BoardStickerInfo stickers;
+    Integer color;
+    String boardId;
 
-    private BoardEditBody() {
+    private ColumnEditBody() {
     }
 
-    public static BoardEditBody.Builder builder() {
-        return new Builder(new BoardEditBody());
+    public static ColumnEditBody.Builder builder() {
+        return new Builder(new ColumnEditBody());
     }
 
-    public static class Builder extends BodyBuilder<BoardEditBody> {
+    public static class Builder extends BodyBuilder<ColumnEditBody> {
 
-        private Builder(BoardEditBody body) {
+        private Builder(ColumnEditBody body) {
             super(body);
         }
 
@@ -39,13 +38,13 @@ public class BoardEditBody extends RequestBody {
             return this;
         }
 
-        public Builder projectId(String value) {
-            body.projectId = value;
+        public Builder color(int value) {
+            body.color = value;
             return this;
         }
 
-        public Builder stickers(BoardStickerInfo value) {
-            body.stickers = value;
+        public Builder boardId(String value) {
+            body.boardId = value;
             return this;
         }
     }

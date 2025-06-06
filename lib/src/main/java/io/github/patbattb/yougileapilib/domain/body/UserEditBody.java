@@ -9,7 +9,7 @@ import lombok.experimental.FieldDefaults;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class UserEditBody extends RequestBody {
 
-    final boolean isAdmin;
+    final Boolean isAdmin;
 
     private UserEditBody(boolean isAdmin) {
         this.isAdmin = isAdmin;

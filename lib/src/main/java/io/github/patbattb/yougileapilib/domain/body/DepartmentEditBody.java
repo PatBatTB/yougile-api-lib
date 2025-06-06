@@ -15,7 +15,7 @@ import java.util.List;
 @JsonSerialize(using = DepartmentEditBodySerializer.class)
 public class DepartmentEditBody extends RequestBody {
 
-    boolean deleted;
+    Boolean deleted;
     String title;
     String parentId;
     final List<UserRole> users;

@@ -134,4 +134,20 @@ class ContentHandler {
     public static Board handleBoard(Content content) throws JsonProcessingException {
         return new JsonMapper().readValue(content.toString(), Board.class);
     }
+
+    public static PagingContainer<Column> handleColumnList(Content content) throws JsonProcessingException {
+        JsonMapper mapper = new JsonMapper();
+        JsonNode rootNode = mapper.readTree(content.toString());
+        PagingData paging = mapper.readValue(rootNode.get("paging").toString(), PagingData.class);
+        List<Column> columnList = new ArrayList<>();
+        ArrayNode contentArrayNode = (ArrayNode) rootNode.get("content");
+        for (JsonNode contentNode: contentArrayNode) {
+            columnList.add(mapper.readValue(contentNode.toString(), Column.class));
+        }
+        return new PagingContainer<>(paging.count(), paging.limit(), paging.offset(), paging.next(), columnList);
+    }
+
+    public static Column handleColumn(Content content) throws JsonProcessingException {
+        return new JsonMapper().readValue(content.toString(), Column.class);
+    }
 }
