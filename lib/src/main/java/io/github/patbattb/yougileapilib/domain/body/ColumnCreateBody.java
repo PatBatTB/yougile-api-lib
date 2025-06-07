@@ -30,6 +30,9 @@ public class ColumnCreateBody extends RequestBody {
         }
 
         public Builder color(int value) {
+            if (value < 1 || value > 16) {
+                throw new IllegalArgumentException("The color value must be between 1 and 16");
+            }
             body.color = value;
             return this;
         }
