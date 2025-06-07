@@ -12,7 +12,7 @@ public class DepartmentEditBodySerializer extends JsonSerializer<DepartmentEditB
     @Override
     public void serialize(DepartmentEditBody value, JsonGenerator gen, SerializerProvider serializers) throws IOException {
         gen.writeStartObject();
-        gen.writeBooleanField("deleted", value.isDeleted());
+        gen.writeBooleanField("deleted", value.getDeleted());
         if (value.getTitle() != null) {
             gen.writeStringField("title", value.getTitle());
         }

@@ -1,15 +1,19 @@
 package io.github.patbattb.yougileapilib.domain;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import io.github.patbattb.yougileapilib.http.deserialize.TaskDeserializer;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
 import java.util.List;
+import java.util.Map;
 
 @Getter
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @AllArgsConstructor
 @EqualsAndHashCode
 @ToString
+@JsonDeserialize(using = TaskDeserializer.class)
 public class Task {
     @Setter
     boolean deleted;
@@ -23,25 +27,25 @@ public class Task {
     String description;
     @Setter
     boolean archived;
-    long archivedTimestamp;
+    Long archivedTimestamp;
     @Setter
     boolean completed;
-    long completedTimestamp;
+    Long completedTimestamp;
     @Setter
     List<String> subtasks;
     @Setter
     List<String> assigned;
-    String cratedBy;
+    String createdBy;
     @Setter
     Deadline deadline;
     @Setter
     TimeTracking timeTracking;
     @Setter
-    List<ChecklistContainer> checklists;
+    List<Checklist> checklists;
     @Setter
-    List<CustomSticker> stickers;
+    Map<String, String> stickers;
     @Setter
-    TaskColor color;
+    String color;
     @Setter
     String idTaskCommon;
     @Setter

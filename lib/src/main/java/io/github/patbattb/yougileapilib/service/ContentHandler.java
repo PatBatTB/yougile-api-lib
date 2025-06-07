@@ -14,6 +14,25 @@ import java.util.List;
 @UtilityClass
 class ContentHandler {
 
+    boolean handleResult(Content content) throws JsonProcessingException {
+        String validString = "ok";
+        JsonMapper mapper = new JsonMapper();
+        JsonNode node = mapper.readTree(content.toString());
+        return node.get("result").asText().equals(validString);
+    }
+
+    List<Id> handleIdList(Content content) throws JsonProcessingException {
+        JsonMapper mapper = new JsonMapper();
+        JsonNode rootNode = mapper.readTree(content.toString());
+        List<Id> idList = new ArrayList<>();
+        if (rootNode != null && rootNode.isArray()) {
+            for (JsonNode node: rootNode) {
+                idList.add(new Id(node.asText()));
+            }
+        }
+        return idList;
+    }
+
     Id handleId(Content content) throws JsonProcessingException {
         return new JsonMapper().readValue(content.toString(), Id.class);
     }
@@ -36,13 +55,6 @@ class ContentHandler {
 
     Company handleCompany(Content content) throws JsonProcessingException {
         return new JsonMapper().readValue(content.toString(), Company.class);
-    }
-
-    boolean handleResult(Content content) throws JsonProcessingException {
-        String validString = "ok";
-        JsonMapper mapper = new JsonMapper();
-        JsonNode node = mapper.readTree(content.toString());
-        return node.get("result").asText().equals(validString);
     }
 
     AuthKey handleAuthKey(Content content) throws JsonProcessingException {
@@ -71,7 +83,7 @@ class ContentHandler {
         return new PagingContainer<>(paging.count(), paging.limit(), paging.offset(), paging.next(), authCompanyList);
     }
 
-    public static PagingContainer<Project> handleProjectList(Content content) throws JsonProcessingException {
+    PagingContainer<Project> handleProjectList(Content content) throws JsonProcessingException {
         JsonMapper mapper = new JsonMapper();
         JsonNode rootNode = mapper.readTree(content.asString());
         PagingData paging = mapper.readValue(rootNode.get("paging").toString(), PagingData.class);
@@ -83,11 +95,11 @@ class ContentHandler {
         return new PagingContainer<>(paging.count(), paging.limit(), paging.offset(), paging.next(), projectList);
     }
 
-    public static Project handleProject(Content content) throws JsonProcessingException {
+    Project handleProject(Content content) throws JsonProcessingException {
         return new JsonMapper().readValue(content.toString(), Project.class);
     }
 
-    public static PagingContainer<ProjectRole> handleProjectRoleList(Content content) throws JsonProcessingException {
+    PagingContainer<ProjectRole> handleProjectRoleList(Content content) throws JsonProcessingException {
         JsonMapper mapper = new JsonMapper();
         JsonNode rootNode = mapper.readTree(content.toString());
         PagingData paging = mapper.readValue(rootNode.get("paging").toString(), PagingData.class);
@@ -99,11 +111,11 @@ class ContentHandler {
         return new PagingContainer<>(paging.count(), paging.limit(), paging.offset(), paging.next(), roleList);
     }
 
-    public static ProjectRole handleProjectRole(Content content) throws JsonProcessingException {
+    ProjectRole handleProjectRole(Content content) throws JsonProcessingException {
         return new JsonMapper().readValue(content.toString(), ProjectRole.class);
     }
 
-    public static PagingContainer<Department> handleDepartmentList(Content content) throws JsonProcessingException {
+    PagingContainer<Department> handleDepartmentList(Content content) throws JsonProcessingException {
         JsonMapper mapper = new JsonMapper();
         JsonNode rootNode = mapper.readTree(content.toString());
         PagingData paging = mapper.readValue(rootNode.get("paging").toString(), PagingData.class);
@@ -115,11 +127,11 @@ class ContentHandler {
         return new PagingContainer<>(paging.count(), paging.limit(), paging.offset(), paging.next(), departmentList);
     }
 
-    public static Department handleDepartment(Content content) throws JsonProcessingException {
+    Department handleDepartment(Content content) throws JsonProcessingException {
         return new JsonMapper().readValue(content.toString(), Department.class);
     }
 
-    public static PagingContainer<Board> handleBoardList(Content content) throws JsonProcessingException {
+    PagingContainer<Board> handleBoardList(Content content) throws JsonProcessingException {
         JsonMapper mapper = new JsonMapper();
         JsonNode rootNode = mapper.readTree(content.toString());
         PagingData paging = mapper.readValue(rootNode.get("paging").toString(), PagingData.class);
@@ -131,11 +143,11 @@ class ContentHandler {
         return new PagingContainer<>(paging.count(), paging.limit(), paging.offset(), paging.next(), boardList);
     }
 
-    public static Board handleBoard(Content content) throws JsonProcessingException {
+    Board handleBoard(Content content) throws JsonProcessingException {
         return new JsonMapper().readValue(content.toString(), Board.class);
     }
 
-    public static PagingContainer<Column> handleColumnList(Content content) throws JsonProcessingException {
+    PagingContainer<Column> handleColumnList(Content content) throws JsonProcessingException {
         JsonMapper mapper = new JsonMapper();
         JsonNode rootNode = mapper.readTree(content.toString());
         PagingData paging = mapper.readValue(rootNode.get("paging").toString(), PagingData.class);
@@ -147,7 +159,23 @@ class ContentHandler {
         return new PagingContainer<>(paging.count(), paging.limit(), paging.offset(), paging.next(), columnList);
     }
 
-    public static Column handleColumn(Content content) throws JsonProcessingException {
+    Column handleColumn(Content content) throws JsonProcessingException {
         return new JsonMapper().readValue(content.toString(), Column.class);
+    }
+
+    PagingContainer<Task> handleTaskList(Content content) throws JsonProcessingException {
+        JsonMapper mapper = new JsonMapper();
+        JsonNode rootNode = mapper.readTree(content.toString());
+        PagingData paging = mapper.readValue(rootNode.get("paging").toString(), PagingData.class);
+        List<Task> taskList = new ArrayList<>();
+        ArrayNode contentArrayNode = (ArrayNode) rootNode.get("content");
+        for (JsonNode contentNode: contentArrayNode) {
+            taskList.add(mapper.readValue(contentNode.toString(), Task.class));
+        }
+        return new PagingContainer<>(paging.count(), paging.limit(), paging.offset(), paging.next(), taskList);
+    }
+
+    Task handleTask(Content content) throws JsonProcessingException {
+        return new JsonMapper().readValue(content.toString(), Task.class);
     }
 }

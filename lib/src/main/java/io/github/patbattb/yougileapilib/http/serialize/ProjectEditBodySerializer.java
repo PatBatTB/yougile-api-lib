@@ -12,7 +12,7 @@ public class ProjectEditBodySerializer extends JsonSerializer<ProjectEditBody> {
     @Override
     public void serialize(ProjectEditBody value, JsonGenerator gen, SerializerProvider serializers) throws IOException {
         gen.writeStartObject();
-        gen.writeBooleanField("deleted", value.isDeleted());
+        gen.writeBooleanField("deleted", value.getDeleted());
         if (value.getTitle() != null) {
             gen.writeStringField("title", value.getTitle());
         }

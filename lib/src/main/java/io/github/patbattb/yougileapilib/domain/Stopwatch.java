@@ -1,5 +1,7 @@
 package io.github.patbattb.yougileapilib.domain;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import io.github.patbattb.yougileapilib.http.deserialize.StopwatchDeserializer;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
@@ -8,8 +10,9 @@ import lombok.experimental.FieldDefaults;
 @AllArgsConstructor
 @EqualsAndHashCode
 @ToString
+@JsonDeserialize(using = StopwatchDeserializer.class)
 public class Stopwatch {
     boolean running;
-    long timer;
+    int seconds;
     long atMoment;
 }
