@@ -10,8 +10,8 @@ import lombok.experimental.FieldDefaults;
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 public class TimeTrackingEditBody extends RequestBody {
 
-    Integer plan;
-    Integer work;
+    Double plan;
+    Double work;
     Boolean deleted;
 
     private TimeTrackingEditBody() {
@@ -27,12 +27,12 @@ public class TimeTrackingEditBody extends RequestBody {
             super(body);
         }
 
-        public Builder plan(int value) {
+        public Builder plan(double value) {
             body.plan = value;
             return this;
         }
 
-        public Builder work(int value) {
+        public Builder work(double value) {
             body.work = value;
             return this;
         }

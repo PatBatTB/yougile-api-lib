@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import io.github.patbattb.yougileapilib.domain.ProjectPermissions;
 import lombok.AccessLevel;
 import lombok.Getter;
+import lombok.NonNull;
 import lombok.experimental.FieldDefaults;
 
 @Getter
@@ -20,7 +21,7 @@ public class ProjectRoleCreateBody extends RequestBody {
         this.permissions = permissions;
     }
 
-    public static ProjectRoleCreateBody.Builder builder(String name, ProjectPermissions permissions) {
+    public static ProjectRoleCreateBody.Builder builder(@NonNull String name, @NonNull ProjectPermissions permissions) {
         return new Builder(new ProjectRoleCreateBody(name, permissions));
     }
 
@@ -30,7 +31,7 @@ public class ProjectRoleCreateBody extends RequestBody {
             super(body);
         }
 
-        public Builder description(String value) {
+        public Builder description(@NonNull String value) {
             body.description = value;
             return this;
         }
