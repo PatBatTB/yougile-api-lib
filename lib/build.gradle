@@ -8,19 +8,23 @@
 plugins {
     id 'java-library'
     id("io.freefair.lombok") version "8.13.1"
+    id 'jacoco'
 }
 
 group = 'io.github.patbattb'
-version = '0.0.2'
+version = '0.0.3'
 def vendorName = 'PatBatTB'
 
 def manifestAttributes = ['Implementation-Version': version,
                           'Implementation-Title': gradle.rootProject.name,
                           'Implementation-Vendor': vendorName]
 
-
 repositories {
     mavenCentral()
+}
+
+configurations {
+    mockitoAgent
 }
 
 dependencies {
@@ -31,6 +35,11 @@ dependencies {
 
     testImplementation(platform('org.junit:junit-bom:5.12.2'))
     testImplementation('org.junit.jupiter:junit-jupiter')
+    testImplementation 'org.assertj:assertj-core:3.27.3'
+    testImplementation 'org.mockito:mockito-core:5.18.0'
+    testImplementation 'org.mockito:mockito-junit-jupiter:5.18.0'
+    mockitoAgent('org.mockito:mockito-core:5.18.0') {transitive = false}
+
     testRuntimeOnly('org.junit.platform:junit-platform-launcher')
 }
 
@@ -46,7 +55,12 @@ jar {
     }
 }
 
-
 test {
     useJUnitPlatform()
+    jvmArgs += "-javaagent:${configurations.mockitoAgent.asPath}"
+    finalizedBy jacocoTestReport
+}
+
+jacocoTestReport {
+    dependsOn test
 }

@@ -14,7 +14,8 @@ public class UserDeserializer extends JsonDeserializer<User> {
         JsonNode node = p.readValueAsTree();
         String id = node.get("id").asText();
         String email = node.get("email").asText();
-        boolean isAdmin = node.get("isAdmin").asBoolean();
+        JsonNode isAdminNode = node.get("isAdmin");
+        boolean isAdmin = isAdminNode != null && isAdminNode.asBoolean();
         String realName = node.get("realName").asText();
         String status = node.get("status").asText();
         long lastActivity = node.get("lastActivity").asLong();

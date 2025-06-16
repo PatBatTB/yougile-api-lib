@@ -6,7 +6,6 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.experimental.FieldDefaults;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -18,12 +17,11 @@ public class ChatSubscribersEditBody extends RequestBody {
     @JsonProperty("content")
     List<String> users;
 
-    private ChatSubscribersEditBody(List<String> users) {
-        this.users = users;
+    private ChatSubscribersEditBody() {
     }
 
     public static ChatSubscribersEditBody.Builder builder() {
-        return new Builder(new ChatSubscribersEditBody(new ArrayList<>()));
+        return new Builder(new ChatSubscribersEditBody());
     }
 
     public static class Builder extends BodyBuilder<ChatSubscribersEditBody> {

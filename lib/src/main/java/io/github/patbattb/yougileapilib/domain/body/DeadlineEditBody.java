@@ -18,7 +18,6 @@ public class DeadlineEditBody extends RequestBody {
     Boolean withTime;
     final List<String> history;
     final List<String> blockedPoints;
-    //TODO Можно передавать ID задачи в конструктор, то бы в списке была как минимум одна задача.
     final List<String> links;
     Boolean deleted;
 

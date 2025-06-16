@@ -32,7 +32,7 @@ public class DepartmentDeserializer extends JsonDeserializer<Department> {
             }
         }
         JsonNode parentIdNode = node.get("parentId");
-        String parentId = (parentIdNode == null) ? "" : parentIdNode.asText();
+        String parentId = (parentIdNode == null) ? null : parentIdNode.asText();
 
         return new Department(deleted, id, title, parentId, userList);
     }

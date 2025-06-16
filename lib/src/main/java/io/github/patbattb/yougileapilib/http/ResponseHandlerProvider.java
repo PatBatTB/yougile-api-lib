@@ -57,7 +57,6 @@ public class ResponseHandlerProvider {
         Content content = new Content(response.getEntity().getContent().readAllBytes(), ContentType.APPLICATION_JSON);
         JsonMapper mapper = new JsonMapper();
         JsonNode rootNode = mapper.readTree(content.asString());
-        System.out.println(rootNode);
         String messageString;
         JsonNode messageNode = rootNode.get("message");
         if (messageNode instanceof ArrayNode) {

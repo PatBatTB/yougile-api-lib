@@ -16,7 +16,8 @@ public class ProjectRoleDeserializer extends JsonDeserializer<ProjectRole> {
         JsonNode node = p.readValueAsTree();
         String id = node.get("id").asText();
         String name = node.get("name").asText();
-        String description = node.get("description").asText();
+        JsonNode descriptionNode = node.get("description");
+        String description = descriptionNode == null ? null : descriptionNode.asText();
         JsonMapper mapper = new JsonMapper();
         ProjectPermissions projectPermissions = mapper.readValue(node.get("permissions").toString(), ProjectPermissions.class);
         return new ProjectRole(id, name, description, projectPermissions);
