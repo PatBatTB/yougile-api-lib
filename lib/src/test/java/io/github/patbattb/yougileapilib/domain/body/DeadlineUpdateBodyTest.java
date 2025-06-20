@@ -2,7 +2,7 @@ package io.github.patbattb.yougileapilib.domain.body;
 
 import org.junit.jupiter.api.Test;
 
-class DeadlineEditBodyTest {
+class DeadlineUpdateBodyTest {
 
     @Test
     void builder() {

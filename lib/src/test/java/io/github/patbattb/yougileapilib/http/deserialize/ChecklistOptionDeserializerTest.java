@@ -1,13 +1,13 @@
 package io.github.patbattb.yougileapilib.http.deserialize;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import io.github.patbattb.yougileapilib.domain.Checkpoint;
+import io.github.patbattb.yougileapilib.domain.ChecklistOption;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class CheckpointDeserializerTest extends AbstractDeserializerTest {
+class ChecklistOptionDeserializerTest extends AbstractDeserializerTest {
 
     @Test
     @DisplayName("Deserialize required fields only")
@@ -24,8 +24,8 @@ class CheckpointDeserializerTest extends AbstractDeserializerTest {
                 """, title, completed
         );
 
-        Checkpoint checkpoint = mapper.readValue(jsonString, Checkpoint.class);
-        assertThat(checkpoint.getTitle()).isEqualTo(title);
-        assertThat(checkpoint.isCompleted()).isEqualTo(completed);
+        ChecklistOption checklistOption = mapper.readValue(jsonString, ChecklistOption.class);
+        assertThat(checklistOption.getTitle()).isEqualTo(title);
+        assertThat(checklistOption.isCompleted()).isEqualTo(completed);
     }
 }

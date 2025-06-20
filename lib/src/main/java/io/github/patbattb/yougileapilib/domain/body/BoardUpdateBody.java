@@ -8,24 +8,24 @@ import lombok.experimental.FieldDefaults;
 
 @Getter
 @FieldDefaults(level = AccessLevel.PRIVATE)
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
-public class BoardEditBody extends RequestBody {
+@JsonInclude(JsonInclude.Include.NON_NULL)
+public class BoardUpdateBody extends RequestBody {
 
     Boolean deleted;
     String title;
     String projectId;
     BoardStickerInfo stickers;
 
-    private BoardEditBody() {
+    private BoardUpdateBody() {
     }
 
-    public static BoardEditBody.Builder builder() {
-        return new Builder(new BoardEditBody());
+    public static BoardUpdateBody.Builder builder() {
+        return new Builder(new BoardUpdateBody());
     }
 
-    public static class Builder extends BodyBuilder<BoardEditBody> {
+    public static class Builder extends BodyBuilder<BoardUpdateBody> {
 
-        private Builder(BoardEditBody body) {
+        private Builder(BoardUpdateBody body) {
             super(body);
         }
 

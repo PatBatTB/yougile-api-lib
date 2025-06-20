@@ -6,7 +6,7 @@ import com.fasterxml.jackson.databind.JsonDeserializer;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.json.JsonMapper;
 import io.github.patbattb.yougileapilib.domain.Checklist;
-import io.github.patbattb.yougileapilib.domain.Checkpoint;
+import io.github.patbattb.yougileapilib.domain.ChecklistOption;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -18,13 +18,13 @@ public class ChecklistDeserializer extends JsonDeserializer<Checklist> {
         JsonNode rootNode = p.readValueAsTree();
         String title = rootNode.get("title").asText();
         JsonNode currentNode = rootNode.get("items");
-        List<Checkpoint> checkpoints = new ArrayList<>();
+        List<ChecklistOption> checklistOptions = new ArrayList<>();
         if (currentNode != null && currentNode.isArray()) {
             JsonMapper mapper = new JsonMapper();
             for (JsonNode node: currentNode) {
-                checkpoints.add(mapper.readValue(node.toString(), Checkpoint.class));
+                checklistOptions.add(mapper.readValue(node.toString(), ChecklistOption.class));
             }
         }
-        return new Checklist(title, checkpoints);
+        return new Checklist(title, checklistOptions);
     }
 }

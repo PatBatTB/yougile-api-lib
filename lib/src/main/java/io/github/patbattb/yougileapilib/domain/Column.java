@@ -18,7 +18,7 @@ public class Column {
     @Setter
     String title;
     @Setter
-    Integer color;
+    Integer color; //TODO проверка на допустимость значения
     @Setter
     String boardId;
 }

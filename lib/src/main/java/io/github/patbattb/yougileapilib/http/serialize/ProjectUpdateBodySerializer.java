@@ -4,13 +4,13 @@ import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.SerializerProvider;
 import io.github.patbattb.yougileapilib.domain.UserRole;
-import io.github.patbattb.yougileapilib.domain.body.ProjectEditBody;
+import io.github.patbattb.yougileapilib.domain.body.ProjectUpdateBody;
 
 import java.io.IOException;
 
-public class ProjectEditBodySerializer extends JsonSerializer<ProjectEditBody> {
+public class ProjectUpdateBodySerializer extends JsonSerializer<ProjectUpdateBody> {
     @Override
-    public void serialize(ProjectEditBody value, JsonGenerator gen, SerializerProvider serializers) throws IOException {
+    public void serialize(ProjectUpdateBody value, JsonGenerator gen, SerializerProvider serializers) throws IOException {
         gen.writeStartObject();
         gen.writeBooleanField("deleted", value.getDeleted());
         if (value.getTitle() != null) {

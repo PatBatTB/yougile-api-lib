@@ -1,6 +1,7 @@
 package io.github.patbattb.yougileapilib.domain;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import io.github.patbattb.yougileapilib.http.deserialize.BoardStickerInfoDeserializer;
 import lombok.*;
@@ -13,7 +14,7 @@ import java.util.List;
 @AllArgsConstructor
 @EqualsAndHashCode
 @ToString
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonDeserialize(using = BoardStickerInfoDeserializer.class)
 public class BoardStickerInfo {
     boolean timer;
@@ -22,5 +23,6 @@ public class BoardStickerInfo {
     boolean timeTracking;
     boolean assignee;
     boolean repeat;
+    @JsonProperty("custom")
     List<CustomSticker> stickers;
 }

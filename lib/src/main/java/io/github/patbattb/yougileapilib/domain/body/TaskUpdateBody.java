@@ -6,12 +6,14 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.experimental.FieldDefaults;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
 
 @Getter
 @FieldDefaults(level = AccessLevel.PRIVATE)
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
-public class TaskEditBody extends RequestBody {
+@JsonInclude(JsonInclude.Include.NON_NULL)
+public class TaskUpdateBody extends RequestBody {
 
     Boolean deleted;
     String title;
@@ -19,32 +21,28 @@ public class TaskEditBody extends RequestBody {
     String description;
     Boolean archived;
     Boolean completed;
-    final List<String> subtasks;
-    final List<String> assigned;
-    DeadlineEditBody deadline;
-    TimeTrackingEditBody timeTracking;
-    final List<Checklist> checklists;
-    final Map<String, String> stickers;
+    List<String> subtasks;
+    List<String> assigned;
+    DeadlineUpdateBody deadline;
+    TimeTrackingUpdateBody timeTracking;
+    List<Checklist> checklists;
+    Map<String, String> stickers;
     String color;
     String idTaskCommon;
     String idTaskProject;
-    TimerEditBody timer;
-    StopwatchEditBody stopwatch;
+    TimerUpdateBody timer;
+    StopwatchUpdateBody stopwatch;
 
-    private TaskEditBody(List<String> subtasks, List<String> assigned, List<Checklist> checklists, Map<String, String> stickers) {
-        this.subtasks = subtasks;
-        this.assigned = assigned;
-        this.checklists = checklists;
-        this.stickers = stickers;
+    private TaskUpdateBody() {
     }
 
-    public static TaskEditBody.Builder builder() {
-        return new Builder(new TaskEditBody(new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new HashMap<>()));
+    public static TaskUpdateBody.Builder builder() {
+        return new Builder(new TaskUpdateBody());
     }
 
-    public static class Builder extends BodyBuilder<TaskEditBody> {
+    public static class Builder extends BodyBuilder<TaskUpdateBody> {
 
-        private Builder(TaskEditBody body) {
+        private Builder(TaskUpdateBody body) {
             super(body);
         }
 
@@ -79,34 +77,35 @@ public class TaskEditBody extends RequestBody {
         }
 
         public Builder subtasks(String... taskId) {
-            body.subtasks.addAll(Arrays.asList(taskId));
+            body.subtasks = Arrays.asList(taskId);
             return this;
         }
 
         public Builder assigned(String... userId) {
-            body.assigned.addAll(Arrays.asList(userId));
+            body.assigned = Arrays.asList(userId);
             return this;
         }
 
-        public Builder deadline(DeadlineEditBody value) {
+        public Builder deadline(DeadlineUpdateBody value) {
             body.deadline = value;
             return this;
         }
 
-        public Builder timeTracking(TimeTrackingEditBody value) {
+        public Builder timeTracking(TimeTrackingUpdateBody value) {
             body.timeTracking = value;
             return this;
         }
 
         public Builder checklists(Checklist... checklist) {
-            body.checklists.addAll(Arrays.asList(checklist));
+            body.checklists = Arrays.asList(checklist);
             return this;
         }
 
-        public Builder stickers(Map<String, String> value) {
-            body.stickers.putAll(value);
-            return this;
-        }
+        //TODO doesn't work. Error in side of API. Made ticket to yougile techsupport;
+//        public Builder stickers(Map<String, String> stickers) {
+//            body.stickers = Map.copyOf(stickers);
+//            return this;
+//        }
 
         //TODO добавить проверку на валидность значения
         public Builder color(String value) {
@@ -124,12 +123,12 @@ public class TaskEditBody extends RequestBody {
             return this;
         }
 
-        public Builder timer(TimerEditBody value) {
+        public Builder timer(TimerUpdateBody value) {
             body.timer = value;
             return this;
         }
 
-        public Builder stopwatch(StopwatchEditBody value) {
+        public Builder stopwatch(StopwatchUpdateBody value) {
             body.stopwatch = value;
             return this;
         }

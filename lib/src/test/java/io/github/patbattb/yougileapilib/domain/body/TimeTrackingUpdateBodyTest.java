@@ -8,27 +8,27 @@ import java.lang.reflect.Modifier;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class TimeTrackingEditBodyTest {
+class TimeTrackingUpdateBodyTest {
 
     @Test
     @DisplayName("The class has private default constructor")
     void constructor() throws NoSuchMethodException {
-        Constructor<TimeTrackingEditBody> constructor = TimeTrackingEditBody.class.getDeclaredConstructor();
+        Constructor<TimeTrackingUpdateBody> constructor = TimeTrackingUpdateBody.class.getDeclaredConstructor();
         assertThat(constructor.getModifiers()).isEqualTo(Modifier.PRIVATE);
     }
 
     @Test
     @DisplayName("builder() returns the Builder with whe TimeTrackingEditBody")
     void builder() {
-        TimeTrackingEditBody.Builder builder = TimeTrackingEditBody.builder();
-        assertThat(builder.body).isInstanceOf(TimeTrackingEditBody.class);
+        TimeTrackingUpdateBody.Builder builder = TimeTrackingUpdateBody.builder();
+        assertThat(builder.body).isInstanceOf(TimeTrackingUpdateBody.class);
     }
 
     @Test
     @DisplayName("getPlan() returns the value that was passed to the builder")
     void getPlan() {
         double plan = 10;
-        TimeTrackingEditBody body = TimeTrackingEditBody.builder().plan(plan).build();
+        TimeTrackingUpdateBody body = TimeTrackingUpdateBody.builder().plan(plan).build();
         assertThat(body.getPlan()).isEqualTo(plan);
     }
 
@@ -36,7 +36,7 @@ class TimeTrackingEditBodyTest {
     @DisplayName("getWork() returns the value that was passed to the builder")
     void getWork() {
         double work = 10;
-        TimeTrackingEditBody body = TimeTrackingEditBody.builder().work(work).build();
+        TimeTrackingUpdateBody body = TimeTrackingUpdateBody.builder().work(work).build();
         assertThat(body.getWork()).isEqualTo(work);
     }
 
@@ -44,28 +44,28 @@ class TimeTrackingEditBodyTest {
     @DisplayName("getDeleted() returns the value that was passed to the builder")
     void getDeleted() {
         boolean deleted = true;
-        TimeTrackingEditBody body = TimeTrackingEditBody.builder().deleted(deleted).build();
+        TimeTrackingUpdateBody body = TimeTrackingUpdateBody.builder().deleted(deleted).build();
         assertThat(body.getDeleted()).isEqualTo(deleted);
     }
 
     @Test
     @DisplayName("getPlan() returns null if the value wasn't passed to the builder")
     void getPlanNull() {
-        TimeTrackingEditBody body = TimeTrackingEditBody.builder().build();
+        TimeTrackingUpdateBody body = TimeTrackingUpdateBody.builder().build();
         assertThat(body.getPlan()).isNull();
     }
 
     @Test
     @DisplayName("getWork() returns null if the value wasn't passed to the builder")
     void getWorkNull() {
-        TimeTrackingEditBody body = TimeTrackingEditBody.builder().build();
+        TimeTrackingUpdateBody body = TimeTrackingUpdateBody.builder().build();
         assertThat(body.getWork()).isNull();
     }
 
     @Test
     @DisplayName("getDeleted() returns null if the value wasn't passed to the builder")
     void getDeletedNull() {
-        TimeTrackingEditBody body = TimeTrackingEditBody.builder().build();
+        TimeTrackingUpdateBody body = TimeTrackingUpdateBody.builder().build();
         assertThat(body.getDeleted()).isNull();
     }
 }

@@ -4,10 +4,10 @@ import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AccessLevel;
 import lombok.Getter;
+import lombok.NonNull;
 import lombok.experimental.FieldDefaults;
 
-
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_NULL)
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class UserBody extends RequestBody {
 
@@ -19,7 +19,7 @@ public class UserBody extends RequestBody {
         this.email = email;
     }
 
-    public static UserBody.Builder builder(String email) {
+    public static UserBody.Builder builder(@NonNull String email) {
         return new Builder(new UserBody(email));
     }
 
@@ -40,4 +40,5 @@ public class UserBody extends RequestBody {
         }
     }
 }
+
 

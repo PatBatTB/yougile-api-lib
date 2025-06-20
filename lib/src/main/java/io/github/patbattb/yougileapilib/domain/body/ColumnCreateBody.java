@@ -3,11 +3,12 @@ package io.github.patbattb.yougileapilib.domain.body;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AccessLevel;
 import lombok.Getter;
+import lombok.NonNull;
 import lombok.experimental.FieldDefaults;
 
 @Getter
 @FieldDefaults(level = AccessLevel.PRIVATE)
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class ColumnCreateBody extends RequestBody {
 
     final String title;
@@ -19,7 +20,7 @@ public class ColumnCreateBody extends RequestBody {
         this.boardId = boardId;
     }
 
-    public static ColumnCreateBody.Builder builder(String title, String boardId) {
+    public static ColumnCreateBody.Builder builder(@NonNull String title, @NonNull String boardId) {
         return new Builder(new ColumnCreateBody(title, boardId));
     }
 

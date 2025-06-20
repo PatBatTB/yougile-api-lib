@@ -2,35 +2,34 @@ package io.github.patbattb.yougileapilib.domain.body;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import io.github.patbattb.yougileapilib.domain.UserRole;
-import io.github.patbattb.yougileapilib.http.serialize.DepartmentEditBodySerializer;
+import io.github.patbattb.yougileapilib.http.serialize.DepartmentUpdateBodySerializer;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.experimental.FieldDefaults;
 
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @Getter
 @FieldDefaults(level = AccessLevel.PRIVATE)
-@JsonSerialize(using = DepartmentEditBodySerializer.class)
-public class DepartmentEditBody extends RequestBody {
+@JsonSerialize(using = DepartmentUpdateBodySerializer.class)
+public class DepartmentUpdateBody extends RequestBody {
 
     Boolean deleted;
     String title;
     String parentId;
-    final List<UserRole> users;
+    List<UserRole> users;
 
-    private DepartmentEditBody(List<UserRole> users) {
-        this.users = users;
+    private DepartmentUpdateBody() {
     }
 
-    public static DepartmentEditBody.Builder builder() {
-        return new Builder(new DepartmentEditBody(new ArrayList<>()));
+    public static DepartmentUpdateBody.Builder builder() {
+        return new Builder(new DepartmentUpdateBody());
     }
 
-    public static class Builder extends BodyBuilder<DepartmentEditBody> {
+    public static class Builder extends BodyBuilder<DepartmentUpdateBody> {
 
-        private Builder(DepartmentEditBody body) {
+        private Builder(DepartmentUpdateBody body) {
             super(body);
         }
 
@@ -51,7 +50,7 @@ public class DepartmentEditBody extends RequestBody {
 
         /**
          *
-         * @param user {@link UserRole} User ID with system or custom role ID.
+         * @param users {@link UserRole} User ID with system or custom role ID.
          *              Available system role IDs:
          *              <ul>
          *              <li>{@code manager}
@@ -59,8 +58,8 @@ public class DepartmentEditBody extends RequestBody {
          *              <li>{@code -} minus symbol to delete user from department.
          *              </ul>
          */
-        public Builder users(UserRole user) {
-            body.users.add(user);
+        public Builder users(UserRole... users) {
+            body.users = Arrays.asList(users);
             return this;
         }
     }

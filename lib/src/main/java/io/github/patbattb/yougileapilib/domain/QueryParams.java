@@ -26,20 +26,20 @@ public class QueryParams {
 
     public static class Builder {
 
-        private final QueryParams paremeters;
+        private final QueryParams parameters;
 
         public Builder(QueryParams params) {
-            this.paremeters = params;
+            this.parameters = params;
         }
 
         public Builder addParameter(String name, Object value) {
-           paremeters.paramsMap.put(name, value);
+           parameters.paramsMap.put(name, value);
            return this;
         }
 
         public QueryParams build()
         {
-            return paremeters;
+            return parameters;
         }
 
     }

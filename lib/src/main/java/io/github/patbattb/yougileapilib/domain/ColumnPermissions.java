@@ -16,7 +16,7 @@ import java.util.List;
 @EqualsAndHashCode
 @ToString
 @JsonDeserialize(using = ColumnPermissionsDeserializer.class)
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class ColumnPermissions {
     boolean editTitle;
     boolean delete;

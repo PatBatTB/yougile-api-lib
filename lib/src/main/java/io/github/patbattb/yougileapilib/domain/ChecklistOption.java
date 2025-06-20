@@ -2,7 +2,7 @@ package io.github.patbattb.yougileapilib.domain;
 
 import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import io.github.patbattb.yougileapilib.http.deserialize.CheckpointDeserializer;
+import io.github.patbattb.yougileapilib.http.deserialize.ChecklistOptionDeserializer;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
@@ -11,8 +11,8 @@ import lombok.experimental.FieldDefaults;
 @AllArgsConstructor
 @EqualsAndHashCode
 @ToString
-@JsonDeserialize(using = CheckpointDeserializer.class)
-public class Checkpoint {
+@JsonDeserialize(using = ChecklistOptionDeserializer.class)
+public class ChecklistOption {
     String title;
     boolean isCompleted;
 

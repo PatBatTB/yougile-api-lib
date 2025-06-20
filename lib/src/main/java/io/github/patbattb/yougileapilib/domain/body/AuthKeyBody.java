@@ -3,10 +3,11 @@ package io.github.patbattb.yougileapilib.domain.body;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AccessLevel;
 import lombok.Getter;
+import lombok.NonNull;
 import lombok.experimental.FieldDefaults;
 
 @Getter
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_NULL)
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class AuthKeyBody extends RequestBody {
 
@@ -20,7 +21,7 @@ public class AuthKeyBody extends RequestBody {
         this.companyId = companyId;
     }
 
-    public static AuthKeyBody.Builder builder(String login, String password, String companyId) {
+    public static AuthKeyBody.Builder builder(@NonNull String login, @NonNull String password, @NonNull String companyId) {
         return new Builder(new AuthKeyBody(login, password, companyId));
     }
 

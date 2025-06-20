@@ -7,24 +7,24 @@ import lombok.experimental.FieldDefaults;
 
 @Getter
 @FieldDefaults(level = AccessLevel.PRIVATE)
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
-public class ColumnEditBody extends RequestBody {
+@JsonInclude(JsonInclude.Include.NON_NULL)
+public class ColumnUpdateBody extends RequestBody {
 
     Boolean deleted;
     String title;
     Integer color;
     String boardId;
 
-    private ColumnEditBody() {
+    private ColumnUpdateBody() {
     }
 
-    public static ColumnEditBody.Builder builder() {
-        return new Builder(new ColumnEditBody());
+    public static ColumnUpdateBody.Builder builder() {
+        return new Builder(new ColumnUpdateBody());
     }
 
-    public static class Builder extends BodyBuilder<ColumnEditBody> {
+    public static class Builder extends BodyBuilder<ColumnUpdateBody> {
 
-        private Builder(ColumnEditBody body) {
+        private Builder(ColumnUpdateBody body) {
             super(body);
         }
 

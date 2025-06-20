@@ -14,7 +14,7 @@ import lombok.experimental.FieldDefaults;
 @EqualsAndHashCode
 @ToString
 @JsonDeserialize(using = ProjectPermissionsDeserializer.class)
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class ProjectPermissions {
     boolean editTitle;
     boolean delete;

@@ -5,12 +5,12 @@ import io.github.patbattb.yougileapilib.http.deserialize.TaskDeserializer;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
 @Getter
 @FieldDefaults(level = AccessLevel.PRIVATE)
-@AllArgsConstructor
 @EqualsAndHashCode
 @ToString
 @JsonDeserialize(using = TaskDeserializer.class)
@@ -42,9 +42,8 @@ public class Task {
     TimeTracking timeTracking;
     @Setter
     List<Checklist> checklists;
-    @Setter
     Map<String, String> stickers;
-    @Setter
+    @Setter //TODO проверка допустимых значений, реализовать как в permissions
     String color;
     @Setter
     String idTaskCommon;
@@ -54,4 +53,33 @@ public class Task {
     Stopwatch stopwatch;
     @Setter
     Timer timer;
+
+    public Task(boolean deleted, String id, String title, long created, String columnId, String description,
+                boolean archived, Long archivedTimestamp, boolean completed, Long completedTimestamp,
+                List<String> subtasks, List<String> assigned, String createdBy, Deadline deadline,
+                TimeTracking timeTracking, List<Checklist> checklists, Map<String, String> stickers,
+                String color, String idTaskCommon, String idTaskProject, Stopwatch stopwatch, Timer timer) {
+        this.deleted = deleted;
+        this.id = id;
+        this.title = title;
+        this.created = created;
+        this.columnId = columnId;
+        this.description = description;
+        this.archived = archived;
+        this.archivedTimestamp = archivedTimestamp;
+        this.completed = completed;
+        this.completedTimestamp = completedTimestamp;
+        this.subtasks = subtasks;
+        this.assigned = assigned;
+        this.createdBy = createdBy;
+        this.deadline = deadline;
+        this.timeTracking = timeTracking;
+        this.checklists = checklists;
+        this.stickers = Collections.unmodifiableMap(stickers);
+        this.color = color;
+        this.idTaskCommon = idTaskCommon;
+        this.idTaskProject = idTaskProject;
+        this.stopwatch = stopwatch;
+        this.timer = timer;
+    }
 }

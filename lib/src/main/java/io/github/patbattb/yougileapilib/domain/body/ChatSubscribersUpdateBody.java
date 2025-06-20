@@ -6,27 +6,29 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.experimental.FieldDefaults;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 @Getter
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class ChatSubscribersEditBody extends RequestBody {
+public class ChatSubscribersUpdateBody extends RequestBody {
 
     @JsonProperty("content")
     List<String> users;
 
-    private ChatSubscribersEditBody() {
+    private ChatSubscribersUpdateBody(List<String> users) {
+        this.users = users;
     }
 
-    public static ChatSubscribersEditBody.Builder builder() {
-        return new Builder(new ChatSubscribersEditBody());
+    public static ChatSubscribersUpdateBody.Builder builder() {
+        return new Builder(new ChatSubscribersUpdateBody(new ArrayList<>()));
     }
 
-    public static class Builder extends BodyBuilder<ChatSubscribersEditBody> {
+    public static class Builder extends BodyBuilder<ChatSubscribersUpdateBody> {
 
-        private Builder(ChatSubscribersEditBody body) {
+        private Builder(ChatSubscribersUpdateBody body) {
             super(body);
         }
 

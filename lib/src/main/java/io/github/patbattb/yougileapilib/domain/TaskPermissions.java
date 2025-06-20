@@ -15,7 +15,7 @@ import java.util.List;
 @EqualsAndHashCode
 @ToString
 @JsonDeserialize(using = TaskPermissionsDeserializer.class)
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class TaskPermissions {
     boolean show;
     boolean delete;

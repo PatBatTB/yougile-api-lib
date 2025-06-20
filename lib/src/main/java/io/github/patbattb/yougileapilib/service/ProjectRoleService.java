@@ -2,7 +2,7 @@ package io.github.patbattb.yougileapilib.service;
 
 import io.github.patbattb.yougileapilib.domain.*;
 import io.github.patbattb.yougileapilib.domain.body.ProjectRoleCreateBody;
-import io.github.patbattb.yougileapilib.domain.body.ProjectRoleEditBody;
+import io.github.patbattb.yougileapilib.domain.body.ProjectRoleUpdateBody;
 import io.github.patbattb.yougileapilib.http.ResponseHandlerProvider;
 import lombok.NonNull;
 import org.apache.http.client.fluent.Content;
@@ -60,17 +60,33 @@ public class ProjectRoleService extends AbstractRequestService {
         return getRoleById(projectId, roleId, authKey);
     }
 
-    public Id editRole(@NonNull String projectId,@NonNull String roleId,@NonNull ProjectRoleEditBody body,@NonNull AuthKey authKey) throws URISyntaxException, IOException {
+    public Id updateRole(@NonNull String projectId, @NonNull String roleId, @NonNull ProjectRoleUpdateBody body, @NonNull AuthKey authKey) throws URISyntaxException, IOException {
         Response response = sendPutRequest(configureURI().setPath(getEndpoint(projectId, roleId)).build(), body, authKey);
         Content content = response.handleResponse(ResponseHandlerProvider::okJsonHandler);
         return ContentHandler.handleId(content);
     }
 
-    public Id editRole(@NonNull String projectId,@NonNull String roleId,@NonNull ProjectRoleEditBody body) throws URISyntaxException, IOException {
+    public Id updateRole(@NonNull String projectId, @NonNull String roleId, @NonNull ProjectRoleUpdateBody body) throws URISyntaxException, IOException {
         if (authKey == null) {
             throw new NullPointerException(noAuthKeyMessage);
         }
-        return editRole(projectId, roleId, body, authKey);
+        return updateRole(projectId, roleId, body, authKey);
+    }
+
+    public Id updateRole(@NonNull String projectId, @NonNull ProjectRole role, @NonNull AuthKey authKey) throws URISyntaxException, IOException {
+        ProjectRoleUpdateBody body = ProjectRoleUpdateBody.builder()
+                .name(role.getName())
+                .description(role.getDescription())
+                .projectPermissions(role.getProjectPermissions())
+                .build();
+        return updateRole(projectId, role.getId(), body, authKey);
+    }
+
+    public Id updateRole(@NonNull String projectId, @NonNull ProjectRole role) throws URISyntaxException, IOException {
+        if (authKey == null) {
+            throw new NullPointerException(noAuthKeyMessage);
+        }
+        return updateRole(projectId, role, authKey);
     }
 
     public Id deleteRole(@NonNull String projectId,@NonNull String roleId,@NonNull AuthKey authKey) throws URISyntaxException, IOException {

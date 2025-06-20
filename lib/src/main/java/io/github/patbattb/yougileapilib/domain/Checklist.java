@@ -15,5 +15,5 @@ import java.util.List;
 @JsonDeserialize(using = ChecklistDeserializer.class)
 public class Checklist {
     String title;
-    List<Checkpoint> items;
+    List<ChecklistOption> items;
 }

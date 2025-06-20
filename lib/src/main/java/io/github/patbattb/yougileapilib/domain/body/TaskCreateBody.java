@@ -4,16 +4,16 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import io.github.patbattb.yougileapilib.domain.*;
 import lombok.AccessLevel;
 import lombok.Getter;
+import lombok.NonNull;
 import lombok.experimental.FieldDefaults;
 
-import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
 @Getter
 @FieldDefaults(level = AccessLevel.PRIVATE)
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class TaskCreateBody extends RequestBody {
 
     final String title;
@@ -22,31 +22,24 @@ public class TaskCreateBody extends RequestBody {
     String description;
     Boolean archived;
     Boolean completed;
-    final List<String> subtasks;
-    final List<String> assigned;
+    List<String> subtasks;
+    List<String> assigned;
     Deadline deadline;
     TimeTracking timeTracking;
-    final List<Checklist> checklists;
-    final Map<String, String> stickers;
+    List<Checklist> checklists;
+    Map<String, String> stickers;
     String color;
     String idTaskCommon;
     String idTaskProject;
     Stopwatch stopwatch;
     Timer timer;
 
-    private TaskCreateBody(String title, List<String> subtasks, List<String> assigned,
-                           List<Checklist> checklists, Map<String, String> stickers) {
+    private TaskCreateBody(String title) {
         this.title = title;
-        this.subtasks = subtasks;
-        this.assigned = assigned;
-        this.checklists = checklists;
-        this.stickers = stickers;
     }
 
-    public static TaskCreateBody.Builder builder(String title) {
-        return new Builder(
-                new TaskCreateBody(title, new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new HashMap<>())
-        );
+    public static TaskCreateBody.Builder builder(@NonNull String title) {
+        return new Builder(new TaskCreateBody(title));
     }
 
     public static class Builder extends BodyBuilder<TaskCreateBody> {
@@ -75,13 +68,13 @@ public class TaskCreateBody extends RequestBody {
             return this;
         }
 
-        public Builder addSubtask(String subtaskId) {
-            body.subtasks.add(subtaskId);
+        public Builder subtasks(String... subtaskIds) {
+            body.subtasks = Arrays.asList(subtaskIds);
             return this;
         }
 
-        public Builder addAssigned(String userId) {
-            body.assigned.add(userId);
+        public Builder assigned(String... userIds) {
+            body.assigned = Arrays.asList(userIds);
             return this;
         }
 
@@ -95,13 +88,13 @@ public class TaskCreateBody extends RequestBody {
             return this;
         }
 
-        public Builder addChecklist(Checklist checklist) {
-            body.checklists.add(checklist);
+        public Builder checklists(Checklist... checklist) {
+            body.checklists = Arrays.asList(checklist);
             return this;
         }
 
-        public Builder addSticker(String stickerId, String stateId) {
-            body.stickers.put(stickerId, stateId);
+        public Builder stickers(Map<String, String> stickers) {
+            body.stickers = Map.copyOf(stickers);
             return this;
         }
 
