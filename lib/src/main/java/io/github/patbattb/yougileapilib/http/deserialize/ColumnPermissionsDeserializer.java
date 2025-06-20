@@ -16,7 +16,8 @@ public class ColumnPermissionsDeserializer extends JsonDeserializer<ColumnPermis
         JsonNode node = p.readValueAsTree();
         boolean editTitle = node.get("editTitle").asBoolean();
         boolean delete = node.get("delete").asBoolean();
-        String move = node.get("move").asText();
+        String moveValue = node.get("move").asText();
+        ColumnPermissions.Move move = ColumnPermissions.Move.fromValue(moveValue);
         boolean addTask = node.get("addTask").asBoolean();
         JsonMapper mapper = new JsonMapper();
         TaskPermissions allTaskPermissions = mapper.readValue(node.get("allTasks").toString(), TaskPermissions.class);

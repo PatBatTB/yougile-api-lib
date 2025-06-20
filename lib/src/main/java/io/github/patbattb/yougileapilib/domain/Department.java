@@ -22,5 +22,5 @@ public class Department {
     @Setter
     String parentId;
     @Setter
-    List<UserRole> users;
+    List<DepartmentUser> users;
 }

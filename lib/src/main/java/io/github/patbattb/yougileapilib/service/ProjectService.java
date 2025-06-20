@@ -104,7 +104,7 @@ public class ProjectService extends AbstractRequestService {
         ProjectUpdateBody body = ProjectUpdateBody.builder()
                 .deleted(project.isDeleted())
                 .title(project.getTitle())
-                .users(project.getUsers().toArray(UserRole[]::new))
+                .users(project.getUsers().toArray(ProjectUser[]::new))
                 .build();
         return updateProject(project.getId(), body, authKey);
     }

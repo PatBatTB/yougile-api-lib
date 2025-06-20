@@ -1,7 +1,7 @@
 package io.github.patbattb.yougileapilib.domain.body;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import io.github.patbattb.yougileapilib.domain.UserRole;
+import io.github.patbattb.yougileapilib.domain.ProjectUser;
 import io.github.patbattb.yougileapilib.http.serialize.ProjectUpdateBodySerializer;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -17,7 +17,7 @@ public class ProjectUpdateBody extends RequestBody {
 
     Boolean deleted;
     String title;
-    List<UserRole> users;
+    List<ProjectUser> users;
 
     private ProjectUpdateBody() {
     }
@@ -42,7 +42,7 @@ public class ProjectUpdateBody extends RequestBody {
             return this;
         }
 
-        public Builder users(UserRole... users) {
+        public Builder users(ProjectUser... users) {
             body.users = Arrays.asList(users);
             return this;
         }

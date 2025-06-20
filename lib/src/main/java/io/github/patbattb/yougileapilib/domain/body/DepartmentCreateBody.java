@@ -1,7 +1,7 @@
 package io.github.patbattb.yougileapilib.domain.body;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import io.github.patbattb.yougileapilib.domain.UserRole;
+import io.github.patbattb.yougileapilib.domain.DepartmentUser;
 import io.github.patbattb.yougileapilib.http.serialize.DepartmentCreateBodySerializer;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -18,7 +18,7 @@ public class DepartmentCreateBody extends RequestBody {
 
     final String title;
     String parentId;
-    List<UserRole> users;
+    List<DepartmentUser> users;
 
     private DepartmentCreateBody(String title) {
         this.title = title;
@@ -36,7 +36,7 @@ public class DepartmentCreateBody extends RequestBody {
 
         /**
          *
-         * @param users {@link UserRole} User IDs with system or custom role ID.
+         * @param users {@link DepartmentUser} User IDs with system or custom role ID.
          *              Available system role IDs:
          *              <ul>
          *              <li>{@code manager}
@@ -44,7 +44,7 @@ public class DepartmentCreateBody extends RequestBody {
          *              <li>{@code -} minus symbol to delete user from department.
          *              </ul>
          */
-        public Builder users(UserRole... users) {
+        public Builder users(DepartmentUser... users) {
             body.users = Arrays.asList(users);
             return this;
         }

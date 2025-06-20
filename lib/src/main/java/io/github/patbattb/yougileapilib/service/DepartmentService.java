@@ -108,7 +108,7 @@ public class DepartmentService extends AbstractRequestService {
                 .deleted(department.isDeleted())
                 .title(department.getTitle())
                 .parentId(department.getParentId())
-                .users(department.getUsers().toArray(new UserRole[0]))
+                .users(department.getUsers().toArray(DepartmentUser[]::new))
                 .build();
         return updateDepartment(department.getId(), body, authKey);
     }

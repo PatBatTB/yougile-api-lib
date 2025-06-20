@@ -5,7 +5,7 @@ import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonDeserializer;
 import com.fasterxml.jackson.databind.JsonNode;
 import io.github.patbattb.yougileapilib.domain.Department;
-import io.github.patbattb.yougileapilib.domain.UserRole;
+import io.github.patbattb.yougileapilib.domain.DepartmentUser;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -24,11 +24,11 @@ public class DepartmentDeserializer extends JsonDeserializer<Department> {
         String id = node.get("id").asText();
         String title = node.get("title").asText();
 
-        List<UserRole> userList = new ArrayList<>();
+        List<DepartmentUser> userList = new ArrayList<>();
         JsonNode usersNode = node.get("users");
         if (usersNode != null) {
             for(Map.Entry<String, JsonNode> enty: usersNode.properties()) {
-                userList.add(new UserRole(enty.getKey(), enty.getValue().asText()));
+                userList.add(new DepartmentUser(enty.getKey(), DepartmentUser.RoleId.fromValue(enty.getValue().asText())));
             }
         }
         JsonNode parentIdNode = node.get("parentId");

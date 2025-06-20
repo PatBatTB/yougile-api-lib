@@ -13,6 +13,7 @@ import java.util.List;
 @EqualsAndHashCode
 @ToString
 @JsonDeserialize(using = ProjectDeserializer.class)
+//TODO провести ручной тест сериализации и десериализации users
 public class Project {
     @Setter
     boolean deleted;
@@ -21,5 +22,5 @@ public class Project {
     String title;
     long created;
     @Setter
-    List<UserRole> users;
+    List<ProjectUser> users;
 }
