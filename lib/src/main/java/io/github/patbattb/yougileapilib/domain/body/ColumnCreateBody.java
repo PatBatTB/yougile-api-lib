@@ -1,6 +1,7 @@
 package io.github.patbattb.yougileapilib.domain.body;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import io.github.patbattb.yougileapilib.domain.Column;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NonNull;
@@ -31,9 +32,7 @@ public class ColumnCreateBody extends RequestBody {
         }
 
         public Builder color(int value) {
-            if (value < 1 || value > 16) {
-                throw new IllegalArgumentException("The color value must be between 1 and 16");
-            }
+            Column.colorCheck(value);
             body.color = value;
             return this;
         }

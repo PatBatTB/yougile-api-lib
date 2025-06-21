@@ -2,6 +2,7 @@ package io.github.patbattb.yougileapilib.domain.body;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import io.github.patbattb.yougileapilib.domain.Checklist;
+import io.github.patbattb.yougileapilib.domain.Task;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.experimental.FieldDefaults;
@@ -27,7 +28,7 @@ public class TaskUpdateBody extends RequestBody {
     TimeTrackingUpdateBody timeTracking;
     List<Checklist> checklists;
     Map<String, String> stickers;
-    String color;
+    Task.Color color;
     String idTaskCommon;
     String idTaskProject;
     TimerUpdateBody timer;
@@ -107,8 +108,7 @@ public class TaskUpdateBody extends RequestBody {
 //            return this;
 //        }
 
-        //TODO добавить проверку на валидность значения
-        public Builder color(String value) {
+        public Builder color(Task.Color value) {
             body.color = value;
             return this;
         }

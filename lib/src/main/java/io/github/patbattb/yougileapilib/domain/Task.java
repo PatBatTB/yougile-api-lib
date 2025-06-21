@@ -1,10 +1,12 @@
 package io.github.patbattb.yougileapilib.domain;
 
+import com.fasterxml.jackson.annotation.JsonValue;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import io.github.patbattb.yougileapilib.http.deserialize.TaskDeserializer;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -17,34 +19,34 @@ import java.util.Map;
 public class Task {
     @Setter
     boolean deleted;
-    String id;
+    final String id;
     @Setter
     String title;
-    long created; //timestamp
+    final long created;
     @Setter
     String columnId;
     @Setter
     String description;
     @Setter
     boolean archived;
-    Long archivedTimestamp;
+    final Long archivedTimestamp;
     @Setter
     boolean completed;
-    Long completedTimestamp;
+    final Long completedTimestamp;
     @Setter
     List<String> subtasks;
     @Setter
     List<String> assigned;
-    String createdBy;
+    final String createdBy;
     @Setter
     Deadline deadline;
     @Setter
     TimeTracking timeTracking;
     @Setter
     List<Checklist> checklists;
-    Map<String, String> stickers;
-    @Setter //TODO проверка допустимых значений, реализовать как в permissions
-    String color;
+    final Map<String, String> stickers;
+    @Setter
+    Color color;
     @Setter
     String idTaskCommon;
     @Setter
@@ -58,7 +60,7 @@ public class Task {
                 boolean archived, Long archivedTimestamp, boolean completed, Long completedTimestamp,
                 List<String> subtasks, List<String> assigned, String createdBy, Deadline deadline,
                 TimeTracking timeTracking, List<Checklist> checklists, Map<String, String> stickers,
-                String color, String idTaskCommon, String idTaskProject, Stopwatch stopwatch, Timer timer) {
+                Color color, String idTaskCommon, String idTaskProject, Stopwatch stopwatch, Timer timer) {
         this.deleted = deleted;
         this.id = id;
         this.title = title;
@@ -81,5 +83,35 @@ public class Task {
         this.idTaskProject = idTaskProject;
         this.stopwatch = stopwatch;
         this.timer = timer;
+    }
+
+    public enum Color {
+        PRIMARY("task-primary"),
+        GRAY("task-gray"),
+        RED("task-red"),
+        PINK("task-pink"),
+        YELLOW("task-yellow"),
+        GREEN("task-green"),
+        TURQUOISE("task-turquoise"),
+        BLUE("task-blue"),
+        VIOLET("task-violet");
+
+        private static final String API_FIELD_NAME = "color";
+        @JsonValue
+        @Getter
+        private final String value;
+
+        Color(String value) {
+            this.value = value;
+        }
+
+        public static Color fromValue(String value) {
+            for (Color color: Color.values()) {
+                if (color.value.equalsIgnoreCase(value)) {
+                    return color;
+                }
+            }
+            throw new IllegalArgumentException(API_FIELD_NAME + " value must be one of: " + Arrays.stream(values()).map(elem -> elem.value).toList());
+        }
     }
 }

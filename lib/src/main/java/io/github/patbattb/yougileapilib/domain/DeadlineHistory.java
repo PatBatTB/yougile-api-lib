@@ -9,7 +9,7 @@ import lombok.experimental.FieldDefaults;
 @NoArgsConstructor
 @EqualsAndHashCode
 @ToString
-public class DeadLineHistory {
+public class DeadlineHistory {
     long deadline;
     long timestamp;
     long notifyBefore;

@@ -21,7 +21,7 @@ public class Deadline {
     Long startDate;
     @Setter
     Boolean withTime;
-    List<DeadLineHistory> history;
+    List<DeadlineHistory> history;
     List<String> blockedPoints;
     List<String> links;
 

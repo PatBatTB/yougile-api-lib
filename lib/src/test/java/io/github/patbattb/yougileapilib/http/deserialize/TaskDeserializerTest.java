@@ -262,7 +262,6 @@ class TaskDeserializerTest extends AbstractDeserializerTest {
                 """, title, created, id
         );
         Task task = mapper.readValue(jsonString, Task.class);
-        //TODO wrong example for deadline in API docs
     }
 
     @Test
@@ -354,7 +353,7 @@ class TaskDeserializerTest extends AbstractDeserializerTest {
     @Test
     @DisplayName("Deserialize color field")
     void deserializeColor() throws JsonProcessingException {
-        String color = "task-red";
+        Task.Color color = Task.Color.RED;
         String jsonString = String.format(
                 """
                 {
@@ -363,7 +362,7 @@ class TaskDeserializerTest extends AbstractDeserializerTest {
                   "id": "%s",
                   "color": "%s"
                 }
-                """, title, created, id, color
+                """, title, created, id, color.getValue()
         );
         Task task = mapper.readValue(jsonString, Task.class);
         assertThat(task.getColor()).isEqualTo(color);

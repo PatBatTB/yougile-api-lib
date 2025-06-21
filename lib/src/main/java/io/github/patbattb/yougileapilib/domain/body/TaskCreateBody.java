@@ -28,7 +28,7 @@ public class TaskCreateBody extends RequestBody {
     TimeTracking timeTracking;
     List<Checklist> checklists;
     Map<String, String> stickers;
-    String color;
+    Task.Color color;
     String idTaskCommon;
     String idTaskProject;
     Stopwatch stopwatch;
@@ -98,8 +98,7 @@ public class TaskCreateBody extends RequestBody {
             return this;
         }
 
-        public Builder color(String value) {
-            //TODO Проверка на валидность переданного значения
+        public Builder color(Task.Color value) {
             body.color = value;
             return this;
         }
