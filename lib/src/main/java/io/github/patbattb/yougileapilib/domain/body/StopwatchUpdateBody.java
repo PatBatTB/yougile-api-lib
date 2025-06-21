@@ -7,28 +7,23 @@ import lombok.experimental.FieldDefaults;
 
 @Getter
 @FieldDefaults(level = AccessLevel.PRIVATE)
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
-public class TimerEditBody extends RequestBody {
+@JsonInclude(JsonInclude.Include.NON_NULL)
+public class StopwatchUpdateBody extends RequestBody {
 
-    Integer seconds;
     Boolean running;
     Boolean deleted;
 
-    private TimerEditBody() {}
-
-    public static TimerEditBody.Builder builder() {
-        return new Builder(new TimerEditBody());
+    private StopwatchUpdateBody() {
     }
 
-    public static class Builder extends BodyBuilder<TimerEditBody> {
+    public static StopwatchUpdateBody.Builder builder() {
+        return new Builder(new StopwatchUpdateBody());
+    }
 
-        private Builder(TimerEditBody body) {
+    public static class Builder extends BodyBuilder<StopwatchUpdateBody> {
+
+        private Builder(StopwatchUpdateBody body) {
             super(body);
-        }
-
-        public Builder seconds(int value) {
-            body.seconds = value;
-            return this;
         }
 
         public Builder running(boolean value) {

@@ -9,15 +9,26 @@ import java.util.List;
 
 @Getter
 @FieldDefaults(level = AccessLevel.PRIVATE)
-@AllArgsConstructor
 @EqualsAndHashCode
 @ToString
+@NoArgsConstructor
+@AllArgsConstructor
 @JsonDeserialize(using = DeadlineDeserializer.class)
 public class Deadline {
-    long deadline;
+    @Setter
+    Long deadline;
+    @Setter
     Long startDate;
+    @Setter
     Boolean withTime;
-    List<String> history;
+    List<DeadlineHistory> history;
     List<String> blockedPoints;
     List<String> links;
+
+    public Deadline(Long deadline, Long startDate, Boolean withTime) {
+        this.deadline = deadline;
+        this.startDate = startDate;
+        this.withTime = withTime;
+    }
+
 }

@@ -2,7 +2,7 @@ package io.github.patbattb.yougileapilib.service;
 
 import io.github.patbattb.yougileapilib.domain.*;
 import io.github.patbattb.yougileapilib.domain.body.BoardCreateBody;
-import io.github.patbattb.yougileapilib.domain.body.BoardEditBody;
+import io.github.patbattb.yougileapilib.domain.body.BoardUpdateBody;
 import io.github.patbattb.yougileapilib.http.ResponseHandlerProvider;
 import lombok.NonNull;
 import org.apache.http.client.fluent.Content;
@@ -60,16 +60,33 @@ public class BoardService extends AbstractRequestService {
         return getBoardById(boardId, authKey);
     }
 
-    public Id editBoard(@NonNull String boardId, @NonNull BoardEditBody body, AuthKey authkey) throws URISyntaxException, IOException {
+    public Id updateBoard(@NonNull String boardId, @NonNull BoardUpdateBody body, @NonNull AuthKey authkey) throws URISyntaxException, IOException {
         Response response = sendPutRequest(configureURI(boardId).build(), body, authKey);
         Content content = response.handleResponse(ResponseHandlerProvider::okJsonHandler);
         return ContentHandler.handleId(content);
     }
 
-    public Id editBoard(@NonNull String boardId, @NonNull BoardEditBody body) throws URISyntaxException, IOException {
+    public Id updateBoard(@NonNull String boardId, @NonNull BoardUpdateBody body) throws URISyntaxException, IOException {
         if (authKey == null) {
             throw new NullPointerException(noAuthKeyMessage);
         }
-        return editBoard(boardId, body, authKey);
+        return updateBoard(boardId, body, authKey);
+    }
+
+    public Id updateBoard(@NonNull Board board, @NonNull AuthKey authKey) throws URISyntaxException, IOException {
+        BoardUpdateBody body = BoardUpdateBody.builder()
+                .deleted(board.isDeleted())
+                .title(board.getTitle())
+                .projectId(board.getProjectId())
+                .stickers(board.getStickers())
+                .build();
+        return updateBoard(board.getId(), body, authKey);
+    }
+
+    public Id updateBoard(@NonNull Board board) throws URISyntaxException, IOException {
+        if (authKey == null) {
+            throw new NullPointerException(noAuthKeyMessage);
+        }
+        return updateBoard(board, authKey);
     }
 }

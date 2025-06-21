@@ -2,7 +2,7 @@ package io.github.patbattb.yougileapilib.http.deserialize;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import io.github.patbattb.yougileapilib.domain.Checklist;
-import io.github.patbattb.yougileapilib.domain.Checkpoint;
+import io.github.patbattb.yougileapilib.domain.ChecklistOption;
 import io.github.patbattb.yougileapilib.domain.Task;
 import io.github.patbattb.yougileapilib.domain.TimeTracking;
 import org.junit.jupiter.api.BeforeAll;
@@ -227,29 +227,41 @@ class TaskDeserializerTest extends AbstractDeserializerTest {
     void deserializeDeadline() throws JsonProcessingException {
         String jsonString = String.format(
                 """
-                {
-                  "title": "%s",
-                  "timestamp": %s,
-                  "id": "%s",
-                  "deadline": {
-                      "deadline": 1653029146646,
-                      "startDate": 1653028146646,
-                      "withTime": true,
-                      "history": [
-                        "string"
-                      ],
-                      "blockedPoints": [
-                        "string"
-                      ],
-                      "links": [
-                        "string"
-                      ]
-                    }
-                }
+                  {
+                      "title": "%s",
+                      "timestamp": %s,
+                      "id": "%s",
+                      "deadline": {
+                          "deadline": 1653029146646,
+                          "startDate": 1653028146646,
+                          "withTime": true,
+                          "history": [
+                              {
+                                "deadline": 1750507200000,
+                                "timestamp": 1750403931364,
+                                "notifyBefore": 0,
+                                "withTime": false,
+                                "by": "9c685a12-4450-4764-8ba3-f49a73d00b10"
+                              },
+                              {
+                                "deadline": 1750507200000,
+                                "timestamp": 1750403933214,
+                                "notifyBefore": 0,
+                                "withTime": true,
+                                "by": "9c685a12-4450-4764-8ba3-f49a73d00b10"
+                              }
+                          ],
+                          "blockedPoints": [
+                            "string"
+                          ],
+                          "links": [
+                            "string"
+                          ]
+                      }
+                  }
                 """, title, created, id
         );
         Task task = mapper.readValue(jsonString, Task.class);
-        //TODO wrong example for deadline in API docs
     }
 
     @Test
@@ -276,9 +288,9 @@ class TaskDeserializerTest extends AbstractDeserializerTest {
     @Test
     @DisplayName("Deserialize checklists field")
     void deserializeChecklists() throws JsonProcessingException {
-        Checkpoint checkpointOne = new Checkpoint("oneTitle", true);
-        Checkpoint checkpointTwo = new Checkpoint("twoTitle", false);
-        Checklist checklist = new Checklist("testChecklist", List.of(checkpointOne, checkpointTwo));
+        ChecklistOption checklistOptionOne = new ChecklistOption("oneTitle", true);
+        ChecklistOption checklistOptionTwo = new ChecklistOption("twoTitle", false);
+        Checklist checklist = new Checklist("testChecklist", List.of(checklistOptionOne, checklistOptionTwo));
         List<Checklist> checklists = List.of(checklist);
         String jsonString = String.format(
                 """
@@ -303,8 +315,8 @@ class TaskDeserializerTest extends AbstractDeserializerTest {
                   ]
                 }
                 """, title, created, id, checklist.getTitle(),
-                checkpointOne.isCompleted(), checkpointOne.getTitle(),
-                checkpointTwo.isCompleted(), checkpointTwo.getTitle()
+                checklistOptionOne.isCompleted(), checklistOptionOne.getTitle(),
+                checklistOptionTwo.isCompleted(), checklistOptionTwo.getTitle()
         );
         Task task = mapper.readValue(jsonString, Task.class);
         assertThat(task.getChecklists()).isEqualTo(checklists);
@@ -341,7 +353,7 @@ class TaskDeserializerTest extends AbstractDeserializerTest {
     @Test
     @DisplayName("Deserialize color field")
     void deserializeColor() throws JsonProcessingException {
-        String color = "task-red";
+        Task.Color color = Task.Color.RED;
         String jsonString = String.format(
                 """
                 {
@@ -350,7 +362,7 @@ class TaskDeserializerTest extends AbstractDeserializerTest {
                   "id": "%s",
                   "color": "%s"
                 }
-                """, title, created, id, color
+                """, title, created, id, color.getValue()
         );
         Task task = mapper.readValue(jsonString, Task.class);
         assertThat(task.getColor()).isEqualTo(color);

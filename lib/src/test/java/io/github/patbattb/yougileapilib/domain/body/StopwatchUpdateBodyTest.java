@@ -8,27 +8,27 @@ import java.lang.reflect.Modifier;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class StopwatchEditBodyTest {
+class StopwatchUpdateBodyTest {
 
     @Test
     @DisplayName("The class has private default constructor")
     void constructor() throws NoSuchMethodException {
-        Constructor<StopwatchEditBody> constructor = StopwatchEditBody.class.getDeclaredConstructor();
+        Constructor<StopwatchUpdateBody> constructor = StopwatchUpdateBody.class.getDeclaredConstructor();
         assertThat(constructor.getModifiers()).isEqualTo(Modifier.PRIVATE);
     }
 
     @Test
     @DisplayName("builder() returns the Builder with the StopwatchEditBody")
     void builder() {
-        StopwatchEditBody.Builder builder = StopwatchEditBody.builder();
-        assertThat(builder.body).isInstanceOf(StopwatchEditBody.class);
+        StopwatchUpdateBody.Builder builder = StopwatchUpdateBody.builder();
+        assertThat(builder.body).isInstanceOf(StopwatchUpdateBody.class);
     }
 
     @Test
     @DisplayName("getRunning() returns the value that was passed to the builder")
     void getRunning() {
         boolean running = true;
-        StopwatchEditBody body = StopwatchEditBody.builder().running(running).build();
+        StopwatchUpdateBody body = StopwatchUpdateBody.builder().running(running).build();
         assertThat(body.getRunning()).isEqualTo(running);
     }
 
@@ -36,21 +36,21 @@ class StopwatchEditBodyTest {
     @DisplayName("getDeleted() returns the vale that was passed to the builder")
     void getDeleted() {
         boolean deleted = true;
-        StopwatchEditBody body = StopwatchEditBody.builder().deleted(deleted).build();
+        StopwatchUpdateBody body = StopwatchUpdateBody.builder().deleted(deleted).build();
         assertThat(body.getDeleted()).isEqualTo(deleted);
     }
 
     @Test
     @DisplayName("getRunning() returns null if he value wasn't passed to the builder")
     void getRunningNull() {
-        StopwatchEditBody body = StopwatchEditBody.builder().build();
+        StopwatchUpdateBody body = StopwatchUpdateBody.builder().build();
         assertThat(body.getRunning()).isNull();
     }
 
     @Test
     @DisplayName("getDeleted() returns null if he value wasn't passed to the builder")
     void getDeletedNull() {
-        StopwatchEditBody body = StopwatchEditBody.builder().build();
+        StopwatchUpdateBody body = StopwatchUpdateBody.builder().build();
         assertThat(body.getDeleted()).isNull();
     }
 }

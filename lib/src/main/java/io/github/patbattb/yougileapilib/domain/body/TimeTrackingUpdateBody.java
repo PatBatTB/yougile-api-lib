@@ -7,23 +7,23 @@ import lombok.experimental.FieldDefaults;
 
 @Getter
 @FieldDefaults(level = AccessLevel.PRIVATE)
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
-public class TimeTrackingEditBody extends RequestBody {
+@JsonInclude(JsonInclude.Include.NON_NULL)
+public class TimeTrackingUpdateBody extends RequestBody {
 
     Double plan;
     Double work;
     Boolean deleted;
 
-    private TimeTrackingEditBody() {
+    private TimeTrackingUpdateBody() {
     }
 
-    public static TimeTrackingEditBody.Builder builder() {
-        return new Builder(new TimeTrackingEditBody());
+    public static TimeTrackingUpdateBody.Builder builder() {
+        return new Builder(new TimeTrackingUpdateBody());
     }
 
-    public static class Builder extends BodyBuilder<TimeTrackingEditBody> {
+    public static class Builder extends BodyBuilder<TimeTrackingUpdateBody> {
 
-        private Builder(TimeTrackingEditBody body) {
+        private Builder(TimeTrackingUpdateBody body) {
             super(body);
         }
 

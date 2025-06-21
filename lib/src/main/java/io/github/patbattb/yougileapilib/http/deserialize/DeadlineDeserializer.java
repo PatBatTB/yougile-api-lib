@@ -4,7 +4,9 @@ import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonDeserializer;
 import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.json.JsonMapper;
 import io.github.patbattb.yougileapilib.domain.Deadline;
+import io.github.patbattb.yougileapilib.domain.DeadlineHistory;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -20,10 +22,11 @@ public class DeadlineDeserializer extends JsonDeserializer<Deadline> {
         currentNode = rootNode.get("withTime");
         Boolean withTime = (currentNode == null) ? null : currentNode.asBoolean();
         currentNode = rootNode.get("history");
-        List<String> historyList = new ArrayList<>();
+        List<DeadlineHistory> historyList = new ArrayList<>();
+        JsonMapper mapper = new JsonMapper();
         if (currentNode != null && currentNode.isArray()) {
             for(JsonNode node: currentNode) {
-                historyList.add(currentNode.asText());
+                historyList.add(mapper.readValue(node.toString(), DeadlineHistory.class));
             }
         }
         List<String> blockedPoints = new ArrayList<>();

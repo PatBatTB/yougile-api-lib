@@ -1,13 +1,14 @@
 package io.github.patbattb.yougileapilib.domain.body;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import io.github.patbattb.yougileapilib.domain.UserRole;
+import io.github.patbattb.yougileapilib.domain.ProjectUser;
 import io.github.patbattb.yougileapilib.http.serialize.ProjectCreateBodySerializer;
 import lombok.AccessLevel;
 import lombok.Getter;
+import lombok.NonNull;
 import lombok.experimental.FieldDefaults;
 
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @Getter
@@ -16,15 +17,14 @@ import java.util.List;
 public class ProjectCreateBody extends RequestBody {
 
     final String title;
-    final List<UserRole> users;
+    List<ProjectUser> users;
 
-    private ProjectCreateBody(String title, List<UserRole> users) {
+    private ProjectCreateBody(String title) {
         this.title = title;
-        this.users = users;
     }
 
-    public static ProjectCreateBody.Builder builder(String title) {
-        return new Builder(new ProjectCreateBody(title, new ArrayList<>()));
+    public static ProjectCreateBody.Builder builder(@NonNull String title) {
+        return new Builder(new ProjectCreateBody(title));
     }
 
     public static class Builder extends BodyBuilder<ProjectCreateBody> {
@@ -35,7 +35,7 @@ public class ProjectCreateBody extends RequestBody {
 
         /**
          *
-         * @param user {@link UserRole} User ID with system or custom role ID.
+         * @param users {@link ProjectUser} User IDs with system or custom role IDs.
          *              Available system role IDs:
          *              <ul>
          *              <li/>{@code admin}
@@ -44,14 +44,9 @@ public class ProjectCreateBody extends RequestBody {
          *              <li/>{@code -} minus symbol to delete user from project.
          *              </ul>
          */
-        public Builder users(UserRole user) {
-            body.users.add(user);
+        public Builder users(ProjectUser... users) {
+            body.users = Arrays.asList(users);
             return this;
-        }
-
-        @Override
-        public ProjectCreateBody build() {
-            return new ProjectCreateBody(this.body.title, List.copyOf(this.body.users));
         }
     }
 }

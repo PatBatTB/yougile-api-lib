@@ -2,7 +2,7 @@ package io.github.patbattb.yougileapilib.service;
 
 import io.github.patbattb.yougileapilib.domain.*;
 import io.github.patbattb.yougileapilib.domain.body.ProjectCreateBody;
-import io.github.patbattb.yougileapilib.domain.body.ProjectEditBody;
+import io.github.patbattb.yougileapilib.domain.body.ProjectUpdateBody;
 import io.github.patbattb.yougileapilib.http.ResponseHandlerProvider;
 import lombok.NonNull;
 import org.apache.http.client.fluent.Content;
@@ -87,16 +87,32 @@ public class ProjectService extends AbstractRequestService {
         return getProjectById(projectId, authKey);
     }
 
-    public Id editProject(@NonNull String projectId, @NonNull ProjectEditBody body, @NonNull AuthKey authKey) throws URISyntaxException, IOException {
+    public Id updateProject(@NonNull String projectId, @NonNull ProjectUpdateBody body, @NonNull AuthKey authKey) throws URISyntaxException, IOException {
         Response response = sendPutRequest(configureURI(projectId).build(), body, authKey);
         Content content = response.handleResponse(ResponseHandlerProvider::okJsonHandler);
         return ContentHandler.handleId(content);
     }
 
-    public Id editProject(@NonNull String projectId, @NonNull ProjectEditBody body) throws URISyntaxException, IOException {
+    public Id updateProject(@NonNull String projectId, @NonNull ProjectUpdateBody body) throws URISyntaxException, IOException {
         if (authKey == null) {
             throw new NullPointerException(noAuthKeyMessage);
         }
-        return editProject(projectId, body, authKey);
+        return updateProject(projectId, body, authKey);
+    }
+
+    public Id updateProject(@NonNull Project project, @NonNull AuthKey authKey) throws URISyntaxException, IOException {
+        ProjectUpdateBody body = ProjectUpdateBody.builder()
+                .deleted(project.isDeleted())
+                .title(project.getTitle())
+                .users(project.getUsers().toArray(ProjectUser[]::new))
+                .build();
+        return updateProject(project.getId(), body, authKey);
+    }
+
+    public Id updateProject(@NonNull Project project) throws URISyntaxException, IOException {
+        if (authKey == null) {
+            throw new NullPointerException(noAuthKeyMessage);
+        }
+        return updateProject(project, authKey);
     }
 }

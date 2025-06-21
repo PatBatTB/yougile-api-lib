@@ -2,7 +2,7 @@ package io.github.patbattb.yougileapilib.http.deserialize;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import io.github.patbattb.yougileapilib.domain.Department;
-import io.github.patbattb.yougileapilib.domain.UserRole;
+import io.github.patbattb.yougileapilib.domain.DepartmentUser;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -80,8 +80,8 @@ class DepartmentDeserializerTest extends AbstractDeserializerTest {
     @Test
     @DisplayName("Deserialize users field")
     void deserializeUsers() throws JsonProcessingException {
-        UserRole userOne = new UserRole("4902b994-b806-4af4-acec-018ea5ea6468", "manager");
-        UserRole userTwo = new UserRole("8aeaeb9d-f94e-4c66-96d3-eb8d96fe7018", "member");
+        DepartmentUser userOne = new DepartmentUser("4902b994-b806-4af4-acec-018ea5ea6468", DepartmentUser.RoleId.MANAGER);
+        DepartmentUser userTwo = new DepartmentUser("8aeaeb9d-f94e-4c66-96d3-eb8d96fe7018", DepartmentUser.RoleId.MEMBER);
         String jsonString = String.format(
                 """
                 {
@@ -92,7 +92,7 @@ class DepartmentDeserializerTest extends AbstractDeserializerTest {
                     "%s": "%s"
                   }
                 }
-                """, id, title, userOne.getId(), userOne.getRoleId(), userTwo.getId(), userTwo.getRoleId()
+                """, id, title, userOne.getUserId(), userOne.getRoleId(), userTwo.getUserId(), userTwo.getRoleId()
         );
         Department department = mapper.readValue(jsonString, Department.class);
         assertThat(department.getUsers()).isEqualTo(List.of(userOne, userTwo));

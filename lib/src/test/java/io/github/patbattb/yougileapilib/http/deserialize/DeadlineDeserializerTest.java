@@ -13,14 +13,27 @@ class DeadlineDeserializerTest extends AbstractDeserializerTest {
     @Test
     @DisplayName("Deserialize required fields only")
     void deserialize() throws JsonProcessingException {
-        String jsonString = String.format(
+        String jsonString =
                 """
                 {
                     "deadline": 1653029146646,
                     "startDate": 1653028146646,
                     "withTime": true,
                     "history": [
-                      "string"
+                        {
+                          "deadline": 1750507200000,
+                          "timestamp": 1750403931364,
+                          "notifyBefore": 0,
+                          "withTime": false,
+                          "by": "9c685a12-4450-4764-8ba3-f49a73d00b10"
+                        },
+                        {
+                          "deadline": 1750507200000,
+                          "timestamp": 1750403933214,
+                          "notifyBefore": 0,
+                          "withTime": true,
+                          "by": "9c685a12-4450-4764-8ba3-f49a73d00b10"
+                        }
                     ],
                     "blockedPoints": [
                       "string"
@@ -29,8 +42,7 @@ class DeadlineDeserializerTest extends AbstractDeserializerTest {
                       "string"
                     ]
                   }
-                """
-        );
+                """;
         Deadline deadlineClass = mapper.readValue(jsonString, Deadline.class);
     }
 }

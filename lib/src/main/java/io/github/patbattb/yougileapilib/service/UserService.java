@@ -2,7 +2,7 @@ package io.github.patbattb.yougileapilib.service;
 
 import io.github.patbattb.yougileapilib.domain.*;
 import io.github.patbattb.yougileapilib.domain.body.UserBody;
-import io.github.patbattb.yougileapilib.domain.body.UserEditBody;
+import io.github.patbattb.yougileapilib.domain.body.UserUpdateBody;
 import io.github.patbattb.yougileapilib.http.ResponseHandlerProvider;
 import lombok.NonNull;
 import org.apache.http.client.fluent.Content;
@@ -88,17 +88,30 @@ public class UserService extends AbstractRequestService {
         return getUserById(userId, authKey);
     }
 
-    public Id editUserById(@NonNull String userId, @NonNull UserEditBody body, @NonNull  AuthKey authKey) throws URISyntaxException, IOException {
+    public Id updateUser(@NonNull String userId, @NonNull UserUpdateBody body, @NonNull  AuthKey authKey) throws URISyntaxException, IOException {
         Response response = sendPutRequest(configureURI(userId).build(), body, authKey);
         Content content = response.handleResponse(ResponseHandlerProvider::okJsonHandler);
         return ContentHandler.handleId(content);
     }
 
-    public Id editUserById(@NonNull String userId, @NonNull UserEditBody body) throws URISyntaxException, IOException {
+    public Id updateUser(@NonNull String userId, @NonNull UserUpdateBody body) throws URISyntaxException, IOException {
         if (this.authKey == null) {
             throw new NullPointerException(noAuthKeyMessage);
         }
-        return editUserById(userId, body, authKey);
+        return updateUser(userId, body, authKey);
+    }
+
+    public Id updateUser(@NonNull User user, @NonNull AuthKey authKey) throws URISyntaxException, IOException {
+        UserUpdateBody body = UserUpdateBody.builder(user.isAdmin())
+                .build();
+        return updateUser(user.getId(), body, authKey);
+    }
+
+    public Id updateUser(@NonNull User user) throws URISyntaxException, IOException {
+        if (this.authKey == null) {
+            throw new NullPointerException(noAuthKeyMessage);
+        }
+        return updateUser(user, authKey);
     }
 
     public Id deleteFromCompany(@NonNull String userId, @NonNull AuthKey authKey) throws URISyntaxException, IOException {

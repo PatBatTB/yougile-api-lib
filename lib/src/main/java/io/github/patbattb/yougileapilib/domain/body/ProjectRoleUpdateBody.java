@@ -4,27 +4,29 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import io.github.patbattb.yougileapilib.domain.ProjectPermissions;
 import lombok.AccessLevel;
 import lombok.Getter;
+import lombok.Setter;
 import lombok.experimental.FieldDefaults;
 
 @Getter
+@Setter
 @FieldDefaults(level = AccessLevel.PRIVATE)
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
-public class ProjectRoleEditBody extends RequestBody {
+@JsonInclude(JsonInclude.Include.NON_NULL)
+public class ProjectRoleUpdateBody extends RequestBody {
 
     String name;
     String description;
     ProjectPermissions permissions;
 
-    private ProjectRoleEditBody() {
+    private ProjectRoleUpdateBody() {
     }
 
-    public static ProjectRoleEditBody.Builder builder() {
-        return new Builder(new ProjectRoleEditBody());
+    public static ProjectRoleUpdateBody.Builder builder() {
+        return new Builder(new ProjectRoleUpdateBody());
     }
 
-    public static class Builder extends BodyBuilder<ProjectRoleEditBody> {
+    public static class Builder extends BodyBuilder<ProjectRoleUpdateBody> {
 
-        private Builder(ProjectRoleEditBody body) {
+        private Builder(ProjectRoleUpdateBody body) {
             super(body);
         }
 

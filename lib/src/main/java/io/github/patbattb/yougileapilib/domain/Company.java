@@ -17,7 +17,5 @@ public class Company {
     String id;
     @Setter
     String title;
-    long created; //timestamp
-    //@Setter
-    //Object apiData;
+    long created;
 }

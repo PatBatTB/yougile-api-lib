@@ -2,13 +2,13 @@ package io.github.patbattb.yougileapilib.domain;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonValue;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import io.github.patbattb.yougileapilib.http.deserialize.ColumnPermissionsDeserializer;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Arrays;
 
 @Getter
 @Setter
@@ -16,12 +16,12 @@ import java.util.List;
 @EqualsAndHashCode
 @ToString
 @JsonDeserialize(using = ColumnPermissionsDeserializer.class)
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class ColumnPermissions {
     boolean editTitle;
     boolean delete;
     @NonNull
-    String move;
+    Move move;
     boolean addTask;
 
     @NonNull
@@ -37,7 +37,7 @@ public class ColumnPermissions {
     @JsonProperty("createdByMeTasks")
     TaskPermissions createdByMeTasksPermissions; //may be null
 
-    public ColumnPermissions(boolean editTitle, boolean delete, String move, boolean addTask,
+    public ColumnPermissions(boolean editTitle, boolean delete, Move move, boolean addTask,
                              TaskPermissions allTasksPermissions, TaskPermissions withMeTasksPermissions,
                              TaskPermissions myTasksPermissions, TaskPermissions createdByMeTasksPermissions) {
         this.editTitle = editTitle;
@@ -48,29 +48,29 @@ public class ColumnPermissions {
         this.myTasksPermissions = myTasksPermissions;
         this.createdByMeTasksPermissions = createdByMeTasksPermissions;
 
-        this.move = Move.validate(move);
+        this.move = move;
     }
 
-    private enum Move {
+    public enum Move {
         NO("no"),
         YES("yes"),
         PROJECT("project");
 
+        private static final String apiFieldName = "column.move";
+        @JsonValue
         private final String value;
 
         Move(String value) {
             this.value = value;
         }
 
-        private static String validate(String field) {
-            List<String> valueList = new ArrayList<>();
+        public static Move fromValue(String value) {
             for (Move move: Move.values()) {
-                if (move.value.equals(field)) {
-                    return field;
+                if (move.value.equalsIgnoreCase(value)) {
+                    return move;
                 }
-                valueList.add(move.value);
             }
-            throw new IllegalArgumentException("column.move value must be one of " + String.join(", ", valueList));
+            throw new IllegalArgumentException(apiFieldName + " value must be one of: " + Arrays.stream(values()).map(elem -> elem.value).toList());
         }
     }
 }

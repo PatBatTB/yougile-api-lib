@@ -17,16 +17,20 @@ public class TaskPermissionsDeserializer extends JsonDeserializer<TaskPermission
         boolean editTitle = node.get("editTitle").asBoolean();
         boolean editDescription = node.get("editDescription").asBoolean();
         boolean close = node.get("close").asBoolean();
-        String assignUsers = node.get("assignUsers").asText();
+        String assignUsersValue = node.get("assignUsers").asText();
+        TaskPermissions.AssignUsers assignUsers = TaskPermissions.AssignUsers.fromValue(assignUsersValue);
         boolean connect = node.get("connect").asBoolean();
-        String editSubtasks = node.get("editSubtasks").asText();
+        String editSubtasksValue = node.get("editSubtasks").asText();
+        TaskPermissions.EditSubtasks editSubtasks = TaskPermissions.EditSubtasks.fromValue(editSubtasksValue);
         boolean editStickers = node.get("editStickers").asBoolean();
         boolean editPins = node.get("editPins").asBoolean();
-        String move = node.get("move").asText();
+        String moveValue = node.get("move").asText();
+        TaskPermissions.Move move = TaskPermissions.Move.fromValue(moveValue);
         boolean complete = node.get("complete").asBoolean();
         boolean sendMessages = node.get("sendMessages").asBoolean();
         boolean sendFiles = node.get("sendFiles").asBoolean();
-        String editWhoToNotify = node.get("editWhoToNotify").asText();
+        String editWhoToNotifyValue = node.get("editWhoToNotify").asText();
+        TaskPermissions.EditWhoToNotify editWhoToNotify = TaskPermissions.EditWhoToNotify.fromValue(editWhoToNotifyValue);
         return new TaskPermissions(show, delete, editTitle, editDescription, complete, close, assignUsers, connect,
                 editSubtasks, editStickers, editPins, move, sendMessages, sendFiles, editWhoToNotify);
     }

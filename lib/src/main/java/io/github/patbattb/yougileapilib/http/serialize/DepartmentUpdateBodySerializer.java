@@ -4,16 +4,20 @@ import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.SerializerProvider;
 import io.github.patbattb.yougileapilib.domain.DepartmentUser;
-import io.github.patbattb.yougileapilib.domain.body.DepartmentCreateBody;
+import io.github.patbattb.yougileapilib.domain.body.DepartmentUpdateBody;
 
 import java.io.IOException;
 
-
-public class DepartmentCreateBodySerializer extends JsonSerializer<DepartmentCreateBody> {
+public class DepartmentUpdateBodySerializer extends JsonSerializer<DepartmentUpdateBody> {
     @Override
-    public void serialize(DepartmentCreateBody value, JsonGenerator gen, SerializerProvider serializers) throws IOException {
+    public void serialize(DepartmentUpdateBody value, JsonGenerator gen, SerializerProvider serializers) throws IOException {
         gen.writeStartObject();
-        gen.writeStringField("title", value.getTitle());
+        if (value.getDeleted() != null) {
+            gen.writeBooleanField("deleted", value.getDeleted());
+        }
+        if (value.getTitle() != null) {
+            gen.writeStringField("title", value.getTitle());
+        }
         if (value.getParentId() != null) {
             gen.writeStringField("parentId", value.getParentId());
         }

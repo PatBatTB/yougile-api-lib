@@ -4,16 +4,16 @@ import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonDeserializer;
 import com.fasterxml.jackson.databind.JsonNode;
-import io.github.patbattb.yougileapilib.domain.Checkpoint;
+import io.github.patbattb.yougileapilib.domain.ChecklistOption;
 
 import java.io.IOException;
 
-public class CheckpointDeserializer extends JsonDeserializer<Checkpoint> {
+public class ChecklistOptionDeserializer extends JsonDeserializer<ChecklistOption> {
     @Override
-    public Checkpoint deserialize(JsonParser p, DeserializationContext ctxt) throws IOException {
+    public ChecklistOption deserialize(JsonParser p, DeserializationContext ctxt) throws IOException {
         JsonNode node = p.readValueAsTree();
         String title = node.get("title").asText();
         boolean isCompleted = node.get("isCompleted").asBoolean();
-        return new Checkpoint(title, isCompleted);
+        return new ChecklistOption(title, isCompleted);
     }
 }

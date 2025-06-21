@@ -1,13 +1,13 @@
 package io.github.patbattb.yougileapilib.domain;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonValue;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import io.github.patbattb.yougileapilib.http.deserialize.TaskPermissionsDeserializer;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Arrays;
 
 @Getter
 @Setter
@@ -15,7 +15,7 @@ import java.util.List;
 @EqualsAndHashCode
 @ToString
 @JsonDeserialize(using = TaskPermissionsDeserializer.class)
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class TaskPermissions {
     boolean show;
     boolean delete;
@@ -24,136 +24,131 @@ public class TaskPermissions {
     boolean complete;
     boolean close;
     @NonNull
-    String assignUsers;
+    AssignUsers assignUsers;
     boolean connect;
     @NonNull
-    String editSubtasks;
+    EditSubtasks editSubtasks;
     boolean editStickers;
     boolean editPins;
     @NonNull
-    String move;
+    Move move;
     boolean sendMessages;
     boolean sendFiles;
     @NonNull
-    String editWhoToNotify;
+    EditWhoToNotify editWhoToNotify;
 
     public TaskPermissions(boolean show, boolean delete, boolean editTitle, boolean editDescription, boolean complete,
-                           boolean close, String assignUsers, boolean connect, String editSubtasks, boolean editStickers,
-                           boolean editPins, String move, boolean sendMessages, boolean sendFiles, String editWhoToNotify) {
+                           boolean close, AssignUsers assignUsers, boolean connect, EditSubtasks editSubtasks, boolean editStickers,
+                           boolean editPins, Move move, boolean sendMessages, boolean sendFiles, EditWhoToNotify editWhoToNotify) {
         this.show = show;
         this.delete = delete;
         this.editTitle = editTitle;
         this.editDescription = editDescription;
         this.complete = complete;
         this.close = close;
+        this.assignUsers = assignUsers;
         this.connect = connect;
+        this.editSubtasks = editSubtasks;
         this.editStickers = editStickers;
         this.editPins = editPins;
+        this.move = move;
         this.sendMessages = sendMessages;
         this.sendFiles = sendFiles;
-
-        this.assignUsers = AssignUsers.validate(assignUsers);
-        this.editSubtasks = EditSubtasks.validate(editSubtasks);
-        this.move = Move.validate(move);
-        this.editWhoToNotify = EditWhoToNotify.validate(editWhoToNotify);
+        this.editWhoToNotify = editWhoToNotify;
     }
 
-    private static class AvailableValues {
-
-    }
-
-    private enum AssignUsers {
+    public enum AssignUsers {
         NO("no"),
         YES("yes"),
         ADD_SELF("add-self"),
         SET_SELF("set-self"),
         CHANGE_FROM_SELF("change-from-self");
 
+        private static final String apiFieldName = "tasks.assignUsers";
+        @JsonValue
         private final String value;
 
         AssignUsers(String value) {
             this.value = value;
         }
 
-        private static String validate(String field) {
-            List<String> valueList = new ArrayList<>();
-            for (AssignUsers assignUsers: AssignUsers.values()) {
-                if (assignUsers.value.equals(field)) {
-                    return field;
+        public static AssignUsers fromValue(String value) {
+            for(AssignUsers assignUsers: AssignUsers.values()) {
+                if (assignUsers.value.equalsIgnoreCase(value)) {
+                    return assignUsers;
                 }
-                valueList.add(assignUsers.value);
             }
-            throw new IllegalArgumentException("task.assignUsers value must be one of " + String.join(", ", valueList));
+            throw new IllegalArgumentException(apiFieldName + " value must be one of: " + Arrays.stream(values()).map(elem -> elem.value).toList());
         }
     }
 
-    private enum EditSubtasks {
+    public enum EditSubtasks {
         NO("no"),
         YES("yes"),
         COMPLETE("complete");
 
+        private static final String apiFieldName = "tasks.editSubtasks";
+        @JsonValue
         private final String value;
 
         EditSubtasks(String value) {
             this.value = value;
         }
 
-        private static String validate(String field) {
-            List<String> valueList = new ArrayList<>();
+        public static EditSubtasks fromValue(String value) {
             for (EditSubtasks editSubtasks: EditSubtasks.values()) {
-                if (editSubtasks.value.equals(field)) {
-                    return field;
+                if (editSubtasks.value.equalsIgnoreCase(value)) {
+                    return editSubtasks;
                 }
-                valueList.add(editSubtasks.value);
             }
-            throw new IllegalArgumentException("task.editSubtasks value must be one of " + String.join(", ", valueList));
+            throw new IllegalArgumentException(apiFieldName + " value must be one of: " + Arrays.stream(values()).map(elem -> elem.value).toList());
         }
     }
 
-    private enum Move {
+    public enum Move {
         NO("no"),
         YES("yes"),
         PROJECT("project"),
         BOARD("board");
 
+        private static final String apiFieldName = "tasks.move";
+        @JsonValue
         private final String value;
 
         Move(String value) {
             this.value = value;
         }
 
-        private static String validate(String field) {
-            List<String> valueList = new ArrayList<>();
+        public static Move fromValue(String value) {
             for (Move move: Move.values()) {
-                if (move.value.equals(field)) {
-                    return field;
+                if (move.value.equalsIgnoreCase(value)) {
+                    return move;
                 }
-                valueList.add(move.value);
             }
-            throw new IllegalArgumentException("task.move value must be one of " + String.join(", ", valueList));
+            throw new IllegalArgumentException(apiFieldName + " value must be one of: " + Arrays.stream(values()).map(elem -> elem.value).toList());
         }
     }
 
-    private enum EditWhoToNotify {
+    public enum EditWhoToNotify {
         NO("no"),
         YES("yes"),
         SELF("self");
 
+        private static final String apiFieldName = "tasks.editWhoToNotify";
+        @JsonValue
         private final String value;
 
         EditWhoToNotify(String value) {
             this.value = value;
         }
 
-        private static String validate(String field) {
-            List<String> valueList = new ArrayList<>();
+        public static EditWhoToNotify fromValue(String value) {
             for (EditWhoToNotify editWhoToNotify: EditWhoToNotify.values()) {
-                if (editWhoToNotify.value.equals(field)) {
-                    return field;
+                if (editWhoToNotify.value.equalsIgnoreCase(value)) {
+                    return editWhoToNotify;
                 }
-                valueList.add(editWhoToNotify.value);
             }
-            throw new IllegalArgumentException("task.editWhoToNotify value must be one of " + String.join(", ", valueList));
+            throw new IllegalArgumentException(apiFieldName + " value must be one of: " + Arrays.stream(values()).map(elem -> elem.value).toList());
         }
     }
 }

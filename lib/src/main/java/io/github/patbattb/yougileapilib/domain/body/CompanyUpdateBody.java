@@ -6,23 +6,23 @@ import lombok.Getter;
 import lombok.experimental.FieldDefaults;
 
 @Getter
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_NULL)
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class CompanyEditBody extends RequestBody {
+public class CompanyUpdateBody extends RequestBody {
 
     Boolean deleted;
     String title;
 
-    private CompanyEditBody() {
+    private CompanyUpdateBody() {
     }
 
     public static Builder builder() {
-        return new Builder(new CompanyEditBody());
+        return new Builder(new CompanyUpdateBody());
     }
 
-    public static class Builder extends BodyBuilder<CompanyEditBody> {
+    public static class Builder extends BodyBuilder<CompanyUpdateBody> {
 
-        private Builder(CompanyEditBody body) {
+        private Builder(CompanyUpdateBody body) {
             super(body);
         }
 

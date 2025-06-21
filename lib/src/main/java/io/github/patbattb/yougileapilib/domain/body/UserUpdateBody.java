@@ -5,13 +5,13 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AccessLevel;
 import lombok.experimental.FieldDefaults;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_NULL)
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class UserEditBody extends RequestBody {
+public class UserUpdateBody extends RequestBody {
 
     final Boolean isAdmin;
 
-    private UserEditBody(boolean isAdmin) {
+    private UserUpdateBody(boolean isAdmin) {
         this.isAdmin = isAdmin;
     }
 
@@ -22,13 +22,13 @@ public class UserEditBody extends RequestBody {
 
 
 
-    public static UserEditBody.Builder builder(boolean isAdmin) {
-        return new Builder(new UserEditBody(isAdmin));
+    public static UserUpdateBody.Builder builder(boolean isAdmin) {
+        return new Builder(new UserUpdateBody(isAdmin));
     }
 
-    public static class Builder extends  BodyBuilder<UserEditBody> {
+    public static class Builder extends  BodyBuilder<UserUpdateBody> {
 
-        private Builder(UserEditBody body) {
+        private Builder(UserUpdateBody body) {
             super(body);
         }
     }

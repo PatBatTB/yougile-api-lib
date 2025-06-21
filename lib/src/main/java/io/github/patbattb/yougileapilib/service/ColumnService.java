@@ -2,7 +2,7 @@ package io.github.patbattb.yougileapilib.service;
 
 import io.github.patbattb.yougileapilib.domain.*;
 import io.github.patbattb.yougileapilib.domain.body.ColumnCreateBody;
-import io.github.patbattb.yougileapilib.domain.body.ColumnEditBody;
+import io.github.patbattb.yougileapilib.domain.body.ColumnUpdateBody;
 import io.github.patbattb.yougileapilib.http.ResponseHandlerProvider;
 import lombok.NonNull;
 import org.apache.http.client.fluent.Content;
@@ -90,16 +90,33 @@ public class ColumnService extends AbstractRequestService {
         return getColumnById(columnId, authKey);
     }
 
-    public Id editColumn(@NonNull String columnId, @NonNull ColumnEditBody body, @NonNull AuthKey authKey) throws URISyntaxException, IOException {
+    public Id updateColumn(@NonNull String columnId, @NonNull ColumnUpdateBody body, @NonNull AuthKey authKey) throws URISyntaxException, IOException {
         Response response = sendPutRequest(configureURI(columnId).build(), body, authKey);
         Content content = response.handleResponse(ResponseHandlerProvider::okJsonHandler);
         return ContentHandler.handleId(content);
     }
 
-    public Id editColumn(@NonNull String columnId, @NonNull ColumnEditBody body) throws URISyntaxException, IOException {
+    public Id updateColumn(@NonNull String columnId, @NonNull ColumnUpdateBody body) throws URISyntaxException, IOException {
         if (authKey == null) {
             throw new NullPointerException(noAuthKeyMessage);
         }
-        return editColumn(columnId, body, authKey);
+        return updateColumn(columnId, body, authKey);
+    }
+
+    public Id updateColumn(@NonNull Column column, @NonNull AuthKey authkey) throws URISyntaxException, IOException {
+        ColumnUpdateBody body = ColumnUpdateBody.builder()
+                .deleted(column.isDeleted())
+                .title(column.getTitle())
+                .color(column.getColor())
+                .boardId(column.getBoardId())
+                .build();
+        return updateColumn(column.getId(), body, authKey);
+    }
+
+    public Id updateColumn(@NonNull Column column) throws URISyntaxException, IOException {
+        if (authKey == null) {
+            throw new NullPointerException(noAuthKeyMessage);
+        }
+        return updateColumn(column, authKey);
     }
 }

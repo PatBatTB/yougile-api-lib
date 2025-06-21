@@ -18,15 +18,15 @@ class TaskPermissionsDeserializerTest extends AbstractDeserializerTest {
         boolean editDescription = true;
         boolean complete = true;
         boolean close = true;
-        String assignUsers = "no";
+        TaskPermissions.AssignUsers assignUsers = TaskPermissions.AssignUsers.NO;
         boolean connect = true;
-        String editSubtasks = "no";
+        TaskPermissions.EditSubtasks editSubtasks = TaskPermissions.EditSubtasks.NO;
         boolean editStickers = true;
         boolean editPins = true;
-        String move = "no";
+        TaskPermissions.Move move = TaskPermissions.Move.NO;
         boolean sendMessages = true;
         boolean sendFiles = true;
-        String editWhoToNotify = "no";
+        TaskPermissions.EditWhoToNotify editWhoToNotify = TaskPermissions.EditWhoToNotify.NO;
         String jsonString = String.format(
                 """
                 {

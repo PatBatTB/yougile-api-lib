@@ -70,7 +70,7 @@ public class TaskDeserializer extends JsonDeserializer<Task> {
             }
         }
         currentNode = rootNode.get("color");
-        String color = (currentNode == null) ? null : currentNode.asText();
+        Task.Color color = (currentNode == null) ? null : Task.Color.fromValue(currentNode.asText());
         currentNode = rootNode.get("idTaskCommon");
         String idTaskCommon = (currentNode == null) ? null : currentNode.asText();
         currentNode = rootNode.get("idTaskProject");

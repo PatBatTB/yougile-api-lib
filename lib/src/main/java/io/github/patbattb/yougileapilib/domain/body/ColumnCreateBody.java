@@ -1,13 +1,15 @@
 package io.github.patbattb.yougileapilib.domain.body;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import io.github.patbattb.yougileapilib.domain.Column;
 import lombok.AccessLevel;
 import lombok.Getter;
+import lombok.NonNull;
 import lombok.experimental.FieldDefaults;
 
 @Getter
 @FieldDefaults(level = AccessLevel.PRIVATE)
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class ColumnCreateBody extends RequestBody {
 
     final String title;
@@ -19,7 +21,7 @@ public class ColumnCreateBody extends RequestBody {
         this.boardId = boardId;
     }
 
-    public static ColumnCreateBody.Builder builder(String title, String boardId) {
+    public static ColumnCreateBody.Builder builder(@NonNull String title, @NonNull String boardId) {
         return new Builder(new ColumnCreateBody(title, boardId));
     }
 
@@ -30,9 +32,7 @@ public class ColumnCreateBody extends RequestBody {
         }
 
         public Builder color(int value) {
-            if (value < 1 || value > 16) {
-                throw new IllegalArgumentException("The color value must be between 1 and 16");
-            }
+            Column.colorCheck(value);
             body.color = value;
             return this;
         }

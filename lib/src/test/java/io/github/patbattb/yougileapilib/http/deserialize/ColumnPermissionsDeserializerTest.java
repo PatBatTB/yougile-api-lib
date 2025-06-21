@@ -12,14 +12,14 @@ class ColumnPermissionsDeserializerTest extends AbstractDeserializerTest {
 
     static boolean editTitle;
     static boolean delete;
-    static String move;
+    static ColumnPermissions.Move move;
     static boolean addTask;
 
     @BeforeAll
     static void beforeAll() {
         editTitle = true;
         delete = true;
-        move = "no";
+        move = ColumnPermissions.Move.NO;
         addTask = true;
     }
 
