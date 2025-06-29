@@ -10,6 +10,12 @@ import lombok.experimental.FieldDefaults;
 
 import java.util.Arrays;
 
+/**
+ * Permissions available on the {@link Column}
+ * It contains {@link TaskPermissions}.
+ * It's part of {@link BoardPermissions}
+ * The {@link ColumnPermissions.Move} enumeration is a constraint of the available values for the {@link ColumnPermissions#move} field.
+ */
 @Getter
 @Setter
 @FieldDefaults(level = AccessLevel.PRIVATE)
@@ -18,24 +24,54 @@ import java.util.Arrays;
 @JsonDeserialize(using = ColumnPermissionsDeserializer.class)
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class ColumnPermissions {
+    /**
+     * Can the column title be edited?
+     */
     boolean editTitle;
+    /**
+     * Can the column be deleted?
+     */
     boolean delete;
+    /**
+     * Can the column be moved?
+     * This enum represents available values:
+     * <ul>
+     * <li>{@link Move#YES} - movement is allowed.
+     * <li>{@link Move#PROJECT} - movement is allowed only inside the project.
+     * <li>{@link Move#NO} - movement restricted.
+     * </ul>
+     */
     @NonNull
     Move move;
+    /**
+     * Can be task added to the column?
+     */
     boolean addTask;
 
+    /**
+     * Default permissions for all tasks.
+     */
     @NonNull
     @JsonProperty("allTasks")
     TaskPermissions allTasksPermissions;
 
+    /**
+     * Permissions for tasks where the user is added to notifications.
+     */
     @JsonProperty("withMeTasks")
-    TaskPermissions withMeTasksPermissions; //may be null
+    TaskPermissions withMeTasksPermissions;
 
+    /**
+     * Permissions for tasks assigned to the user
+     */
     @JsonProperty("myTasks")
-    TaskPermissions myTasksPermissions; //may be null
+    TaskPermissions myTasksPermissions;
 
+    /**
+     * Task permissions created by the user himself.
+     */
     @JsonProperty("createdByMeTasks")
-    TaskPermissions createdByMeTasksPermissions; //may be null
+    TaskPermissions createdByMeTasksPermissions;
 
     public ColumnPermissions(boolean editTitle, boolean delete, Move move, boolean addTask,
                              TaskPermissions allTasksPermissions, TaskPermissions withMeTasksPermissions,
@@ -51,6 +87,9 @@ public class ColumnPermissions {
         this.move = move;
     }
 
+    /**
+     * Enumeration represents available values for the {@link ColumnPermissions#move}
+     */
     public enum Move {
         NO("no"),
         YES("yes"),
@@ -64,6 +103,13 @@ public class ColumnPermissions {
             this.value = value;
         }
 
+        /**
+         * Create enum constant from the {@link String} value.
+         * If there is no passed value in available list method throws {@link IllegalArgumentException}
+         * @param value value of the constant. Available values : yes, no, project.
+         * @return appropriate enum constant.
+         * @throws IllegalArgumentException if passed value is not available.
+         */
         public static Move fromValue(String value) {
             for (Move move: Move.values()) {
                 if (move.value.equalsIgnoreCase(value)) {

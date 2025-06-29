@@ -1,5 +1,6 @@
 package io.github.patbattb.yougileapilib.domain;
 
+//TODO add doc
 public enum Icon {
     EMPTY(""),
     STAR("star"),

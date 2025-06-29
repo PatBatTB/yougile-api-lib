@@ -5,6 +5,9 @@ import io.github.patbattb.yougileapilib.http.deserialize.AuthKeyDetailsDeseriali
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
+/**
+ * Detailed authorization key of API.
+ */
 @Getter
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @AllArgsConstructor
@@ -12,8 +15,20 @@ import lombok.experimental.FieldDefaults;
 @ToString
 @JsonDeserialize(using = AuthKeyDetailsDeserializer.class)
 public class AuthKeyDetails {
+    /**
+     * Authorization key.
+     */
     String key;
+    /**
+     * Company ID.
+     */
     String companyId;
+    /**
+     * Creation time.
+     */
     long created;
+    /**
+     * The key is deleted - yes/no
+     */
     boolean deleted;
 }

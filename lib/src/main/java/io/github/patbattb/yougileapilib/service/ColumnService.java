@@ -25,7 +25,7 @@ public class ColumnService extends AbstractRequestService {
      * @param params {@link QueryParams} Request parameters<p>
      *                                  Available parameter names:<ul>
      *                                  <li>{@code boardId} - string
-     *                                  <li/>{@code includeDeleted} - boolean
+     *                                  <li>{@code includeDeleted} - boolean
      *                                  <li>{@code limit} - number
      *                                  <li>{@code offset} - number
      *                                  <li>{@code parentId} - string
@@ -46,7 +46,7 @@ public class ColumnService extends AbstractRequestService {
      * @param params {@link QueryParams} Request parameters<p>
      *                                  Available parameter names:<ul>
      *                                  <li>{@code boardId} - string
-     *                                  <li/>{@code includeDeleted} - boolean
+     *                                  <li>{@code includeDeleted} - boolean
      *                                  <li>{@code limit} - number
      *                                  <li>{@code offset} - number
      *                                  <li>{@code parentId} - string

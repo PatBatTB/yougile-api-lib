@@ -27,8 +27,8 @@ public class TaskService extends AbstractRequestService {
     /**
      * @param params {@link QueryParams} Request parameters<p>
      *                                  Available parameter names:<ul>
-     *                                  <li/>{@code assignedTo} (string) - Performer IDs separated by commas
-     *                                  <li/>{@code columnId} (string) - ID of column (s? separated by commas)
+     *                                  <li>{@code assignedTo} (string) - Performer IDs separated by commas
+     *                                  <li>{@code columnId} (string) - ID of column (s? separated by commas)
      *                                  <li>{@code includeDeleted} (boolean) - Set to {@code true} so that deleted objects are returned.
      *                                  <li>{@code limit} (number) - The number of elements you want to get. Maximum 1000.
      *                                  <li>{@code offset} (number) - Index of the first page element
@@ -49,8 +49,8 @@ public class TaskService extends AbstractRequestService {
     /**
      * @param params {@link QueryParams} Request parameters<p>
      *                                  Available parameter names:<ul>
-     *                                  <li/>{@code assignedTo} (string) - Performer IDs separated by commas
-     *                                  <li/>{@code columnId} (string) - ID of column (s? separated by commas)
+     *                                  <li>{@code assignedTo} (string) - Performer IDs separated by commas
+     *                                  <li>{@code columnId} (string) - ID of column (s? separated by commas)
      *                                  <li>{@code includeDeleted} (boolean) - Set to {@code true} so that deleted objects are returned.
      *                                  <li>{@code limit} (number) - The number of elements you want to get. Maximum 1000.
      *                                  <li>{@code offset} (number) - Index of the first page element

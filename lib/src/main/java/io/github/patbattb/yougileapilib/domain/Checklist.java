@@ -7,6 +7,10 @@ import lombok.experimental.FieldDefaults;
 
 import java.util.List;
 
+/**
+ * The checklist contained in the {@link Task}.
+ * It includes {@link ChecklistOption}
+ */
 @Getter
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @AllArgsConstructor
@@ -14,6 +18,12 @@ import java.util.List;
 @ToString
 @JsonDeserialize(using = ChecklistDeserializer.class)
 public class Checklist {
+    /**
+     * Name of the checklist.
+     */
     String title;
+    /**
+     * List of the checklist options.
+     */
     List<ChecklistOption> items;
 }

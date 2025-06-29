@@ -38,10 +38,10 @@ public class ProjectCreateBody extends RequestBody {
          * @param users {@link ProjectUser} User IDs with system or custom role IDs.
          *              Available system role IDs:
          *              <ul>
-         *              <li/>{@code admin}
-         *              <li/>{@code worker}
-         *              <li/>{@code observer}
-         *              <li/>{@code -} minus symbol to delete user from project.
+         *              <li>{@code admin}
+         *              <li>{@code worker}
+         *              <li>{@code observer}
+         *              <li>{@code -} minus symbol to delete user from project.
          *              </ul>
          */
         public Builder users(ProjectUser... users) {
