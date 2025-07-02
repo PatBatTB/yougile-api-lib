@@ -18,6 +18,7 @@ import lombok.experimental.FieldDefaults;
 public class ProjectRole {
     /**
      * Project role ID.
+     * This ID can be used as {@link ProjectUser#roleId} to assign this role to the user.
      */
     String id;
     /**

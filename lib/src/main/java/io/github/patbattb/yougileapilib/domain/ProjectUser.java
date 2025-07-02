@@ -27,7 +27,7 @@ public class ProjectUser {
      * <li>{@code observer}
      * <li>{@code -} - used for deleting user from the project.
      * </ul>
-     * or can be ID of the custom user-made role.
+     * or can be ID of the custom user-made  {@link ProjectRole}.
      */
     @Setter
     String roleId;
