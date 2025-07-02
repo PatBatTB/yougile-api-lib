@@ -11,6 +11,9 @@ import lombok.experimental.FieldDefaults;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * Implementation of the {@link RequestBody} for POST request creates {@link io.github.patbattb.yougileapilib.domain.Project}
+ */
 @Getter
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @JsonSerialize(using = ProjectCreateBodySerializer.class)
@@ -23,6 +26,13 @@ public class ProjectCreateBody extends RequestBody {
         this.title = title;
     }
 
+    /**
+     * Instantiates the builder for constructing {@link ProjectCreateBody}.
+     * Required fields of the {@link ProjectCreateBody} needs to be passed as the arguments.
+     * The remaining fields can be specified using the builder's methods.
+     * @param title project name
+     * @return the builder.
+     */
     public static ProjectCreateBody.Builder builder(@NonNull String title) {
         return new Builder(new ProjectCreateBody(title));
     }

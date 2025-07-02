@@ -11,6 +11,9 @@ import lombok.experimental.FieldDefaults;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * Implementation of the {@link RequestBody} for POST request creates {@link io.github.patbattb.yougileapilib.domain.Department}
+ */
 @Getter
 @JsonSerialize(using = DepartmentCreateBodySerializer.class)
 @FieldDefaults(level = AccessLevel.PRIVATE)
@@ -24,6 +27,13 @@ public class DepartmentCreateBody extends RequestBody {
         this.title = title;
     }
 
+    /**
+     * Instantiates the builder for constructing {@link DepartmentCreateBody}.
+     * Required fields of the {@link DepartmentCreateBody} needs to be passed as the arguments.
+     * The remaining fields can be specified using the builder's methods.
+     * @param title department name
+     * @return the builder.
+     */
     public static DepartmentCreateBody.Builder builder(@NonNull String title) {
         return new Builder(new DepartmentCreateBody(title));
     }
@@ -49,6 +59,12 @@ public class DepartmentCreateBody extends RequestBody {
             return this;
         }
 
+        /**
+         * ID of the parent department.
+         * Must be {@code null} or equals "-", if that top-leveled department.
+         * @param value ID of the parent department.
+         * @return the builder itself for continue constructing.
+         */
         public Builder parentId(String value) {
             body.parentId = value;
             return this;
