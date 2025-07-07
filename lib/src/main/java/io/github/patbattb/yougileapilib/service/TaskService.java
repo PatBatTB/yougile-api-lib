@@ -55,7 +55,7 @@ public class TaskService extends AbstractRequestService {
     public PagingContainer<Task> getTaskList(@NonNull QueryParams params, @NonNull AuthKey authKey) throws URISyntaxException, IOException {
         Response response = sendGetRequest(configureURI(params).setPath(taskListEndpoint).build(), authKey);
         Content content = response.handleResponse(ResponseHandlerProvider::okJsonHandler);
-        return ContentHandler.handleTaskList(content);
+        return ContentHandler.handlePagingContent(content, Task.class);
     }
 
     /**

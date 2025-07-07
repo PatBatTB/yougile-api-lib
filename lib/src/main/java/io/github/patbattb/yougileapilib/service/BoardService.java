@@ -54,7 +54,7 @@ public class BoardService extends AbstractRequestService {
     public PagingContainer<Board> getBoardList(@NonNull QueryParams params, @NonNull AuthKey authKey) throws URISyntaxException, IOException {
         Response response = sendGetRequest(configureURI(params).build(), authKey);
         Content content = response.handleResponse(ResponseHandlerProvider::okJsonHandler);
-        return ContentHandler.handleBoardList(content);
+        return ContentHandler.handlePagingContent(content, Board.class);
     }
 
     /**

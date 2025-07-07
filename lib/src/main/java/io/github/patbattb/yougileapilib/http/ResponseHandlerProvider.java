@@ -7,6 +7,7 @@ import lombok.experimental.UtilityClass;
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
 import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.ResponseHandler;
 import org.apache.http.client.fluent.Content;
 import org.apache.http.entity.ContentType;
 
@@ -14,9 +15,23 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Utility class with static methods for use in {@link org.apache.http.client.fluent.Response#handleResponse(ResponseHandler)}
+ * as implementation of functional interface {@link ResponseHandler}
+ */
 @UtilityClass
 public class ResponseHandlerProvider {
 
+    /**
+     * The handler execute necessary checks and returns response content.
+     * The handler used for response with:
+     * <ul>
+     *     <li> 200 (OK) HTTP status code
+     *     <li> JSON typed content
+     * </ul>
+     * @return content of the response.
+     * @throws IOException then gets content doesn't successfully or content can't be reads
+     */
     public Content okJsonHandler(HttpResponse response) throws IOException {
         ContentType contentType = ContentType.APPLICATION_JSON;
         checkContainedEntity(response);
@@ -25,6 +40,16 @@ public class ResponseHandlerProvider {
         return new Content(response.getEntity().getContent().readAllBytes(), contentType);
     }
 
+    /**
+     * The handler execute necessary checks and returns response content.
+     * The handler used for response with:
+     * <ul>
+     *     <li> 201 (CREATED) HTTP status code
+     *     <li> JSON typed content
+     * </ul>
+     * @return content of the response.
+     * @throws IOException then gets content doesn't successfully or content can't be reads
+     */
     public Content createdJsonHandler(HttpResponse response) throws IOException {
         ContentType contentType = ContentType.APPLICATION_JSON;
         checkContainedEntity(response);

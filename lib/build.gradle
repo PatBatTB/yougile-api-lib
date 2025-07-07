@@ -24,7 +24,9 @@ repositories {
 }
 
 configurations {
-    mockitoAgent
+    mockitoAgent {
+        transitive = false
+    }
 }
 
 dependencies {

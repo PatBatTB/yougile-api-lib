@@ -52,7 +52,7 @@ public class ProjectService extends AbstractRequestService {
     public PagingContainer<Project> getProjectList(@NonNull QueryParams params, @NonNull AuthKey authKey) throws URISyntaxException, IOException {
         Response response = sendGetRequest(configureURI(params).build(), authKey);
         Content content = response.handleResponse(ResponseHandlerProvider::okJsonHandler);
-        return ContentHandler.handleProjectList(content);
+        return ContentHandler.handlePagingContent(content, Project.class);
     }
 
     /**

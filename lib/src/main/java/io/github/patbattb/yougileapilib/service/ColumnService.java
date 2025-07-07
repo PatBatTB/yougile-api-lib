@@ -54,7 +54,7 @@ public class ColumnService extends AbstractRequestService {
     public PagingContainer<Column> getColumnList(@NonNull QueryParams params, @NonNull AuthKey authKey) throws URISyntaxException, IOException {
         Response response = sendGetRequest(configureURI(params).build(), authKey);
         Content content = response.handleResponse(ResponseHandlerProvider::okJsonHandler);
-        return ContentHandler.handleColumnList(content);
+        return ContentHandler.handlePagingContent(content, Column.class);
     }
 
     /**

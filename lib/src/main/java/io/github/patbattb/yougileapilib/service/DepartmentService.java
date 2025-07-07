@@ -55,7 +55,7 @@ public class DepartmentService extends AbstractRequestService {
     public PagingContainer<Department> getDepartmentList(@NonNull QueryParams params,@NonNull AuthKey authKey) throws URISyntaxException, IOException {
         Response response = sendGetRequest(configureURI(params).build(), authKey);
         Content content = response.handleResponse(ResponseHandlerProvider::okJsonHandler);
-        return ContentHandler.handleDepartmentList(content);
+        return ContentHandler.handlePagingContent(content, Department.class);
     }
 
     /**

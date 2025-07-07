@@ -52,7 +52,7 @@ public class UserService extends AbstractRequestService {
     public PagingContainer<User> getUserList(@NonNull QueryParams params, @NonNull AuthKey authKey) throws URISyntaxException, IOException {
         Response response = sendGetRequest(configureURI(params).build(), authKey);
         Content content = response.handleResponse(ResponseHandlerProvider::okJsonHandler);
-        return ContentHandler.handleUserList(content);
+        return ContentHandler.handlePagingContent(content, User.class);
     }
 
     /**

@@ -50,7 +50,7 @@ public class ProjectRoleService extends AbstractRequestService {
     public PagingContainer<ProjectRole> getRoleList(@NonNull String projectId,@NonNull QueryParams params,@NonNull AuthKey authKey) throws URISyntaxException, IOException {
         Response response = sendGetRequest(configureURI(params).setPath(getEndpoint(projectId)).build(), authKey);
         Content content = response.handleResponse(ResponseHandlerProvider::okJsonHandler);
-        return ContentHandler.handleProjectRoleList(content);
+        return ContentHandler.handlePagingContent(content, ProjectRole.class);
     }
 
     /**
