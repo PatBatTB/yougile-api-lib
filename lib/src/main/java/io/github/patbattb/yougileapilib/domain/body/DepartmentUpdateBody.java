@@ -10,6 +10,9 @@ import lombok.experimental.FieldDefaults;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * Implementation of the {@link RequestBody} for PUT request updates {@link io.github.patbattb.yougileapilib.domain.Department}
+ */
 @Getter
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @JsonSerialize(using = DepartmentUpdateBodySerializer.class)
@@ -23,6 +26,11 @@ public class DepartmentUpdateBody extends RequestBody {
     private DepartmentUpdateBody() {
     }
 
+    /**
+     * Instantiates the builder for constructing {@link DepartmentUpdateBody}.
+     * This builder has no parameters. All fields of the {@link DepartmentUpdateBody} can be specified using the builder's methods.
+     * @return the builder
+     */
     public static DepartmentUpdateBody.Builder builder() {
         return new Builder(new DepartmentUpdateBody());
     }
@@ -33,16 +41,32 @@ public class DepartmentUpdateBody extends RequestBody {
             super(body);
         }
 
+        /**
+         *
+         * @param value if true, then the object will be deleted.
+         * @return the builder itself for continue constructing.
+         */
         public Builder deleted(boolean value) {
             body.deleted = value;
             return this;
         }
 
+        /**
+         *
+         * @param value department name
+         * @return the builder itself for continue constructing.
+         */
         public Builder title(String value) {
             body.title = value;
             return this;
         }
 
+        /**
+         * ID of the parent department.
+         * Must be {@code null} or equals "-", if that top-leveled department.
+         * @param value ID of the parent department.
+         * @return the builder itself for continue constructing.
+         */
         public Builder parentId(String value) {
             body.parentId = value;
             return this;

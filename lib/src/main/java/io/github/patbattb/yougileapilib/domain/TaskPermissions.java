@@ -9,6 +9,11 @@ import lombok.experimental.FieldDefaults;
 
 import java.util.Arrays;
 
+/**
+ * Available permissions for the {@link Task} in the {@link ProjectRole}
+ *
+ * These permissions are part of {@link ColumnPermissions}.
+ */
 @Getter
 @Setter
 @FieldDefaults(level = AccessLevel.PRIVATE)
@@ -17,23 +22,95 @@ import java.util.Arrays;
 @JsonDeserialize(using = TaskPermissionsDeserializer.class)
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class TaskPermissions {
+    /**
+     * Viewing the Task.
+     */
     boolean show;
+    /**
+     * Can the user delete tasks?
+     */
     boolean delete;
+    /**
+     * Can the user edit task titles?
+     */
     boolean editTitle;
+    /**
+     * Can the user edit task descriptions?
+     */
     boolean editDescription;
+    /**
+     * Can the user complete tasks?
+     */
     boolean complete;
+    /**
+     * Can the user close tasks?
+     */
     boolean close;
+    /**
+     * Can the user assign users to any task?
+     * This enum represents available values:
+     * <ul>
+     *     <li> {@link AssignUsers#NO} - assigning any users is forbidden.
+     *     <li> {@link AssignUsers#YES} - assigning any users is allowed.
+     *     <li> {@link AssignUsers#ADD_SELF} - the user can assign himself only.
+     *     <li> {@link AssignUsers#SET_SELF} - the user can assign himself if there are no assigned users yet.
+     *     <li> {@link AssignUsers#CHANGE_FROM_SELF} - the user can assign another user from himself only.
+     * </ul>
+     */
     @NonNull
     AssignUsers assignUsers;
+    /**
+     * Can the user link tasks to another tasks?
+     */
     boolean connect;
+    /**
+     * Can the user edit checklists and subtasks?
+     * This enum represents available values:
+     * <ul>
+     *     <li> {@link EditSubtasks#NO} - editing subtask list and checklists is forbidden.
+     *     <li> {@link EditSubtasks#YES} - editing subtask list and checklists is allowed.
+     *     <li> {@link EditSubtasks#COMPLETE} - only completion is allowed.
+     * </ul>
+     */
     @NonNull
     EditSubtasks editSubtasks;
+    /**
+     * Can the user edit stickers and change color of the task?
+     */
     boolean editStickers;
+    /**
+     * Can the user edit fast link in the task-chat?
+     */
     boolean editPins;
+    /**
+     * Can the user move the task?
+     * This enum represents available values:
+     * <ul>
+     *     <li>{@link Move#YES} - task moving is allowed.
+     *     <li>{@link Move#NO} - task moving is forbidden.
+     *     <li>{@link Move#PROJECT} - task moving allowed inside project only.
+     *     <li>{@link Move#BOARD} - task moving allowed inside board only.
+     * </ul>
+     */
     @NonNull
     Move move;
+    /**
+     * Can the user send messages in the task chat?
+     */
     boolean sendMessages;
+    /**
+     * Can the user send files in the task chat?
+     */
     boolean sendFiles;
+    /**
+     * Changing the list of notification recipients.
+     * The enum represents available values:
+     * <ul>
+     *     <li> {@link EditWhoToNotify#YES} - editing recipient list is allowed.
+     *     <li> {@link EditWhoToNotify#NO} - editing recipient list is forbidden.
+     *     <li> {@link EditWhoToNotify#SELF} - the user is allowed to add and remove only himself
+     * </ul>
+     */
     @NonNull
     EditWhoToNotify editWhoToNotify;
 
@@ -57,6 +134,9 @@ public class TaskPermissions {
         this.editWhoToNotify = editWhoToNotify;
     }
 
+    /**
+     * The enumeration represents available values for {@link TaskPermissions#assignUsers}.
+     */
     public enum AssignUsers {
         NO("no"),
         YES("yes"),
@@ -72,6 +152,13 @@ public class TaskPermissions {
             this.value = value;
         }
 
+        /**
+         * Create enum constant from the {@link String} value.
+         * If there is no passed value in available list method throws {@link IllegalArgumentException}
+         * @param value value of the constant. Available values : no, yes, add-self, set-self, change-from-self
+         * @return appropriate enum constant.
+         * @throws IllegalArgumentException if passed value is not available.
+         */
         public static AssignUsers fromValue(String value) {
             for(AssignUsers assignUsers: AssignUsers.values()) {
                 if (assignUsers.value.equalsIgnoreCase(value)) {
@@ -82,6 +169,9 @@ public class TaskPermissions {
         }
     }
 
+    /**
+     * The enumeration represents available values for the {@link TaskPermissions#editSubtasks}.
+     */
     public enum EditSubtasks {
         NO("no"),
         YES("yes"),
@@ -95,6 +185,13 @@ public class TaskPermissions {
             this.value = value;
         }
 
+        /**
+         * Create enum constant from the {@link String} value.
+         * If there is no passed value in available list method throws {@link IllegalArgumentException}
+         * @param value value of the constant. Available values : no, yes, complete.
+         * @return appropriate enum constant.
+         * @throws IllegalArgumentException if passed value is not available.
+         */
         public static EditSubtasks fromValue(String value) {
             for (EditSubtasks editSubtasks: EditSubtasks.values()) {
                 if (editSubtasks.value.equalsIgnoreCase(value)) {
@@ -105,6 +202,9 @@ public class TaskPermissions {
         }
     }
 
+    /**
+     * The enumeration represents available values for the {@link TaskPermissions#move}.
+     */
     public enum Move {
         NO("no"),
         YES("yes"),
@@ -119,6 +219,13 @@ public class TaskPermissions {
             this.value = value;
         }
 
+        /**
+         * Create enum constant from the {@link String} value.
+         * If there is no passed value in available list method throws {@link IllegalArgumentException}
+         * @param value value of the constant. Available values : no, yes, project, board.
+         * @return appropriate enum constant.
+         * @throws IllegalArgumentException if passed value is not available.
+         */
         public static Move fromValue(String value) {
             for (Move move: Move.values()) {
                 if (move.value.equalsIgnoreCase(value)) {
@@ -129,6 +236,9 @@ public class TaskPermissions {
         }
     }
 
+    /**
+     * The enumeration represents available values for the {@link TaskPermissions#editWhoToNotify}.
+     */
     public enum EditWhoToNotify {
         NO("no"),
         YES("yes"),
@@ -142,6 +252,13 @@ public class TaskPermissions {
             this.value = value;
         }
 
+        /**
+         * Create enum constant from the {@link String} value.
+         * If there is no passed value in available list method throws {@link IllegalArgumentException}
+         * @param value value of the constant. Available values : no, yes, self.
+         * @return appropriate enum constant.
+         * @throws IllegalArgumentException if passed value is not available.
+         */
         public static EditWhoToNotify fromValue(String value) {
             for (EditWhoToNotify editWhoToNotify: EditWhoToNotify.values()) {
                 if (editWhoToNotify.value.equalsIgnoreCase(value)) {

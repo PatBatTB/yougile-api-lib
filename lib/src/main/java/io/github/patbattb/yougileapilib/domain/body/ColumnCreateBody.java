@@ -7,6 +7,9 @@ import lombok.Getter;
 import lombok.NonNull;
 import lombok.experimental.FieldDefaults;
 
+/**
+ * Implementation of the {@link RequestBody} for POST request creates {@link Column}
+ */
 @Getter
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @JsonInclude(JsonInclude.Include.NON_NULL)
@@ -21,6 +24,14 @@ public class ColumnCreateBody extends RequestBody {
         this.boardId = boardId;
     }
 
+    /**
+     * Instantiates the builder for constructing {@link ColumnCreateBody}.
+     * Required fields of the {@link ColumnCreateBody} needs to be passed as the arguments.
+     * The remaining fields can be specified using the builder's methods.
+     * @param title column name
+     * @param boardId board ID where column can be placed.
+     * @return the builder.
+     */
     public static ColumnCreateBody.Builder builder(@NonNull String title, @NonNull String boardId) {
         return new Builder(new ColumnCreateBody(title, boardId));
     }
@@ -31,6 +42,11 @@ public class ColumnCreateBody extends RequestBody {
             super(body);
         }
 
+        /**
+         *
+         * @param value The color of the column. It is indicated as a number in the range from 1 to 16.
+         * @return the builder itself for continue constructing.
+         */
         public Builder color(int value) {
             Column.colorCheck(value);
             body.color = value;

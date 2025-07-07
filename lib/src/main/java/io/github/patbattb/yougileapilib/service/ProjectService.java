@@ -11,48 +11,64 @@ import org.apache.http.client.fluent.Response;
 import java.io.IOException;
 import java.net.URISyntaxException;
 
+/**
+ * The service for managing projects.
+ */
 public class ProjectService extends AbstractRequestService {
 
+    /**
+     * If the service constructs without {@link AuthKey}, key must be passed to each method as argument.
+     */
     public ProjectService() {
         this(null);
     }
 
+    /**
+     * If the service constructs with {@link AuthKey}, you can use methods without key in parameters.
+     * The passed key in constructor will be used by default.
+     * If you want to send request with separate key, but without new service creating,
+     * you can also use methods with {@link AuthKey} in parameters.
+     * @param authKey yougile key for using by default in the Service instance.
+     */
     public ProjectService(AuthKey authKey) {
         super("projects", authKey);
     }
 
     /**
-     * @param authKey {@link AuthKey} with your YouGile token
+     * The request gets the container with {@link Project} list.
      * @param params {@link QueryParams} Request parameters<p>
      *                                  Available parameter names:<ul>
-     *                                  <li>{@code includeDeleted} - boolean
-     *                                  <li>{@code limit} - number
-     *                                  <li>{@code offset} - number
-     *                                  <li>{@code title} - string
+     *                                  <li>{@code includeDeleted} ({@code boolean}) - By default,
+     *                                   if an object has been marked as deleted, it will not be found.
+     *                                   Set true so that deleted objects are returned.
+     *                                  <li>{@code limit} ({@code number}) - The number of items you want to receive. Maximum 1000.
+     *                                  <li>{@code offset} ({@code number}) - The index of the first element.
+     *                                  <li>{@code title} ({@code string}) - Project title.
      *                                  </ul>
-     *
-     * @return list of {@link User}
-     * @throws URISyntaxException
-     * @throws IOException
+     * @param authKey {@link AuthKey} with your YouGile token
+     * @return container with {@link Project} list
+     * @throws IOException then the json cannot be parsed correctly.
      */
     public PagingContainer<Project> getProjectList(@NonNull QueryParams params, @NonNull AuthKey authKey) throws URISyntaxException, IOException {
         Response response = sendGetRequest(configureURI(params).build(), authKey);
         Content content = response.handleResponse(ResponseHandlerProvider::okJsonHandler);
-        return ContentHandler.handleProjectList(content);
+        return ContentHandler.handlePagingContent(content, Project.class);
     }
 
     /**
+     * The request gets the container with {@link Project} list.
+     * The passed key in constructor will be used by default.
      * @param params {@link QueryParams} Request parameters<p>
      *                                  Available parameter names:<ul>
-     *                                  <li>{@code includeDeleted} - boolean
-     *                                  <li>{@code limit} - number
-     *                                  <li>{@code offset} - number
-     *                                  <li>{@code title} - string
+     *                                  <li>{@code includeDeleted} ({@code boolean}) - By default,
+     *                                   if an object has been marked as deleted, it will not be found.
+     *                                   Set true so that deleted objects are returned.
+     *                                  <li>{@code limit} ({@code number}) - The number of items you want to receive. Maximum 1000.
+     *                                  <li>{@code offset} ({@code number}) - The index of the first element.
+     *                                  <li>{@code title} ({@code String}) - Project title.
      *                                  </ul>
-     *
-     * @return list of {@link User}
-     * @throws URISyntaxException
-     * @throws IOException
+     * @return container with {@link Project} list
+     * @throws IOException then the json cannot be parsed correctly.
      */
     public PagingContainer<Project> getProjectList(@NonNull QueryParams params) throws URISyntaxException, IOException {
         if (authKey == null) {
@@ -61,12 +77,26 @@ public class ProjectService extends AbstractRequestService {
         return getProjectList(params, authKey);
     }
 
+    /**
+     * The request creates new project.
+     * @param body body contained parameters of the creating project.
+     * @param authKey yougile key.
+     * @return ID of the created project.
+     * @throws IOException then the json cannot be parsed correctly.
+     */
     public Id createProject(@NonNull ProjectCreateBody body, @NonNull AuthKey authKey) throws URISyntaxException, IOException {
         Response response = sendPostRequest(configureURI().build(), body, authKey);
         Content content = response.handleResponse(ResponseHandlerProvider::createdJsonHandler);
         return ContentHandler.handleId(content);
     }
 
+    /**
+     * The request creates new project.
+     * The passed key in constructor will be used by default.
+     * @param body body contained parameters of the creating project.
+     * @return ID of the created project.
+     * @throws IOException then the json cannot be parsed correctly.
+     */
     public Id createProject(@NonNull ProjectCreateBody body) throws URISyntaxException, IOException {
         if (authKey == null) {
             throw new NullPointerException(noAuthKeyMessage);
@@ -74,12 +104,26 @@ public class ProjectService extends AbstractRequestService {
         return createProject(body, authKey);
     }
 
+    /**
+     * The request gets {@link Project} by ID.
+     * @param projectId id of the project.
+     * @param authKey yougile key.
+     * @return project entity, if it's available.
+     * @throws IOException then the json cannot be parsed correctly.
+     */
     public Project getProjectById(@NonNull String projectId, @NonNull AuthKey authKey) throws URISyntaxException, IOException {
         Response response = sendGetRequest(configureURI(projectId).build(), authKey);
         Content content = response.handleResponse(ResponseHandlerProvider::okJsonHandler);
         return ContentHandler.handleProject(content);
     }
 
+    /**
+     * The request gets {@link Project} by ID.
+     * The passed key in constructor will be used by default.
+     * @param projectId id of the project.
+     * @return project entity, if it's available.
+     * @throws IOException then the json cannot be parsed correctly.
+     */
     public Project getProjectById(@NonNull String projectId) throws URISyntaxException, IOException {
         if (authKey == null) {
             throw new NullPointerException(noAuthKeyMessage);
@@ -87,12 +131,28 @@ public class ProjectService extends AbstractRequestService {
         return getProjectById(projectId, authKey);
     }
 
+    /**
+     * The request updates project by ID.
+     * @param projectId ID of the project to update
+     * @param body body with project parameters to update.
+     * @param authKey yougile key.
+     * @return ID of the updated project.
+     * @throws IOException then the json cannot be parsed correctly.
+     */
     public Id updateProject(@NonNull String projectId, @NonNull ProjectUpdateBody body, @NonNull AuthKey authKey) throws URISyntaxException, IOException {
         Response response = sendPutRequest(configureURI(projectId).build(), body, authKey);
         Content content = response.handleResponse(ResponseHandlerProvider::okJsonHandler);
         return ContentHandler.handleId(content);
     }
 
+    /**
+     * The request updates project by ID.
+     * The passed key in constructor will be used by default.
+     * @param projectId ID of the project to update
+     * @param body body with project parameters to update.
+     * @return ID of the updated project.
+     * @throws IOException then the json cannot be parsed correctly.
+     */
     public Id updateProject(@NonNull String projectId, @NonNull ProjectUpdateBody body) throws URISyntaxException, IOException {
         if (authKey == null) {
             throw new NullPointerException(noAuthKeyMessage);
@@ -100,6 +160,13 @@ public class ProjectService extends AbstractRequestService {
         return updateProject(projectId, body, authKey);
     }
 
+    /**
+     * The request updates project by passed instance of {@link Project}.
+     * @param project project instance to update.
+     * @param authKey yougile key.
+     * @return ID of the updated project.
+     * @throws IOException then the json cannot be parsed correctly.
+     */
     public Id updateProject(@NonNull Project project, @NonNull AuthKey authKey) throws URISyntaxException, IOException {
         ProjectUpdateBody body = ProjectUpdateBody.builder()
                 .deleted(project.isDeleted())
@@ -109,6 +176,13 @@ public class ProjectService extends AbstractRequestService {
         return updateProject(project.getId(), body, authKey);
     }
 
+    /**
+     * The request updates project by passed instance of {@link Project}.
+     * The passed key in constructor will be used by default.
+     * @param project project instance to update.
+     * @return ID of the updated project.
+     * @throws IOException then the json cannot be parsed correctly.
+     */
     public Id updateProject(@NonNull Project project) throws URISyntaxException, IOException {
         if (authKey == null) {
             throw new NullPointerException(noAuthKeyMessage);

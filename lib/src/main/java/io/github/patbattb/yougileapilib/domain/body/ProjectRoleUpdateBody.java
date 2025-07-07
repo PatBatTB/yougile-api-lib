@@ -7,6 +7,9 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.FieldDefaults;
 
+/**
+ * Implementation of the {@link RequestBody} for PUT request updates {@link io.github.patbattb.yougileapilib.domain.ProjectRole}
+ */
 @Getter
 @Setter
 @FieldDefaults(level = AccessLevel.PRIVATE)
@@ -20,6 +23,11 @@ public class ProjectRoleUpdateBody extends RequestBody {
     private ProjectRoleUpdateBody() {
     }
 
+    /**
+     * Instantiates the builder for constructing {@link ProjectRoleUpdateBody}.
+     * This builder has no parameters. All fields of the {@link ProjectRoleUpdateBody} can be specified using the builder's methods.
+     * @return the builder
+     */
     public static ProjectRoleUpdateBody.Builder builder() {
         return new Builder(new ProjectRoleUpdateBody());
     }
@@ -30,16 +38,31 @@ public class ProjectRoleUpdateBody extends RequestBody {
             super(body);
         }
 
+        /**
+         *
+         * @param value project role's name
+         * @return the builder itself for continue constructing.
+         */
         public Builder name(String value) {
             body.name = value;
             return this;
         }
 
+        /**
+         *
+         * @param value project role's description.
+         * @return the builder itself for continue constructing.
+         */
         public Builder description(String value) {
             body.description = value;
             return this;
         }
 
+        /**
+         *
+         * @param value Permissions in the project.
+         * @return the builder itself for continue constructing.
+         */
         public Builder projectPermissions(ProjectPermissions value) {
             body.permissions = value;
             return this;
