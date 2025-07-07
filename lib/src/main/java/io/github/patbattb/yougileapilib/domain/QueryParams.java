@@ -5,6 +5,7 @@ import java.util.Map;
 
 /**
  * An entity for composing and transmitting Query parameters in a REST request.
+ * A class is a key-value type structure that contains the names of the parameters as keys and the values for them.
  */
 public class QueryParams {
 

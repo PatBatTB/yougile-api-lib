@@ -11,9 +11,10 @@ import org.apache.http.client.fluent.Response;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
-import java.util.List;
 
-
+/**
+ * Service for managing of companies in the authorization section.
+ */
 public class AuthCompanyService extends AbstractRequestService{
 
     public AuthCompanyService() {
@@ -21,15 +22,16 @@ public class AuthCompanyService extends AbstractRequestService{
     }
 
     /**
+     * The request gets container with {@link AuthCompany} list.
      * @param body {@link AuthCompanyBody} Request body.
      * @param params {@link QueryParams} Request parameters<p>
      *                                   Available parameter names:<ul>
-     *                                   <li>{@code limit} - number
-     *                                   <li>{@code offset} - number</ul>
+     *                                   <li>{@code limit} - number - The number of items you want to receive. Maximum 1000.
+     *                                   <li>{@code offset} - number - The index of the first element.
+     *                                   </ul>
      *
-     * @return {@link List} of {@link AuthCompany}
-     * @throws URISyntaxException
-     * @throws IOException
+     * @return the list of {@link AuthCompany}
+     * @throws IOException then the json cannot be parsed correctly
      */
     public PagingContainer<AuthCompany> getAuthCompanyList(@NonNull QueryParams params, @NonNull AuthCompanyBody body) throws URISyntaxException, IOException {
         Response response = sendPostRequest(configureURI(params).build(), body);
