@@ -28,7 +28,7 @@ public class AuthKeyService extends AbstractRequestService {
     public AuthKey createAuthKey(@NonNull AuthKeyBody body) throws URISyntaxException, IOException {
         Response response = sendPostRequest(configureURI().build(), body);
         Content content = response.handleResponse(ResponseHandlerProvider::createdJsonHandler);
-        return ContentHandler.handleAuthKey(content);
+        return ContentHandler.handleEntity(content, AuthKey.class);
     }
 
     /**

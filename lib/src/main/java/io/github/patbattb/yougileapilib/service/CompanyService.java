@@ -65,7 +65,7 @@ public class CompanyService extends AbstractRequestService {
     public Company getCompany(AuthKey authKey) throws URISyntaxException, IOException {
         Response response = sendGetRequest(configureURI().build(), authKey);
         Content content = response.handleResponse(ResponseHandlerProvider::okJsonHandler);
-        return ContentHandler.handleCompany(content);
+        return ContentHandler.handleEntity(content, Company.class);
     }
 
     /**
@@ -92,7 +92,7 @@ public class CompanyService extends AbstractRequestService {
     public Id updateCompany(@NonNull CompanyUpdateBody body, @NonNull AuthKey authKey) throws URISyntaxException, IOException {
         Response response = sendPutRequest(configureURI().build(), body, authKey);
         Content content = response.handleResponse(ResponseHandlerProvider::okJsonHandler);
-        return ContentHandler.handleId(content);
+        return ContentHandler.handleEntity(content, Id.class);
     }
 
     /**

@@ -3,7 +3,9 @@ package io.github.patbattb.yougileapilib.domain;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import io.github.patbattb.yougileapilib.http.deserialize.BoardStickerInfoDeserializer;
+import io.github.patbattb.yougileapilib.http.serialize.BoardStickerInfoSerializer;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
@@ -20,6 +22,7 @@ import java.util.List;
 @ToString
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonDeserialize(using = BoardStickerInfoDeserializer.class)
+@JsonSerialize(using = BoardStickerInfoSerializer.class)
 public class BoardStickerInfo {
     /**
      * Is available a timer on the board?
@@ -47,6 +50,12 @@ public class BoardStickerInfo {
     boolean repeat;
     /**
      * Custom board stickers.
+     * ATTENTION! Works state-stickers and sprint-stickers only.
+     * Server returns error 404, if other-typed sticker has been sent.
+     * This can lead to a situation where you get a Board object and pass it to the update method, but you get error 404.
+     * This is because it is possible to obtain the ID of a custom sticker through the API, but not to transmit it.
+     * Technical support reported that this was a bug, and there was no way to check the sticker for validity.
+     * To ensure correct operation, you must transfer an object with an empty stickers field, or be sure that only state stickers or sprint stickers are recorded in this field.
      */
     @JsonProperty("custom")
     List<CustomSticker> stickers;

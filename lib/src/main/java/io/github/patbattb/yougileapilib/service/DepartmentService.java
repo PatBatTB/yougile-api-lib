@@ -92,7 +92,7 @@ public class DepartmentService extends AbstractRequestService {
     public Id createDepartment(@NonNull DepartmentCreateBody body,@NonNull AuthKey authKey) throws URISyntaxException, IOException {
         Response response = sendPostRequest(configureURI().build(), body, authKey);
         Content content = response.handleResponse(ResponseHandlerProvider::createdJsonHandler);
-        return ContentHandler.handleId(content);
+        return ContentHandler.handleEntity(content, Id.class);
     }
 
     /**
@@ -119,7 +119,7 @@ public class DepartmentService extends AbstractRequestService {
     public Department getDepartmentById(@NonNull String departmentId,@NonNull AuthKey authKey) throws URISyntaxException, IOException {
         Response response = sendGetRequest(configureURI(departmentId).build(), authKey);
         Content content = response.handleResponse(ResponseHandlerProvider::okJsonHandler);
-        return ContentHandler.handleDepartment(content);
+        return ContentHandler.handleEntity(content, Department.class);
     }
 
     /**
@@ -148,7 +148,7 @@ public class DepartmentService extends AbstractRequestService {
     public Id updateDepartment(@NonNull String departmentId, @NonNull DepartmentUpdateBody body, @NonNull AuthKey authKey) throws URISyntaxException, IOException {
         Response response = sendPutRequest(configureURI(departmentId).build(), body, authKey);
         Content content = response.handleResponse(ResponseHandlerProvider::okJsonHandler);
-        return ContentHandler.handleId(content);
+        return ContentHandler.handleEntity(content, Id.class);
     }
 
     /**

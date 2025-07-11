@@ -87,7 +87,7 @@ public class ProjectService extends AbstractRequestService {
     public Id createProject(@NonNull ProjectCreateBody body, @NonNull AuthKey authKey) throws URISyntaxException, IOException {
         Response response = sendPostRequest(configureURI().build(), body, authKey);
         Content content = response.handleResponse(ResponseHandlerProvider::createdJsonHandler);
-        return ContentHandler.handleId(content);
+        return ContentHandler.handleEntity(content, Id.class);
     }
 
     /**
@@ -114,7 +114,7 @@ public class ProjectService extends AbstractRequestService {
     public Project getProjectById(@NonNull String projectId, @NonNull AuthKey authKey) throws URISyntaxException, IOException {
         Response response = sendGetRequest(configureURI(projectId).build(), authKey);
         Content content = response.handleResponse(ResponseHandlerProvider::okJsonHandler);
-        return ContentHandler.handleProject(content);
+        return ContentHandler.handleEntity(content, Project.class);
     }
 
     /**
@@ -142,7 +142,7 @@ public class ProjectService extends AbstractRequestService {
     public Id updateProject(@NonNull String projectId, @NonNull ProjectUpdateBody body, @NonNull AuthKey authKey) throws URISyntaxException, IOException {
         Response response = sendPutRequest(configureURI(projectId).build(), body, authKey);
         Content content = response.handleResponse(ResponseHandlerProvider::okJsonHandler);
-        return ContentHandler.handleId(content);
+        return ContentHandler.handleEntity(content, Id.class);
     }
 
     /**

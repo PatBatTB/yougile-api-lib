@@ -90,7 +90,7 @@ public class TaskService extends AbstractRequestService {
     public Id createTask(@NonNull TaskCreateBody body, @NonNull AuthKey authKey) throws URISyntaxException, IOException {
         Response response = sendPostRequest(configureURI().build(), body, authKey);
         Content content = response.handleResponse(ResponseHandlerProvider::createdJsonHandler);
-        return ContentHandler.handleId(content);
+        return ContentHandler.handleEntity(content, Id.class);
     }
 
     /**
@@ -117,7 +117,7 @@ public class TaskService extends AbstractRequestService {
     public Task getTaskById(@NonNull String taskId, @NonNull AuthKey authKey) throws URISyntaxException, IOException {
         Response response = sendGetRequest(configureURI(taskId).build(), authKey);
         Content content = response.handleResponse(ResponseHandlerProvider::okJsonHandler);
-        return ContentHandler.handleTask(content);
+        return ContentHandler.handleEntity(content, Task.class);
     }
 
     /**
@@ -145,7 +145,7 @@ public class TaskService extends AbstractRequestService {
     public Id updateTask(@NonNull String taskId, @NonNull TaskUpdateBody body, @NonNull AuthKey authKey) throws URISyntaxException, IOException {
         Response response = sendPutRequest(configureURI(taskId).build(), body, authKey);
         Content content = response.handleResponse(ResponseHandlerProvider::okJsonHandler);
-        return ContentHandler.handleId(content);
+        return ContentHandler.handleEntity(content, Id.class);
     }
 
     /**
@@ -248,7 +248,7 @@ public class TaskService extends AbstractRequestService {
     public Id updateChatSubscribers(@NonNull String taskId, @NonNull ChatSubscribersUpdateBody body, @NonNull AuthKey authKey) throws URISyntaxException, IOException {
         Response response = sendPutRequest(configureURI().setPath(getChatSubscribersEndpoint(taskId)).build(), body, authKey);
         Content content = response.handleResponse(ResponseHandlerProvider::okJsonHandler);
-        return ContentHandler.handleId(content);
+        return ContentHandler.handleEntity(content, Id.class);
     }
 
     /**

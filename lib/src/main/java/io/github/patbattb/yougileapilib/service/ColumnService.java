@@ -92,7 +92,7 @@ public class ColumnService extends AbstractRequestService {
     public Id createColumn(@NonNull ColumnCreateBody body, @NonNull AuthKey authKey) throws URISyntaxException, IOException {
         Response response = sendPostRequest(configureURI().build(), body, authKey);
         Content content = response.handleResponse(ResponseHandlerProvider::createdJsonHandler);
-        return ContentHandler.handleId(content);
+        return ContentHandler.handleEntity(content, Id.class);
     }
 
     /**
@@ -118,7 +118,7 @@ public class ColumnService extends AbstractRequestService {
     public Column getColumnById(@NonNull String columnId, @NonNull AuthKey authKey) throws URISyntaxException, IOException {
         Response response = sendGetRequest(configureURI(columnId).build(), authKey);
         Content content = response.handleResponse(ResponseHandlerProvider::okJsonHandler);
-        return ContentHandler.handleColumn(content);
+        return ContentHandler.handleEntity(content, Column.class);
     }
 
     /**
@@ -146,7 +146,7 @@ public class ColumnService extends AbstractRequestService {
     public Id updateColumn(@NonNull String columnId, @NonNull ColumnUpdateBody body, @NonNull AuthKey authKey) throws URISyntaxException, IOException {
         Response response = sendPutRequest(configureURI(columnId).build(), body, authKey);
         Content content = response.handleResponse(ResponseHandlerProvider::okJsonHandler);
-        return ContentHandler.handleId(content);
+        return ContentHandler.handleEntity(content, Id.class);
     }
 
     /**

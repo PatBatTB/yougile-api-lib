@@ -87,7 +87,7 @@ public class UserService extends AbstractRequestService {
     public Id inviteToCompany(@NonNull UserBody body, @NonNull AuthKey authKey) throws URISyntaxException, IOException {
         Response response = sendPostRequest(configureURI().build(), body, authKey);
         Content content = response.handleResponse(ResponseHandlerProvider::createdJsonHandler);
-        return ContentHandler.handleId(content);
+        return ContentHandler.handleEntity(content, Id.class);
     }
 
     /**
@@ -115,7 +115,7 @@ public class UserService extends AbstractRequestService {
     public User getUserById(@NonNull String userId, @NonNull AuthKey authKey) throws URISyntaxException, IOException {
         Response response = sendGetRequest(configureURI(userId).build(), authKey);
         Content content = response.handleResponse(ResponseHandlerProvider::okJsonHandler);
-        return ContentHandler.handleUser(content);
+        return ContentHandler.handleEntity(content, User.class);
     }
 
     /**
@@ -143,7 +143,7 @@ public class UserService extends AbstractRequestService {
     public Id updateUser(@NonNull String userId, @NonNull UserUpdateBody body, @NonNull  AuthKey authKey) throws URISyntaxException, IOException {
         Response response = sendPutRequest(configureURI(userId).build(), body, authKey);
         Content content = response.handleResponse(ResponseHandlerProvider::okJsonHandler);
-        return ContentHandler.handleId(content);
+        return ContentHandler.handleEntity(content, Id.class);
     }
 
     /**
@@ -199,7 +199,7 @@ public class UserService extends AbstractRequestService {
     public Id deleteFromCompany(@NonNull String userId, @NonNull AuthKey authKey) throws URISyntaxException, IOException {
         Response response = sendDeleteRequest(configureURI(userId).build(), authKey);
         Content content = response.handleResponse(ResponseHandlerProvider::okJsonHandler);
-        return ContentHandler.handleId(content);
+        return ContentHandler.handleEntity(content, Id.class);
     }
 
     /**

@@ -29,8 +29,8 @@ abstract class AbstractRequestService {
 
     private final String scheme = "https";
     private final String host = "ru.yougile.com";
-    private final String apiPath = "api-v2";
-    private final String endpoint;
+    protected final String apiPath = "api-v2";
+    protected final String endpoint;
     @Setter
     private int timeout = 10000;
 

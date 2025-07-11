@@ -91,7 +91,7 @@ public class BoardService extends AbstractRequestService {
     public Id createBoard(@NonNull BoardCreateBody body, @NonNull AuthKey authKey) throws URISyntaxException, IOException {
         Response response = sendPostRequest(configureURI().build(), body, authKey);
         Content content = response.handleResponse(ResponseHandlerProvider::createdJsonHandler);
-        return ContentHandler.handleId(content);
+        return ContentHandler.handleEntity(content, Id.class);
     }
 
     /**
@@ -118,7 +118,7 @@ public class BoardService extends AbstractRequestService {
     public Board getBoardById(@NonNull String boardId, @NonNull AuthKey authKey) throws URISyntaxException, IOException {
         Response response = sendGetRequest(configureURI(boardId).build(), authKey);
         Content content = response.handleResponse(ResponseHandlerProvider::okJsonHandler);
-        return ContentHandler.handleBoard(content);
+        return ContentHandler.handleEntity(content, Board.class);
     }
 
     /**
@@ -146,7 +146,7 @@ public class BoardService extends AbstractRequestService {
     public Id updateBoard(@NonNull String boardId, @NonNull BoardUpdateBody body, @NonNull AuthKey authkey) throws URISyntaxException, IOException {
         Response response = sendPutRequest(configureURI(boardId).build(), body, authKey);
         Content content = response.handleResponse(ResponseHandlerProvider::okJsonHandler);
-        return ContentHandler.handleId(content);
+        return ContentHandler.handleEntity(content, Id.class);
     }
 
     /**

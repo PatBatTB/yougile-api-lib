@@ -19,5 +19,6 @@ public class CustomSticker {
     /**
      * If true that sticker is available.
      */
-    boolean status;
+    @Setter
+    Boolean status;
 }

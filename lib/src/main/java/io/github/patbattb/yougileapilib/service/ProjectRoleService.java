@@ -84,7 +84,7 @@ public class ProjectRoleService extends AbstractRequestService {
     public Id createRole(@NonNull String projectId,@NonNull ProjectRoleCreateBody body,@NonNull AuthKey authKey) throws URISyntaxException, IOException {
         Response response = sendPostRequest(configureURI().setPath(getEndpoint(projectId)).build(), body, authKey);
         Content content = response.handleResponse(ResponseHandlerProvider::createdJsonHandler);
-        return ContentHandler.handleId(content);
+        return ContentHandler.handleEntity(content, Id.class);
     }
 
     /**
@@ -113,7 +113,7 @@ public class ProjectRoleService extends AbstractRequestService {
     public ProjectRole getRoleById(@NonNull String projectId,@NonNull String roleId,@NonNull AuthKey authKey) throws URISyntaxException, IOException {
         Response response = sendGetRequest(configureURI().setPath(getEndpoint(projectId, roleId)).build(), authKey);
         Content content = response.handleResponse(ResponseHandlerProvider::okJsonHandler);
-        return ContentHandler.handleProjectRole(content);
+        return ContentHandler.handleEntity(content, ProjectRole.class);
     }
 
     /**
@@ -143,7 +143,7 @@ public class ProjectRoleService extends AbstractRequestService {
     public Id updateRole(@NonNull String projectId, @NonNull String roleId, @NonNull ProjectRoleUpdateBody body, @NonNull AuthKey authKey) throws URISyntaxException, IOException {
         Response response = sendPutRequest(configureURI().setPath(getEndpoint(projectId, roleId)).build(), body, authKey);
         Content content = response.handleResponse(ResponseHandlerProvider::okJsonHandler);
-        return ContentHandler.handleId(content);
+        return ContentHandler.handleEntity(content, Id.class);
     }
 
     /**
@@ -205,7 +205,7 @@ public class ProjectRoleService extends AbstractRequestService {
     public Id deleteRole(@NonNull String projectId,@NonNull String roleId,@NonNull AuthKey authKey) throws URISyntaxException, IOException {
         Response response = sendDeleteRequest(configureURI().setPath(getEndpoint(projectId, roleId)).build(), authKey);
         Content content = response.handleResponse(ResponseHandlerProvider::okJsonHandler);
-        return ContentHandler.handleId(content);
+        return ContentHandler.handleEntity(content, Id.class);
     }
 
     /**

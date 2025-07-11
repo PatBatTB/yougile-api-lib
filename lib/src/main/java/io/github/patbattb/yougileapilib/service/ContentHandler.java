@@ -4,7 +4,10 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.json.JsonMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
-import io.github.patbattb.yougileapilib.domain.*;
+import io.github.patbattb.yougileapilib.domain.AuthKeyDetails;
+import io.github.patbattb.yougileapilib.domain.Id;
+import io.github.patbattb.yougileapilib.domain.PagingContainer;
+import io.github.patbattb.yougileapilib.domain.PagingData;
 import lombok.experimental.UtilityClass;
 import org.apache.http.client.fluent.Content;
 
@@ -21,16 +24,8 @@ class ContentHandler {
         return node.get("result").asText().equals(validString);
     }
 
-    List<Id> handleIdList(Content content) throws JsonProcessingException {
-        JsonMapper mapper = new JsonMapper();
-        JsonNode rootNode = mapper.readTree(content.toString());
-        List<Id> idList = new ArrayList<>();
-        if (rootNode != null && rootNode.isArray()) {
-            for (JsonNode node: rootNode) {
-                idList.add(new Id(node.asText()));
-            }
-        }
-        return idList;
+    <T> T handleEntity(Content content, Class<T> entityClazz) throws JsonProcessingException {
+        return new JsonMapper().readValue(content.toString(), entityClazz);
     }
 
     <T> PagingContainer<T> handlePagingContent(Content content, Class<T> contentClazz) throws JsonProcessingException {
@@ -45,20 +40,16 @@ class ContentHandler {
         return new PagingContainer<>(paging.count(), paging.limit(), paging.offset(), paging.next(), taskList);
     }
 
-    Id handleId(Content content) throws JsonProcessingException {
-        return new JsonMapper().readValue(content.toString(), Id.class);
-    }
-
-    User handleUser(Content content) throws JsonProcessingException {
-        return new JsonMapper().readValue(content.toString(), User.class);
-    }
-
-    Company handleCompany(Content content) throws JsonProcessingException {
-        return new JsonMapper().readValue(content.toString(), Company.class);
-    }
-
-    AuthKey handleAuthKey(Content content) throws JsonProcessingException {
-        return new JsonMapper().readValue(content.toString(), AuthKey.class);
+    List<Id> handleIdList(Content content) throws JsonProcessingException {
+        JsonMapper mapper = new JsonMapper();
+        JsonNode rootNode = mapper.readTree(content.toString());
+        List<Id> idList = new ArrayList<>();
+        if (rootNode != null && rootNode.isArray()) {
+            for (JsonNode node: rootNode) {
+                idList.add(new Id(node.asText()));
+            }
+        }
+        return idList;
     }
 
     List<AuthKeyDetails> handleAuthKeyList(Content content) throws JsonProcessingException {
@@ -69,29 +60,5 @@ class ContentHandler {
             authKeyDetailsList.add(mapper.readValue(node.toString(), AuthKeyDetails.class));
         }
         return authKeyDetailsList;
-    }
-
-    Project handleProject(Content content) throws JsonProcessingException {
-        return new JsonMapper().readValue(content.toString(), Project.class);
-    }
-
-    ProjectRole handleProjectRole(Content content) throws JsonProcessingException {
-        return new JsonMapper().readValue(content.toString(), ProjectRole.class);
-    }
-
-    Department handleDepartment(Content content) throws JsonProcessingException {
-        return new JsonMapper().readValue(content.toString(), Department.class);
-    }
-
-    Board handleBoard(Content content) throws JsonProcessingException {
-        return new JsonMapper().readValue(content.toString(), Board.class);
-    }
-
-    Column handleColumn(Content content) throws JsonProcessingException {
-        return new JsonMapper().readValue(content.toString(), Column.class);
-    }
-
-    Task handleTask(Content content) throws JsonProcessingException {
-        return new JsonMapper().readValue(content.toString(), Task.class);
     }
 }
