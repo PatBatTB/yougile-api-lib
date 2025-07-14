@@ -13,7 +13,7 @@ import lombok.experimental.FieldDefaults;
 @Getter
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class AuthCompanyBody extends RequestBody{
+public class AuthCompanyBody implements RequestBody {
 
     final String login;
     final String password;

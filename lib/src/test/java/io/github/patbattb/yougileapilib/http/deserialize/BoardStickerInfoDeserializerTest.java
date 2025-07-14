@@ -89,10 +89,10 @@ class BoardStickerInfoDeserializerTest extends AbstractDeserializerTest {
                     "%s": %s
                     }
                 }
-                """, stickerOne.getId(), stickerOne.isStatus(), stickerTwo.getId(), stickerTwo.isStatus()
+                """, stickerOne.getId(), stickerOne.getStatus(), stickerTwo.getId(), stickerTwo.getStatus()
         );
         BoardStickerInfo boardStickerInfo = mapper.readValue(jsonString, BoardStickerInfo.class);
-        assertThatCollection(boardStickerInfo.getStickers()).contains(stickerOne, stickerTwo);
+        assertThatCollection(boardStickerInfo.getCustom()).contains(stickerOne, stickerTwo);
     }
 
     private BoardStickerInfo getBoardStickerInfo(String fieldName, Object value) throws JsonProcessingException {

@@ -12,7 +12,7 @@ import lombok.experimental.FieldDefaults;
 @Getter
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class TimerUpdateBody extends RequestBody {
+public class TimerUpdateBody implements RequestBody {
 
     Integer seconds;
     Boolean running;

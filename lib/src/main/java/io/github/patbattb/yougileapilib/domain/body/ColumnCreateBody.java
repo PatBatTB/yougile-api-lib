@@ -13,7 +13,7 @@ import lombok.experimental.FieldDefaults;
 @Getter
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class ColumnCreateBody extends RequestBody {
+public class ColumnCreateBody implements RequestBody {
 
     final String title;
     final String boardId;

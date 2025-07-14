@@ -12,7 +12,7 @@ import lombok.experimental.FieldDefaults;
 @Getter
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class DeadlineUpdateBody extends RequestBody {
+public class DeadlineUpdateBody implements RequestBody {
 
     Long deadline;
     Long startDate;

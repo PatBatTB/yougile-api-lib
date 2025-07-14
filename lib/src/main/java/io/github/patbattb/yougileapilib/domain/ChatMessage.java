@@ -1,7 +1,11 @@
 package io.github.patbattb.yougileapilib.domain;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import io.github.patbattb.yougileapilib.http.deserialize.ChatMessgeDeserializer;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
+
+import java.util.List;
 
 /**
  * The message of the chat.
@@ -12,6 +16,7 @@ import lombok.experimental.FieldDefaults;
 @AllArgsConstructor
 @EqualsAndHashCode
 @ToString
+@JsonDeserialize(using = ChatMessgeDeserializer.class)
 public class ChatMessage {
     /**
      * If true, then the message has been deleted.
@@ -20,6 +25,7 @@ public class ChatMessage {
     boolean deleted;
     /**
      * Message ID.
+     * It is also the timestamp of creation.
      */
     String id;
     /**
@@ -42,10 +48,9 @@ public class ChatMessage {
     /**
      * Last edit time.
      */
-    long editTimestamp;
-    /*
+    Long editTimestamp;
+    /**
      * Message reactions.
      */
-    //@Setter
-    //Object reactions 👍👎👏🙂😀😕🎉❤🚀✔
+    List<Reaction> reactions;
 }

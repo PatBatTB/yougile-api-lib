@@ -12,7 +12,7 @@ import lombok.experimental.FieldDefaults;
 @Getter
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class CompanyUpdateBody extends RequestBody {
+public class CompanyUpdateBody implements RequestBody {
 
     Boolean deleted;
     String title;

@@ -17,7 +17,7 @@ import java.util.Map;
 @Getter
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class TaskCreateBody extends RequestBody {
+public class TaskCreateBody implements RequestBody {
 
     final String title;
 

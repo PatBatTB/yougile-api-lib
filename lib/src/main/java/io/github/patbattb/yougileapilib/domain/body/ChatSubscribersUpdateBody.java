@@ -16,7 +16,7 @@ import java.util.List;
 @Getter
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class ChatSubscribersUpdateBody extends RequestBody {
+public class ChatSubscribersUpdateBody implements RequestBody {
 
     @JsonProperty("content")
     List<String> users;

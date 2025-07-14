@@ -11,6 +11,7 @@ import lombok.experimental.FieldDefaults;
 @Getter
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @AllArgsConstructor
+@NoArgsConstructor
 @EqualsAndHashCode
 @ToString
 public class SprintStickerState {
@@ -31,11 +32,36 @@ public class SprintStickerState {
     /**
      * Timestamp of the sprint start.
      */
-    @Setter
     long begin;
     /**
      * Timestamp of the sprint end.
      */
-    @Setter
     long end;
+
+    /**
+     * Sets timestamp of the sprint start.
+     * @param value value can't be lesser than zero or bigger than {@link SprintStickerState#end}
+     */
+    public void begin(long value) {
+        validateTimestamp(value, end);
+        this.begin = value;
+    }
+
+    /**
+     * Sets timestamp of the spirit end.
+     * @param value value can't be lesser than zero or {@link SprintStickerState#begin}
+     */
+    public void end(long value) {
+        validateTimestamp(begin, value);
+        this.end = value;
+    }
+
+    public static void validateTimestamp(long beginValue, long endValue) {
+        if (beginValue < 0 || endValue < 0) {
+            throw new IllegalArgumentException("Time value can't be lesser than zero.");
+        }
+        if (beginValue > endValue) {
+            throw new IllegalArgumentException("Begin time can't be bigger than end time.");
+        }
+    }
 }

@@ -1,37 +1,37 @@
 package io.github.patbattb.yougileapilib.domain.body;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import io.github.patbattb.yougileapilib.domain.StateStickerState;
+import io.github.patbattb.yougileapilib.domain.StringStickerState;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.experimental.FieldDefaults;
 
 /**
- * Implementation of the {@link RequestBody} for PUT request updates {@link io.github.patbattb.yougileapilib.domain.StateStickerState}
+ * Implementation of the {@link RequestBody} for PUT request updates {@link StringStickerState}
  */
 @Getter
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class StateStickerStateUpdateBody extends RequestBody {
+public class StringStickerStateUpdateBody implements RequestBody {
 
     Boolean deleted;
     String name;
-    StateStickerState.Color color;
+    StringStickerState.Color color;
 
-    private StateStickerStateUpdateBody() {}
+    private StringStickerStateUpdateBody() {}
 
     /**
-     * Instantiates the builder for constructing {@link StateStickerStateUpdateBody}.
-     * This builder has no parameters. All fields of the {@link StateStickerStateUpdateBody} can be specified using the builder's methods.
+     * Instantiates the builder for constructing {@link StringStickerStateUpdateBody}.
+     * This builder has no parameters. All fields of the {@link StringStickerStateUpdateBody} can be specified using the builder's methods.
      * @return the builder
      */
-    public static StateStickerStateUpdateBody.Builder builder() {
-        return new Builder(new StateStickerStateUpdateBody());
+    public static StringStickerStateUpdateBody.Builder builder() {
+        return new Builder(new StringStickerStateUpdateBody());
     }
 
-    public static class Builder extends BodyBuilder<StateStickerStateUpdateBody> {
+    public static class Builder extends BodyBuilder<StringStickerStateUpdateBody> {
 
-        private Builder(StateStickerStateUpdateBody body) {
+        private Builder(StringStickerStateUpdateBody body) {
             super(body);
         }
 
@@ -60,7 +60,7 @@ public class StateStickerStateUpdateBody extends RequestBody {
          * @param value state color.
          * @return the builder itself for continue constructing.
          */
-        public Builder color(StateStickerState.Color value) {
+        public Builder color(StringStickerState.Color value) {
             body.color = value;
             return this;
         }

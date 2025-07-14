@@ -1,8 +1,8 @@
 package io.github.patbattb.yougileapilib.domain.body;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import io.github.patbattb.yougileapilib.domain.StateSticker;
-import io.github.patbattb.yougileapilib.domain.StateStickerState;
+import io.github.patbattb.yougileapilib.domain.StringSticker;
+import io.github.patbattb.yougileapilib.domain.StringStickerState;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NonNull;
@@ -13,39 +13,39 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- * Implementation of the {@link RequestBody} for POST request creates new {@link io.github.patbattb.yougileapilib.domain.StateSticker}
+ * Implementation of the {@link RequestBody} for POST request creates new {@link StringSticker}
  */
 @Getter
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class StateStickerCreateBody extends RequestBody{
+public class StringStickerCreateBody implements RequestBody{
 
     final String name;
-    StateSticker.Icon icon;
-    List<StateStickerState> states = new ArrayList<>();
+    StringSticker.Icon icon;
+    List<StringStickerState> states = new ArrayList<>();
 
-    private StateStickerCreateBody(String name) {
+    private StringStickerCreateBody(String name) {
         this.name = name;
     }
 
     /**
-     * Instantiates the builder for constructing {@link StateStickerCreateBody}.
-     * Required fields of the {@link StateStickerCreateBody} needs to be passed as the arguments.
+     * Instantiates the builder for constructing {@link StringStickerCreateBody}.
+     * Required fields of the {@link StringStickerCreateBody} needs to be passed as the arguments.
      * The remaining fields can be specified using the builder's methods.
-     * @param name state-sticker name.
+     * @param name string-sticker name.
      * @return the builder.
      */
-    public static StateStickerCreateBody.Builder builder(@NonNull String name) {
-        return new Builder(new StateStickerCreateBody(name));
+    public static StringStickerCreateBody.Builder builder(@NonNull String name) {
+        return new Builder(new StringStickerCreateBody(name));
     }
 
     /**
      * The builder doesn't have public constructor or static methods.
-     * Use {@link StateStickerCreateBody#builder(String)} for constructing.
+     * Use {@link StringStickerCreateBody#builder(String)} for constructing.
      */
-    public static class Builder extends BodyBuilder<StateStickerCreateBody> {
+    public static class Builder extends BodyBuilder<StringStickerCreateBody> {
 
-        private Builder(StateStickerCreateBody body) {
+        private Builder(StringStickerCreateBody body) {
             super(body);
         }
 
@@ -54,7 +54,7 @@ public class StateStickerCreateBody extends RequestBody{
          * @param icon Icon of the sticker.
          * @return the builder itself for continue constructing.
          */
-        public Builder icon(StateSticker.Icon icon) {
+        public Builder icon(StringSticker.Icon icon) {
             body.icon = icon;
             return this;
         }
@@ -64,7 +64,7 @@ public class StateStickerCreateBody extends RequestBody{
          * @param states state instances.
          * @return the builder itself for continue constructing.
          */
-        public Builder states(StateStickerState... states) {
+        public Builder states(StringStickerState... states) {
             body.states = Arrays.asList(states);
             return this;
         }

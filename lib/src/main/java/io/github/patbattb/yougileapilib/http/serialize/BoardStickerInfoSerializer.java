@@ -20,7 +20,7 @@ public class BoardStickerInfoSerializer extends JsonSerializer<BoardStickerInfo>
         gen.writeBooleanField("repeat", value.isRepeat());
         gen.writeFieldName("custom");
         gen.writeStartObject();
-        for (CustomSticker sticker: value.getStickers()) {
+        for (CustomSticker sticker: value.getCustom()) {
             gen.writeBooleanField(sticker.getId(), sticker.getStatus());
         }
         gen.writeEndObject();

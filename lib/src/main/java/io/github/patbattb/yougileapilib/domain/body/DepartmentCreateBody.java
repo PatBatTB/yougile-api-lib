@@ -17,7 +17,7 @@ import java.util.List;
 @Getter
 @JsonSerialize(using = DepartmentCreateBodySerializer.class)
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class DepartmentCreateBody extends RequestBody {
+public class DepartmentCreateBody implements RequestBody {
 
     final String title;
     String parentId;
@@ -53,6 +53,7 @@ public class DepartmentCreateBody extends RequestBody {
          *              <li>{@code member}
          *              <li>{@code -} minus symbol to delete user from department.
          *              </ul>
+         * @return the builder itself for continue constructing.
          */
         public Builder users(DepartmentUser... users) {
             body.users = Arrays.asList(users);

@@ -17,7 +17,7 @@ import java.util.Map;
 @Getter
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class TaskUpdateBody extends RequestBody {
+public class TaskUpdateBody implements RequestBody {
 
     Boolean deleted;
     String title;
@@ -30,7 +30,8 @@ public class TaskUpdateBody extends RequestBody {
     DeadlineUpdateBody deadline;
     TimeTrackingUpdateBody timeTracking;
     List<Checklist> checklists;
-    Map<String, String> stickers;
+    //It doesn't work on yougile.
+    final Map<String, String> stickers = null;
     Task.Color color;
     String idTaskCommon;
     String idTaskProject;

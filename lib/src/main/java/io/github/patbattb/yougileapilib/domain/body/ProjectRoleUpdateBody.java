@@ -14,7 +14,7 @@ import lombok.experimental.FieldDefaults;
 @Setter
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class ProjectRoleUpdateBody extends RequestBody {
+public class ProjectRoleUpdateBody implements RequestBody {
 
     String name;
     String description;

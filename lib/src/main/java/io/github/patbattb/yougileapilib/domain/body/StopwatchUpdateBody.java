@@ -12,7 +12,7 @@ import lombok.experimental.FieldDefaults;
 @Getter
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class StopwatchUpdateBody extends RequestBody {
+public class StopwatchUpdateBody implements RequestBody {
 
     Boolean running;
     Boolean deleted;

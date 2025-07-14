@@ -1,7 +1,6 @@
 package io.github.patbattb.yougileapilib.domain;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import io.github.patbattb.yougileapilib.http.deserialize.BoardStickerInfoDeserializer;
@@ -57,6 +56,5 @@ public class BoardStickerInfo {
      * Technical support reported that this was a bug, and there was no way to check the sticker for validity.
      * To ensure correct operation, you must transfer an object with an empty stickers field, or be sure that only state stickers or sprint stickers are recorded in this field.
      */
-    @JsonProperty("custom")
-    List<CustomSticker> stickers;
+    List<CustomSticker> custom;
 }

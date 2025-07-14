@@ -16,7 +16,7 @@ import java.util.List;
 @Getter
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @JsonSerialize(using = DepartmentUpdateBodySerializer.class)
-public class DepartmentUpdateBody extends RequestBody {
+public class DepartmentUpdateBody implements RequestBody {
 
     Boolean deleted;
     String title;

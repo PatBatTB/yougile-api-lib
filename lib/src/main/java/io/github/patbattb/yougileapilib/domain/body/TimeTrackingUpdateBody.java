@@ -11,7 +11,7 @@ import lombok.experimental.FieldDefaults;
 @Getter
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class TimeTrackingUpdateBody extends RequestBody {
+public class TimeTrackingUpdateBody implements RequestBody {
 
     Double plan;
     Double work;
