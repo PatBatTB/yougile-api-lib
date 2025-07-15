@@ -67,6 +67,5 @@ class UserDeserializerTest extends AbstractDeserializerTest {
         );
         User user = mapper.readValue(jsonString, User.class);
         assertThat(user.isAdmin()).isEqualTo(isAdmin);
-
     }
 }
