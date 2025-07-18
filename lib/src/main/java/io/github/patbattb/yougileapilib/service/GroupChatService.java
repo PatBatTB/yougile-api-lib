@@ -14,14 +14,13 @@ import java.net.URISyntaxException;
 /**
  * Service for managing of group chats.
  * <p>
- * <b>ATTENTION! GroupChat doesn't work correctly!
+ * <b>ATTENTION! GroupChat doesn't work correctly!</b>
  * <p>
- * If you delete all users from the chat, it will get bogged down.
+ * <b>If you delete all users from the chat, it will get bogged down.
  * You can get it through the API, but if you try to change it, add users, or something else, there will be no result.
- * The server returns the 200 status (OK), but no changes occur.
+ * The server returns the 200 status (OK), but no changes occur.</b>
  * <p>
- * There may be other errors that I have not been able to identify as a result of the tests.
- * </b>
+ * <b>There may be other errors that I have not been able to identify as a result of the tests.</b>
  */
 public class GroupChatService extends AbstractRequestService {
 
