@@ -45,7 +45,7 @@ public class GroupChatUpdateBody implements RequestBody {
          * @param value true, if object must be deleted.
          * @return the builder itself for continue constructing.
          */
-        public Builder deleted(boolean value) {
+        public Builder deleted(Boolean value) {
             body.deleted = value;
             return this;
         }

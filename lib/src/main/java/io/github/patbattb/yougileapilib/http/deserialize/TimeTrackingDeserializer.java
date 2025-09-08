@@ -12,8 +12,8 @@ public class TimeTrackingDeserializer extends JsonDeserializer<TimeTracking> {
     @Override
     public TimeTracking deserialize(JsonParser p, DeserializationContext ctxt) throws IOException {
         JsonNode node = p.readValueAsTree();
-        int plan = node.get("plan").asInt();
-        int work = node.get("work").asInt();
+        double plan = node.get("plan").asDouble();
+        double work = node.get("work").asDouble();
         return new TimeTracking(plan, work);
     }
 }

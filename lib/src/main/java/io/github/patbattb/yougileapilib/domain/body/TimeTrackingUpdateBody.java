@@ -40,7 +40,7 @@ public class TimeTrackingUpdateBody implements RequestBody {
          * @param value How many hours were scheduled to complete the task.
          * @return the builder itself for continue constructing.
          */
-        public Builder plan(double value) {
+        public Builder plan(Double value) {
             body.plan = value;
             return this;
         }
@@ -50,7 +50,7 @@ public class TimeTrackingUpdateBody implements RequestBody {
          * @param value How many hours were spent on the task.
          * @return the builder itself for continue constructing.
          */
-        public Builder work(double value) {
+        public Builder work(Double value) {
             body.work = value;
             return this;
         }
@@ -60,7 +60,7 @@ public class TimeTrackingUpdateBody implements RequestBody {
          * @param value if true, then object will be deleted.
          * @return the builder itself for continue constructing.
          */
-        public Builder deleted(boolean value) {
+        public Builder deleted(Boolean value) {
             body.deleted = value;
             return this;
         }

@@ -55,7 +55,7 @@ public class UserBody implements RequestBody {
          * @param value Has the user admin rights?
          * @return the builder itself for continue constructing.
          */
-        public Builder isAdmin(boolean value) {
+        public Builder isAdmin(Boolean value) {
             body.isAdmin = value;
             return this;
         }

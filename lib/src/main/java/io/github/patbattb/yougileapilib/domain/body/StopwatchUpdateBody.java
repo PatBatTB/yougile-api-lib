@@ -40,7 +40,7 @@ public class StopwatchUpdateBody implements RequestBody {
          * @param value Stopwatch status - started (true) / stopped (false)
          * @return the builder itself for continue constructing.
          */
-        public Builder running(boolean value) {
+        public Builder running(Boolean value) {
             body.running = value;
             return this;
         }
@@ -50,7 +50,7 @@ public class StopwatchUpdateBody implements RequestBody {
          * @param value if true, then object will be deleted.
          * @return the builder itself for continue constructing.
          */
-        public Builder deleted(boolean value) {
+        public Builder deleted(Boolean value) {
             body.deleted = value;
             return this;
         }

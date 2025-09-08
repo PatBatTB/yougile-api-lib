@@ -40,7 +40,7 @@ public class SprintStickerStateUpdateBody implements RequestBody {
          * @param value if true, then object will be deleted.
          * @return the builder itself for continue constructing.
          */
-        public Builder deleted(boolean value) {
+        public Builder deleted(Boolean value) {
             body.deleted = value;
             return this;
         }
@@ -60,7 +60,7 @@ public class SprintStickerStateUpdateBody implements RequestBody {
          * @param value timestamp of the sticker start.
          * @return the builder itself for continue constructing.
          */
-        public Builder begin(long value) {
+        public Builder begin(Long value) {
             if (value < 0) {
                 throw new IllegalArgumentException("Begin time can't be lesser than zero.");
             }
@@ -76,7 +76,7 @@ public class SprintStickerStateUpdateBody implements RequestBody {
          * @param value timestamp of the sticker end.
          * @return the builder itself for continue constructing.
          */
-        public Builder end(long value) {
+        public Builder end(Long value) {
             if (value < 0) {
                 throw new IllegalArgumentException("End time can't be lesser than zero.");
             }

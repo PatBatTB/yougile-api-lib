@@ -47,7 +47,7 @@ public class ColumnCreateBody implements RequestBody {
          * @param value The color of the column. It is indicated as a number in the range from 1 to 16.
          * @return the builder itself for continue constructing.
          */
-        public Builder color(int value) {
+        public Builder color(Integer value) {
             Column.colorCheck(value);
             body.color = value;
             return this;

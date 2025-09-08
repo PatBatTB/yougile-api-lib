@@ -40,7 +40,7 @@ public class TimerUpdateBody implements RequestBody {
          * @param value How many seconds remain for the timer finish.
          * @return the builder itself for continue constructing.
          */
-        public Builder seconds(int value) {
+        public Builder seconds(Integer value) {
             body.seconds = value;
             return this;
         }
@@ -50,7 +50,7 @@ public class TimerUpdateBody implements RequestBody {
          * @param value Timer status - running / stopped.
          * @return the builder itself for continue constructing.
          */
-        public Builder running(boolean value) {
+        public Builder running(Boolean value) {
             body.running = value;
             return this;
         }
@@ -60,7 +60,7 @@ public class TimerUpdateBody implements RequestBody {
          * @param value if true, then object will be deleted.
          * @return the builder itself for continue constructing.
          */
-        public Builder deleted(boolean value) {
+        public Builder deleted(Boolean value) {
             body.deleted = value;
             return this;
         }

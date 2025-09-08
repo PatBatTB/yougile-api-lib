@@ -50,7 +50,7 @@ public class SprintStickerStateCreateBody implements RequestBody{
          * @param endValue timestamp of the sticker end.
          * @return the builder itself for continue constructing.
          */
-        public Builder timestamp(long beginValue, long endValue) {
+        public Builder timestamp(Long beginValue, Long endValue) {
             SprintStickerState.validateTimestamp(beginValue, endValue);
             body.begin = beginValue;
             body.end = endValue;

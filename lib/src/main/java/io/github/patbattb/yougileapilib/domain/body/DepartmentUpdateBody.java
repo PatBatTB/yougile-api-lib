@@ -46,7 +46,7 @@ public class DepartmentUpdateBody implements RequestBody {
          * @param value if true, then the object will be deleted.
          * @return the builder itself for continue constructing.
          */
-        public Builder deleted(boolean value) {
+        public Builder deleted(Boolean value) {
             body.deleted = value;
             return this;
         }

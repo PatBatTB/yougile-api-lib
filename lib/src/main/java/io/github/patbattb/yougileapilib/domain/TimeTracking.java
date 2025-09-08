@@ -19,9 +19,9 @@ public class TimeTracking {
     /**
      * How many hours were scheduled to complete the task.
      */
-    int plan;
+    double plan;
     /**
      * How many hours were spent on the task.
      */
-    int work;
+    double work;
 }

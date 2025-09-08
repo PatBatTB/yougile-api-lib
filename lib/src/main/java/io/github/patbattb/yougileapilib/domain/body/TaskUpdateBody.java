@@ -101,7 +101,7 @@ public class TaskUpdateBody implements RequestBody {
          * @param value Is the task must be archived?
          * @return the builder itself for continue constructing.
          */
-        public Builder archived(boolean value) {
+        public Builder archived(Boolean value) {
             body.archived = value;
             return this;
         }
@@ -111,7 +111,7 @@ public class TaskUpdateBody implements RequestBody {
          * @param value Is the task must be completed?
          * @return the builder itself for continue constructing.
          */
-        public Builder completed(boolean value) {
+        public Builder completed(Boolean value) {
             body.completed = value;
             return this;
         }

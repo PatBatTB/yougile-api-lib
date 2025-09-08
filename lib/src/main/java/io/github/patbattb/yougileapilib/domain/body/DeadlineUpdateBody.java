@@ -42,7 +42,7 @@ public class DeadlineUpdateBody implements RequestBody {
          * @param value deadline's timestamp.
          * @return the builder itself for continue constructing.
          */
-        public Builder deadline(long value) {
+        public Builder deadline(Long value) {
             body.deadline = value;
             return this;
         }
@@ -52,7 +52,7 @@ public class DeadlineUpdateBody implements RequestBody {
          * @param value task start's timestamp
          * @return the builder itself for continue constructing.
          */
-        public Builder startDate(long value) {
+        public Builder startDate(Long value) {
             body.startDate = value;
             return this;
         }
@@ -62,7 +62,7 @@ public class DeadlineUpdateBody implements RequestBody {
          * @param value if true. then time will be displayed.
          * @return the builder itself for continue constructing.
          */
-        public Builder withTime(boolean value) {
+        public Builder withTime(Boolean value) {
             body.withTime = value;
             return this;
         }
@@ -72,7 +72,7 @@ public class DeadlineUpdateBody implements RequestBody {
          * @param value if true, then the object will be deleted.
          * @return the builder itself for continue constructing.
          */
-        public Builder deleted(boolean value) {
+        public Builder deleted(Boolean value) {
             body.deleted = value;
             return this;
         }
