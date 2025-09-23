@@ -44,7 +44,7 @@ ps.updateProject(project);
 Can be found in [CHANGELOG](CHANGELOG.md).
 
 ## Authors
-* Patrick Bates - [PatBatTB](https://gitlab.com/PatBatTB)
+* Patrick Bates - [PatBatTB](https://github.com/PatBatTB)
 
 ## Code of Conduct
 Please, follow [Code of Conduct](CODE_OF_CONDUCT.md) page.
