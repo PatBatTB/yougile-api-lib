@@ -6,10 +6,7 @@ import io.github.patbattb.yougileapilib.http.deserialize.TaskDeserializer;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * This is the basic unit used in the system.
@@ -167,7 +164,7 @@ public class Task {
         this.deadline = deadline;
         this.timeTracking = timeTracking;
         this.checklists = checklists;
-        this.stickers = Collections.unmodifiableMap(stickers);
+        this.stickers = new HashMap<>(stickers);
         this.color = color;
         this.idTaskCommon = idTaskCommon;
         this.idTaskProject = idTaskProject;

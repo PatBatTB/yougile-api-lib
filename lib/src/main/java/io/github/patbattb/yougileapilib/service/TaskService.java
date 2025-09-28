@@ -183,7 +183,7 @@ public class TaskService extends AbstractRequestService {
                 .deadline(getUpdateBody(task.getDeadline()))
                 .timeTracking(getUpdateBody(task.getTimeTracking()))
                 .checklists(task.getChecklists().toArray(Checklist[]::new))
-                //.stickers(task.getStickers())
+                .stickers(task.getStickers())
                 .color(task.getColor())
                 .idTaskCommon(task.getIdTaskCommon())
                 .idTaskProject(task.getIdTaskProject())

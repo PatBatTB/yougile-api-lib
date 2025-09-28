@@ -30,8 +30,7 @@ public class TaskUpdateBody implements RequestBody {
     DeadlineUpdateBody deadline;
     TimeTrackingUpdateBody timeTracking;
     List<Checklist> checklists;
-    //It doesn't work on yougile.
-    final Map<String, String> stickers = null;
+    Map<String, String> stickers;
     Task.Color color;
     String idTaskCommon;
     String idTaskProject;
@@ -167,11 +166,15 @@ public class TaskUpdateBody implements RequestBody {
             return this;
         }
 
-        //TODO doesn't work. Error in side of API. Made ticket to yougile techsupport;
-//        public Builder stickers(Map<String, String> stickers) {
-//            body.stickers = Map.copyOf(stickers);
-//            return this;
-//        }
+        /**
+         * Custom stickers. Passed as a key-value object, where key is the sticker ID, value is the state ID.
+         * @param stickers custom stickers
+         * @return the builder itself for continue constructing.
+         */
+        public Builder stickers(Map<String, String> stickers) {
+            body.stickers = Map.copyOf(stickers);
+            return this;
+        }
 
         /**
          * The color of the task.
